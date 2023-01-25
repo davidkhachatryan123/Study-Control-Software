@@ -7,7 +7,7 @@ const routes: Routes = [
   {
     path: '',
     pathMatch: 'prefix',
-    redirectTo: 'register'
+    redirectTo: 'login'
   },
   {
     path: 'register',
