@@ -1,0 +1,44 @@
+<mat-list>
+  <mat-expansion-panel [expanded]="route === routers.DASHBOARD_MAIN_FILES">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <mat-icon color="primary">donut_large</mat-icon>Main
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <mat-list-item [routerLink]="[routers.DASHBOARD_MAIN_FILES]" routerLinkActive="active">
+      <mat-icon color="primary">folder</mat-icon>Public Files
+    </mat-list-item>
+
+  </mat-expansion-panel>
+
+  <mat-divider></mat-divider>
+  <mat-expansion-panel [expanded]="route === routers.DASHBOARD_HOME_SERVICES">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <mat-icon color="primary">home</mat-icon>Home
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <mat-list-item [routerLink]="[routers.DASHBOARD_HOME_SERVICES]" routerLinkActive="active">
+      <mat-icon color="primary">local_laundry_service</mat-icon>Services
+    </mat-list-item>
+
+  </mat-expansion-panel>
+
+  <mat-divider></mat-divider>
+
+  <mat-expansion-panel *ngIf="appUser.role == roles.admin"
+                       [expanded]="route === routers.DASHBOARD_USERS_ADMINS">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <mat-icon color="primary">supervised_user_circle</mat-icon>Users
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <mat-list-item [routerLink]="[routers.DASHBOARD_USERS_ADMINS]" routerLinkActive="active">
+      <mat-icon color="primary">verified_user</mat-icon>Admin Panel
+    </mat-list-item>
+
+  </mat-expansion-panel>
+</mat-list>
