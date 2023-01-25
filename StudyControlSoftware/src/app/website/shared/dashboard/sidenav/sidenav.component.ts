@@ -28,6 +28,6 @@ export class SidenavComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.authService.getUser().subscribe(data => this.appUser = data);
+    //this.authService.getUser().subscribe(data => this.appUser = data);
   }
 }

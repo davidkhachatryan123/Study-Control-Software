@@ -18,41 +18,37 @@ export class AuthService {
     this.apiUrl = environment.config.apiUrl + this.apiUrl;
   }
 
-  isSetup() {
-    return this.http.get<boolean>(this.apiUrl + "/isSetup");
-  }
-
   isLoggedIn() {
-    return this.http.get<boolean>(this.apiUrl + "/isLoggedIn", { withCredentials: true });
+    //return this.http.get<boolean>(this.apiUrl + "/isLoggedIn", { withCredentials: true });
   }
 
   login(user: User) {
-    return this.http.post<ResponseModel>(this.apiUrl + "/login", user, { withCredentials: true });
+    //return this.http.post<ResponseModel>(this.apiUrl + "/login", user, { withCredentials: true });
   }
 
   twoFA(twoFA: TwoFA) {
-    return this.http.post<ResponseModel>(this.apiUrl + "/loginTwoFactor", twoFA, { withCredentials: true })
+    /*return this.http.post<ResponseModel>(this.apiUrl + "/loginTwoFactor", twoFA, { withCredentials: true })
     .pipe(map((data: ResponseModel) => {
       if(data.statusCode == '200') {
         this.getUser().subscribe();
       }
 
       return data;
-    }));
+    }));*/
   }
 
   getUser() {
-    if(this.appUser == undefined)
+    /*if(this.appUser == undefined)
       return this.getUserFromServer();
 
-    return this.appUser;
+    return this.appUser;*/
   }
 
   private getUserFromServer() {
-    return this.appUser = this.http.get<AppUser>(this.apiUrl + "/getUser", { withCredentials: true });
+    //return this.appUser = this.http.get<AppUser>(this.apiUrl + "/getUser", { withCredentials: true });
   }
 
   signOut() {
-    return this.http.get(this.apiUrl + "/signOut", { withCredentials: true });
+    //return this.http.get(this.apiUrl + "/signOut", { withCredentials: true });
   }
 }

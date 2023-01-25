@@ -6,6 +6,7 @@ import { LoginComponent, RegisterComponent } from './components';
 const routes: Routes = [
   {
     path: '',
+    pathMatch: 'prefix',
     redirectTo: 'register'
   },
   {

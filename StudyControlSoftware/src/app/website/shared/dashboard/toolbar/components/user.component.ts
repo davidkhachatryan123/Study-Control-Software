@@ -22,11 +22,11 @@ export class UserComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.authService.getUser().subscribe(data => this.user = data);
+    //this.authService.getUser().subscribe(data => this.user = data);
   }
 
   signOut() {
-    this.authService.signOut().subscribe();
+    //this.authService.signOut().subscribe();
     this.router.navigate([this.routers.LOGIN]);
   }
 }

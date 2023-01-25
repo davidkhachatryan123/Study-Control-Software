@@ -36,7 +36,7 @@ export class UserComponent {
   submit(){
     if(this.loginForm.valid) {
 
-      this.authService.login(new User(
+      /*this.authService.login(new User(
         this.loginForm.controls['username'].value,
         this.loginForm.controls['password'].value
       )).subscribe(
@@ -50,7 +50,7 @@ export class UserComponent {
             this.nextEvent.emit(true);
           }
         }
-      );
+      );*/
     }
   }
 }

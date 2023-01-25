@@ -34,7 +34,7 @@ export class TwoFAComponent {
   submit(){
     if(this.twoFAForm.valid) {
 
-      this.authService.twoFA(new TwoFA(
+      /*this.authService.twoFA(new TwoFA(
         this.twoFAForm.controls['token'].value,
       )).subscribe(
         (data: ResponseModel) => {
@@ -47,7 +47,7 @@ export class TwoFAComponent {
             this.router.navigate([this.routers.DASHBOARD]);
           }
         }
-      );
+      );*/
     }
   }
 }

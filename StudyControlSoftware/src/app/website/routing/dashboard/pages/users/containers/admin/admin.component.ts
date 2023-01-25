@@ -37,7 +37,7 @@ export class AdminComponent {
   }
 
   getUsers() {
-    this.usersManagmentService.getAdminUsers(new TableOptions(
+    /*this.usersManagmentService.getAdminUsers(new TableOptions(
       this.userListOptions.sort,
       this.userListOptions.sortDirection,
       this.userListOptions.pageIndex,
@@ -46,7 +46,7 @@ export class AdminComponent {
     ).subscribe(data => {
       this.data = data.users;
       this.resultsLength = data.totalCount;
-    });
+    });*/
   }
 
   onCreate() {
@@ -66,7 +66,7 @@ export class AdminComponent {
     });
   }
   create(newUser: NewUser) {
-    this.usersManagmentService.createAdminUser(newUser).subscribe(
+    /*this.usersManagmentService.createAdminUser(newUser).subscribe(
     (data: ResponseModel) => {
 
       this._snackBar.open(data.message, 'Ok', {
@@ -77,7 +77,7 @@ export class AdminComponent {
         this.createDialogRef.close();
         this.getUsers();
       }
-    });
+    });*/
   }
 
   onDelete($event: any) {
@@ -95,7 +95,7 @@ export class AdminComponent {
     });
   }
   delete(id: string) {
-    this.usersManagmentService.deleteAdminUser(id)
+    /*this.usersManagmentService.deleteAdminUser(id)
     .subscribe((data: ResponseModel) => {
       this._snackBar.open(data.message, 'Ok', {
         duration: 10000,
@@ -103,7 +103,7 @@ export class AdminComponent {
 
       if(data.statusCode == '200')
         this.getUsers();
-    });
+    });*/
   }
 
   onEdit($event: NewUser) {
@@ -123,7 +123,7 @@ export class AdminComponent {
     });
   }
   update(newUser: NewUser) {
-    this.usersManagmentService.updateAdminUser(newUser).subscribe(
+    /*this.usersManagmentService.updateAdminUser(newUser).subscribe(
     (data: ResponseModel) => {
   
       this._snackBar.open(data.message, 'Ok', {
@@ -134,11 +134,11 @@ export class AdminComponent {
         this.createDialogRef.close();
         this.getUsers();
       }
-    });
+    });*/
   }
 
   onConfirmEmail($event: string) {
-    this.usersManagmentService.sendConfirmEmail($event).subscribe(
+    /*this.usersManagmentService.sendConfirmEmail($event).subscribe(
       (data: ResponseModel) => {
     
         this._snackBar.open(data.message, 'Ok', {
@@ -147,6 +147,6 @@ export class AdminComponent {
     
         if(data.statusCode == '200')
           this.getUsers();
-      });
+      });*/
   }
 }

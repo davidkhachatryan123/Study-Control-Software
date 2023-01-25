@@ -39,7 +39,7 @@ export class UsersCardComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit() {
-    this.authService.getUser().subscribe(data => this.appUser = data);
+    //this.authService.getUser().subscribe(data => this.appUser = data);
   }
 
   ngAfterViewInit() {
