@@ -14,7 +14,7 @@ const routes: Routes = [
   },
   {
     path: appRoutes.DASHBOARD_EDUCATION_FACULTY,
-    component: TestComponent
+    loadChildren: () => import('./routing/faculty/faculty.module').then(module => module.FacultyModule)
   },
   {
     path: appRoutes.DASHBOARD_EDUCATION_COURSE,
