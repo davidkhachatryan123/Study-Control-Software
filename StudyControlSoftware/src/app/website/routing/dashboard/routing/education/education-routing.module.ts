@@ -10,14 +10,14 @@ const routes: Routes = [
   {
     path: '',
     pathMatch: 'prefix',
-    redirectTo: appRoutes.DASHBOARD_EDUCATION_COURSE
-  },
-  {
-    path: appRoutes.DASHBOARD_EDUCATION_COURSE,
-    component: TestComponent
+    redirectTo: appRoutes.DASHBOARD_EDUCATION_FACULTY
   },
   {
     path: appRoutes.DASHBOARD_EDUCATION_FACULTY,
+    component: TestComponent
+  },
+  {
+    path: appRoutes.DASHBOARD_EDUCATION_COURSE,
     component: TestComponent
   }
 ];

@@ -5,8 +5,8 @@ export enum appRoutes {
   DASHBOARD = 'dashboard',
 
   DASHBOARD_EDUCATION = 'education',
-  DASHBOARD_EDUCATION_COURSE = 'course',
   DASHBOARD_EDUCATION_FACULTY = 'faculty',
+  DASHBOARD_EDUCATION_COURSE = 'course',
 
   DASHBOARD_USERS = 'users',
   DASHBOARD_USERS_LECTURERS = 'lecturers',
@@ -16,8 +16,8 @@ export enum appRoutes {
 
   AUTH_LOGIN_FULL = '/auth/login',
 
-  DASHBOARD_EDUCATION_COURSE_FULL = '/dashboard/education/course',
   DASHBOARD_EDUCATION_FACULTY_FULL = '/dashboard/education/faculty',
+  DASHBOARD_EDUCATION_COURSE_FULL = '/dashboard/education/course',
 
   DASHBOARD_USERS_LECTURERS_FULL = '/dashboard/users/lecturers',
   DASHBOARD_USERS_STUDENTS_FULL = '/dashboard/users/students',
