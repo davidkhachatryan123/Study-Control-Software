@@ -10,6 +10,9 @@ import { DeleteDialogComponent } from 'src/app/website/routing/dashboard/dialogs
 
 import { AdminGuard } from './guards';
 
+
+import { TestComponent } from './test/test.component';
+
 @NgModule({
   imports: [
     DashboardRoutingModule,
@@ -19,6 +22,7 @@ import { AdminGuard } from './guards';
   ],
   declarations: [
     DeleteDialogComponent,
+    TestComponent
   ],
   providers: [
     AdminGuard
