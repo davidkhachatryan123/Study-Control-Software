@@ -12,7 +12,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { AuthRoutingModule } from './auth-routing.module';
 import { SharedModule } from '../../shared/shared.module';
 
-import { RegisterComponent, LoginComponent, UserComponent, TwoFAComponent } from './components';
+import { LoginComponent, UserComponent, TwoFAComponent } from './components';
 
 import { AuthService } from './services/auth.service';
 import { ValidationService } from './services/validation.service';
@@ -35,7 +35,6 @@ import { AuthGuard } from './guards';
   ],
   declarations: [
     LoginComponent,
-    RegisterComponent,
     UserComponent,
     TwoFAComponent
   ],
