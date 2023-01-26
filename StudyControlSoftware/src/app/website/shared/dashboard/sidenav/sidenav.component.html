@@ -1,9 +1,35 @@
 <mat-list>
-  <!--<mat-divider></mat-divider>-->
 
-                       <!--*ngIf="appUser.role == roles.admin"-->
-  <mat-expansion-panel 
-                       [expanded]="route === routers.DASHBOARD_USERS_ADMINS
+  <mat-expansion-panel [expanded]="route === routers.DASHBOARD_EDUCATION_FACULTY
+                                   || route === routers.DASHBOARD_EDUCATION_COURSE">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <mat-icon color="primary">business</mat-icon>Education
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <mat-list-item [routerLink]="[routers.DASHBOARD_EDUCATION_FACULTY]" routerLinkActive="active">
+      <span matListItemIcon>
+        <mat-icon color="primary">meeting_room</mat-icon>
+      </span>
+      <span matListItemTitle>Faculties</span>
+      <span matListItemLine>Manage faculties</span>
+    </mat-list-item>
+
+    <mat-list-item [routerLink]="[routers.DASHBOARD_EDUCATION_COURSE]" routerLinkActive="active">
+      <span matListItemIcon>
+        <mat-icon color="primary">school</mat-icon>
+      </span>
+      <span matListItemTitle>Courses</span>
+      <span matListItemLine>Manage courses</span>
+    </mat-list-item>
+
+  </mat-expansion-panel>
+
+  <mat-divider></mat-divider>
+
+  <!--*ngIf="appUser.role == roles.admin"-->
+  <mat-expansion-panel [expanded]="route === routers.DASHBOARD_USERS_ADMINS
                                    || route === routers.DASHBOARD_USERS_APP">
     <mat-expansion-panel-header>
       <mat-panel-title>
@@ -28,4 +54,5 @@
     </mat-list-item>
 
   </mat-expansion-panel>
+
 </mat-list>
