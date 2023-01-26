@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { AuthService } from 'src/app/website/routing/auth/services';
 
-import { routes } from '../../../consts';
+import { appRoutes } from 'src/app/website/consts';
 
 @Component({
   selector: 'app-dashboard-toolbar',
@@ -15,7 +15,7 @@ export class ToolBarComponent implements OnInit {
   @Input() isMenuOpened: boolean = true;
   @Output() isShowSidebar = new EventEmitter<boolean>();
 
-  private routers: typeof routes = routes;
+  private routers: typeof appRoutes = appRoutes;
 
   constructor(
     private authService: AuthService,

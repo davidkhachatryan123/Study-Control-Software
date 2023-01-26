@@ -6,7 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from '../../../../services/auth.service';
 import { ResponseModel } from 'src/app/website/models';
 import { TwoFA } from '../../../../models';
-import { routes } from 'src/app/website/consts';
+import { appRoutes } from 'src/app/website/consts';
 
 @Component({
   selector: 'login-2fa',
@@ -16,7 +16,7 @@ import { routes } from 'src/app/website/consts';
 export class TwoFAComponent {
   @Output() twoFAForm: FormGroup;
 
-  private routers: typeof routes = routes;
+  private routers: typeof appRoutes = appRoutes;
 
   constructor(
     private authService: AuthService,

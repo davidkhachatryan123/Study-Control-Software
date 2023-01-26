@@ -3,11 +3,11 @@ import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from
 import { Observable, map } from 'rxjs';
 
 import { AuthService } from '../services';
-import { routes } from '../../../consts';
+import { appRoutes } from 'src/app/website/consts';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  private routers: typeof routes = routes;
+  private routers: typeof appRoutes = appRoutes;
 
   constructor(
     private router: Router,

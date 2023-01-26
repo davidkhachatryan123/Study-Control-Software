@@ -1,19 +1,22 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { AdminGuard } from './guards';
+import { appRoutes } from 'src/app/website/consts';
 
 const routes: Routes = [
   {
     path: '',
-    pathMatch: 'full',
-    redirectTo: 'users'
+    pathMatch: 'prefix',
+    redirectTo: appRoutes.DASHBOARD_EDUCATION
   },
   {
-    path: 'users',
-    canActivate: [AdminGuard],
-    loadChildren: () => import('./pages/users/users.module').then(module => module.UsersModule)
-  }
+    path: appRoutes.DASHBOARD_EDUCATION,
+    loadChildren: () => import('./routing/education/education.module').then(module => module.EducationModule)
+  },
+  {
+    path: appRoutes.DASHBOARD_USERS,
+    loadChildren: () => import('./routing/users/users.module').then(module => module.UsersModule)
+  },
 ];
 
 @NgModule({

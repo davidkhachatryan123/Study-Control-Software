@@ -5,11 +5,11 @@ import { Observable, map } from 'rxjs';
 import { AuthService } from 'src/app/website/routing/auth/services';
 import { roles } from 'src/app/website/routing/auth/models';
 
-import { routes } from 'src/app/website/consts';
+import { appRoutes } from 'src/app/website/consts';
 
 @Injectable()
 export class AdminGuard implements CanActivate {
-  private routers: typeof routes = routes;
+  private routers: typeof appRoutes = appRoutes;
 
   constructor(
     private router: Router,

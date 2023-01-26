@@ -4,7 +4,7 @@ import { AppUser } from 'src/app/website/routing/auth/models';
 import { Observable } from 'rxjs';
 
 import { AuthService } from 'src/app/website/routing/auth/services';
-import { routes } from '../../../../consts';
+import { appRoutes } from 'src/app/website/consts';
 
 @Component({
   selector: 'app-dashboard-toolbar-user',
@@ -13,7 +13,7 @@ import { routes } from '../../../../consts';
 })
 
 export class UserComponent implements OnInit {
-  public routers: typeof routes = routes;
+  public routers: typeof appRoutes = appRoutes;
   public user: AppUser | undefined = new AppUser('', '', '', '');
 
   constructor(
@@ -27,6 +27,6 @@ export class UserComponent implements OnInit {
 
   signOut() {
     //this.authService.signOut().subscribe();
-    this.router.navigate([this.routers.LOGIN]);
+    this.router.navigate([this.routers.AUTH]);
   }
 }

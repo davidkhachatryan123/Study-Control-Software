@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/website/routing/auth/services';
 import { AppUser } from 'src/app/website/routing/auth/models';
 
-import { routes } from '../../../consts';
+import { appRoutes } from 'src/app/website/consts';
 import { roles } from 'src/app/website/routing/auth/models';
 
 @Component({
@@ -14,7 +14,7 @@ import { roles } from 'src/app/website/routing/auth/models';
 })
 
 export class SidenavComponent implements OnInit {
-  routers: typeof routes = routes;
+  routers: typeof appRoutes = appRoutes;
   route: string;
 
   appUser: AppUser = new AppUser('', '', '', '');

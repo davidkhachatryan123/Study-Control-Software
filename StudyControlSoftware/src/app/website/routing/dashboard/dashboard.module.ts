@@ -6,9 +6,6 @@ import { SharedModule } from '../../shared/shared.module';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 
-import { LanguageService } from './services';
-import { UsersManagmentService } from './pages/users/services';
-
 import { DeleteDialogComponent } from 'src/app/website/routing/dashboard/dialogs';
 
 import { AdminGuard } from './guards';
@@ -24,8 +21,6 @@ import { AdminGuard } from './guards';
     DeleteDialogComponent,
   ],
   providers: [
-    LanguageService,
-    UsersManagmentService,
     AdminGuard
   ]
 })
