@@ -7,10 +7,13 @@ const routes: Routes = [
   {
     path: '',
     pathMatch: 'prefix',
-    redirectTo: appRoutes.DASHBOARD_USERS_APP
+    redirectTo: appRoutes.DASHBOARD_USERS_LECTURERS
   },
   {
-    path: appRoutes.DASHBOARD_USERS_APP,
+    path: appRoutes.DASHBOARD_USERS_LECTURERS,
+  },
+  {
+    path: appRoutes.DASHBOARD_USERS_STUDENTS,
   },
   {
     path: appRoutes.DASHBOARD_USERS_ADMINS,

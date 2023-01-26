@@ -1,22 +1,14 @@
 <mat-list>
 
-  <mat-expansion-panel [expanded]="route === routers.DASHBOARD_EDUCATION_FACULTY
-                                   || route === routers.DASHBOARD_EDUCATION_COURSE">
+  <mat-expansion-panel [expanded]="route === routers.DASHBOARD_EDUCATION_COURSE_FULL
+                                || route === routers.DASHBOARD_EDUCATION_FACULTY_FULL">
     <mat-expansion-panel-header>
       <mat-panel-title>
         <mat-icon color="primary">business</mat-icon>Education
       </mat-panel-title>
     </mat-expansion-panel-header>
 
-    <mat-list-item [routerLink]="[routers.DASHBOARD_EDUCATION_FACULTY]" routerLinkActive="active">
-      <span matListItemIcon>
-        <mat-icon color="primary">meeting_room</mat-icon>
-      </span>
-      <span matListItemTitle>Faculties</span>
-      <span matListItemLine>Manage faculties</span>
-    </mat-list-item>
-
-    <mat-list-item [routerLink]="[routers.DASHBOARD_EDUCATION_COURSE]" routerLinkActive="active">
+    <mat-list-item [routerLink]="[routers.DASHBOARD_EDUCATION_COURSE_FULL]" routerLinkActive="active">
       <span matListItemIcon>
         <mat-icon color="primary">school</mat-icon>
       </span>
@@ -24,28 +16,45 @@
       <span matListItemLine>Manage courses</span>
     </mat-list-item>
 
+    <mat-list-item [routerLink]="[routers.DASHBOARD_EDUCATION_FACULTY_FULL]" routerLinkActive="active">
+      <span matListItemIcon>
+        <mat-icon color="primary">meeting_room</mat-icon>
+      </span>
+      <span matListItemTitle>Faculties</span>
+      <span matListItemLine>Manage faculties</span>
+    </mat-list-item>
+
   </mat-expansion-panel>
 
   <mat-divider></mat-divider>
 
   <!--*ngIf="appUser.role == roles.admin"-->
-  <mat-expansion-panel [expanded]="route === routers.DASHBOARD_USERS_ADMINS
-                                   || route === routers.DASHBOARD_USERS_APP">
+  <mat-expansion-panel [expanded]="route === routers.DASHBOARD_USERS_LECTURERS_FULL
+                                || route === routers.DASHBOARD_USERS_STUDENTS_FULL
+                                || route === routers.DASHBOARD_USERS_ADMINS_FULL">
     <mat-expansion-panel-header>
       <mat-panel-title>
         <mat-icon color="primary">supervised_user_circle</mat-icon>Users
       </mat-panel-title>
     </mat-expansion-panel-header>
 
-    <mat-list-item [routerLink]="[routers.DASHBOARD_USERS_APP]" routerLinkActive="active">
+    <mat-list-item [routerLink]="[routers.DASHBOARD_USERS_LECTURERS_FULL]" routerLinkActive="active">
       <span matListItemIcon>
         <mat-icon color="primary">account_box</mat-icon>
       </span>
-      <span matListItemTitle>Application</span>
-      <span matListItemLine>Manage application users</span>
+      <span matListItemTitle>Lecturers</span>
+      <span matListItemLine>Manage lecturers</span>
     </mat-list-item>
 
-    <mat-list-item [routerLink]="[routers.DASHBOARD_USERS_ADMINS]" routerLinkActive="active">
+    <mat-list-item [routerLink]="[routers.DASHBOARD_USERS_STUDENTS_FULL]" routerLinkActive="active">
+      <span matListItemIcon>
+        <mat-icon color="primary">account_box</mat-icon>
+      </span>
+      <span matListItemTitle>Students</span>
+      <span matListItemLine>Manage students</span>
+    </mat-list-item>
+
+    <mat-list-item [routerLink]="[routers.DASHBOARD_USERS_ADMINS_FULL]" routerLinkActive="active">
       <span matListItemIcon>
         <mat-icon color="primary">verified_user</mat-icon>
       </span>
