@@ -1,0 +1,13 @@
+.mat-mdc-list-item {
+  height: 70px;
+}
+
+.add-new-course:hover {
+  background: whitesmoke;
+
+  cursor: pointer;
+}
+
+.add-new-course:active {
+  background: #efefef;
+}

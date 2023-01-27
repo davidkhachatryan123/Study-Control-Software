@@ -1,0 +1,56 @@
+<mat-card class="card">
+  <mat-card-header>
+    <mat-card-title>
+      Courses
+    </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+                     <!--[dataSource]="data"-->
+    <table mat-table  matSort matSortActive="name" matSortDirection="asc" matSortDisableClear>
+
+      <!-- Id Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+      </ng-container>
+  
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Course Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+
+      <!-- Description Column -->
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Course Description </th>
+        <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+      </ng-container>
+  
+       <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let element">
+          <div *ngIf="element.username != appUser.userName" class="actions-wrapper">
+
+            <button mat-flat-button color="accent" class="action-btn">
+              Edit
+            </button>
+            <button mat-flat-button color="warn" class="action-btn">Delete</button>
+
+          </div>
+        </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+                   <!--[length]="resultsLength"-->
+    <mat-paginator 
+                   [pageSizeOptions]="[5, 10, 20]"
+                   showFirstLastButtons
+                   aria-label="Select page of periodic elements">
+    </mat-paginator>
+
+  </mat-card-content>
+</mat-card>

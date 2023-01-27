@@ -1,23 +1,25 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatRadioModule } from '@angular/material/radio';
+import { MatListModule } from '@angular/material/list';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { SharedModule } from 'src/app/website/shared/shared.module';
 
 import { FacultyComponent } from './faculty.component';
 import { FaculityCardComponent } from './components/faculty-card/faculty-card.component';
+import { AddCourseListComponent } from './components/add-course-list/add-course-list.component';
+import { NewDialogComponent } from './dialogs/new/new.component';
 
 const routes: Routes = [
   {
@@ -30,15 +32,25 @@ const routes: Routes = [
   imports: [
     SharedModule,
     RouterModule.forChild(routes),
+    FormsModule,
+    ReactiveFormsModule,
+    CommonModule,
     MatCardModule,
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
     MatButtonModule,
+    MatIconModule,
+    MatListModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDialogModule,
   ],
   declarations: [
     FacultyComponent,
-    FaculityCardComponent
+    FaculityCardComponent,
+    AddCourseListComponent,
+    NewDialogComponent
   ]
 })
 export class FacultyModule { }
