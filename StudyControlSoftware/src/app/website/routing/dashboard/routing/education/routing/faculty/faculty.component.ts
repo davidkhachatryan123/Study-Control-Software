@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-dashboard-faculty',
   templateUrl: 'faculty.component.html'
 })
-export class FacultyComponent implements OnInit {
-  constructor() { }
-
-  ngOnInit() { }
+export class FacultyComponent {
+  onNew() {
+    console.log("New faculity create dialog!");
+  }
 }

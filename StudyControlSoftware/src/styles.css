@@ -17,3 +17,18 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+.card {
+  margin: 10px;
+}
+
+.actions-wrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.action-btn {
+  margin: 0 5px;
+}

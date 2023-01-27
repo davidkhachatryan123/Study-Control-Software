@@ -13,7 +13,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatBadgeModule } from '@angular/material/badge';
 
 import { AuthLayoutComponent } from './auth/auth-layout.component';
-import { DashboardLayoutComponent, ToolBarComponent, UserComponent, SidenavComponent } from './dashboard';
+import { DashboardLayoutComponent, ToolBarComponent, UserComponent, SidenavComponent, ActionsNewComponent } from './dashboard';
 
 @NgModule({
   declarations: [
@@ -21,7 +21,8 @@ import { DashboardLayoutComponent, ToolBarComponent, UserComponent, SidenavCompo
     DashboardLayoutComponent,
     ToolBarComponent,
     UserComponent,
-    SidenavComponent
+    SidenavComponent,
+    ActionsNewComponent
   ],
   imports: [
     CommonModule,
@@ -38,7 +39,8 @@ import { DashboardLayoutComponent, ToolBarComponent, UserComponent, SidenavCompo
   ],
   exports: [
     AuthLayoutComponent,
-    DashboardLayoutComponent
+    DashboardLayoutComponent,
+    ActionsNewComponent
   ],
 })
 export class SharedModule { }
