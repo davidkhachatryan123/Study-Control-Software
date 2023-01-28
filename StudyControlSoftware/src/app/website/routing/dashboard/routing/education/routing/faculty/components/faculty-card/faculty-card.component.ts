@@ -17,6 +17,7 @@ import { Faculty } from '../../../../models';
 })
 export class FaculityCardComponent {
   @Output() onEdit = new EventEmitter<Faculty>;
+  @Output() onDelete = new EventEmitter<Faculty>;
 
   columnsToDisplay: string[] = [ 'name', 'actions' ];
   columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
@@ -31,5 +32,9 @@ export class FaculityCardComponent {
 
   onEditEvent(element: Faculty) {
     this.onEdit.emit(element);
+  }
+
+  onDeleteEvent(element: Faculty) {
+    this.onDelete.emit(element);
   }
 }

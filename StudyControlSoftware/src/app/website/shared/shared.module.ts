@@ -11,9 +11,13 @@ import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatBadgeModule } from '@angular/material/badge';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { AuthLayoutComponent } from './auth/auth-layout.component';
 import { DashboardLayoutComponent, ToolBarComponent, UserComponent, SidenavComponent, ActionsNewComponent } from './dashboard';
+import { DeleteDialogComponent } from './dashboard/dialogs';
 
 @NgModule({
   declarations: [
@@ -22,7 +26,8 @@ import { DashboardLayoutComponent, ToolBarComponent, UserComponent, SidenavCompo
     ToolBarComponent,
     UserComponent,
     SidenavComponent,
-    ActionsNewComponent
+    ActionsNewComponent,
+    DeleteDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -36,11 +41,15 @@ import { DashboardLayoutComponent, ToolBarComponent, UserComponent, SidenavCompo
     MatExpansionModule,
     MatMenuModule,
     MatBadgeModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDialogModule,
   ],
   exports: [
     AuthLayoutComponent,
     DashboardLayoutComponent,
-    ActionsNewComponent
+    ActionsNewComponent,
+    DeleteDialogComponent
   ],
 })
 export class SharedModule { }

@@ -12,13 +12,17 @@
         <mat-icon matListItemIcon>school</mat-icon>
         <div matListItemTitle>{{course.name}}</div>
         
+        <button mat-icon-button matListItemMeta
+                (click)="deleteCourse(course)">
+          <mat-icon color="warn">close</mat-icon>
+        </button>
       </mat-list-item>
     </mat-list>
   
     <mat-divider></mat-divider>
   </div>
 
-  <mat-list-item class="add-new-course" role="course">
+  <mat-list-item class="add-new-course" role="course" (click)="addCourse()">
     <mat-icon matListItemIcon>add</mat-icon>
     <div matListItemTitle>Add new Course</div>
   </mat-list-item>

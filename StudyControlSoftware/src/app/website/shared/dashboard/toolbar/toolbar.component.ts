@@ -7,8 +7,7 @@ import { appRoutes } from 'src/app/website/consts';
 
 @Component({
   selector: 'app-dashboard-toolbar',
-  templateUrl: 'toolbar.component.html',
-  styleUrls: [ 'toolbar.component.css' ]
+  templateUrl: 'toolbar.component.html'
 })
 
 export class ToolBarComponent implements OnInit {

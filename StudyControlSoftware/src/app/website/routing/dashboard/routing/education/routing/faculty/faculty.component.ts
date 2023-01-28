@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 import { NewDialogComponent } from './dialogs/new/new.component';
+import { DeleteDialogComponent } from 'src/app/website/shared/dashboard/dialogs';
+
 import { Faculty } from '../../models';
 
 @Component({
@@ -12,7 +14,7 @@ export class FacultyComponent {
   private newDialogRef: MatDialogRef<NewDialogComponent>;
 
   constructor(
-    public dialog: MatDialog,
+    public dialog: MatDialog
   ) { }
 
   onNew() {
@@ -77,6 +79,33 @@ export class FacultyComponent {
         this.createDialogRef.close();
         this.getUsers();
       }
+    });*/
+  }
+
+  onDelete($event: any) {
+    this.openDeleteDialog($event);
+  }
+  openDeleteDialog(faculty: Faculty) {
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
+      width: '250px',
+      data: { value: faculty.name, isDelete: 'false' }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result)
+        this.delete(faculty.id);
+    });
+  }
+  delete(id: number) {
+    console.log(id);
+    /*this.usersManagmentService.deleteAdminUser(id)
+    .subscribe((data: ResponseModel) => {
+      this._snackBar.open(data.message, 'Ok', {
+        duration: 10000,
+      });
+
+      if(data.statusCode == '200')
+        this.getUsers();
     });*/
   }
 }
