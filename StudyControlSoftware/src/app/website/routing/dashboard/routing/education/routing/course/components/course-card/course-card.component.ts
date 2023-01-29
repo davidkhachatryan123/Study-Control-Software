@@ -1,14 +1,36 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
+
+import { Course } from 'src/app/website/routing/dashboard/routing/education/models';
+import { tableDetailExpand } from 'src/app/website/shared/dashboard/animations';
 
 @Component({
   selector: 'app-dashboard-course-card',
-  templateUrl: 'course-card.component.html'
+  templateUrl: 'course-card.component.html',
+  styleUrls: [ 'course-card.component.css' ],
+  animations: [
+    tableDetailExpand
+  ],
 })
+export class CourseCardComponent {
+  @Output() onEdit = new EventEmitter<Course>;
+  @Output() onDelete = new EventEmitter<Course>;
 
-export class CourseCardComponent implements OnInit {
-  displayedColumns: string[] = [ 'name', 'description', 'actions' ];
+  columnsToDisplay: string[] = [ 'name', 'description', 'actions' ];
+  columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
 
-  constructor() { }
+  expandedElement: Course | null;
 
-  ngOnInit() { }
+  data: Course[] = [
+    new Course(1, 'C# ծրագրավորում', 'Սովորում ենք գրել ծրագրեր օգտագործելով C# ծրագրավորման լեզուն'),
+    new Course(2, 'C++ ծրագրավորում', 'Սովորում ենք գրել ծրագրեր օգտագործելով C++ ծրագրավորման լեզուն'),
+    new Course(3, 'ASP.NET Core', 'Սովորում ենք գրել ծրագրեր օգտագործելով ASP.NET Core framework-ը')
+  ];
+
+  onEditEvent(element: Course) {
+    this.onEdit.emit(element);
+  }
+
+  onDeleteEvent(element: Course) {
+    this.onDelete.emit(element);
+  }
 }

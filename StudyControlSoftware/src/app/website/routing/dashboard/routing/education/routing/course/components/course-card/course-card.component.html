@@ -6,8 +6,9 @@
   </mat-card-header>
 
   <mat-card-content>
-                     <!--[dataSource]="data"-->
-    <table mat-table  matSort matSortActive="name" matSortDirection="asc" matSortDisableClear>
+
+    <table mat-table [dataSource]="data" multiTemplateDataRows
+           matSort matSortActive="name" matSortDirection="asc" matSortDisableClear>
 
       <!-- Id Column -->
       <ng-container matColumnDef="id">
@@ -31,19 +32,66 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef> Actions </th>
         <td mat-cell *matCellDef="let element">
-          <div *ngIf="element.username != appUser.userName" class="actions-wrapper">
 
-            <button mat-flat-button color="accent" class="action-btn">
-              Edit
+          <button mat-flat-button
+                  color="accent"
+                  class="action-btn"
+                  (click)="onEditEvent(element)">
+            Edit
+          </button>
+          <button mat-flat-button
+                  color="warn"
+                  class="action-btn"
+                  (click)="onDeleteEvent(element)">
+            Delete
+          </button>
+
+        </td>
+      </ng-container>
+
+      <!-- Expand Column -->
+      <ng-container matColumnDef="expand" stickyEnd>
+        <th mat-header-cell *matHeaderCellDef aria-label="row actions">Add lecturer</th>
+        <td mat-cell *matCellDef="let element">
+
+          <div class="expand-row-container">
+            <button mat-icon-button aria-label="expand row"
+                    (click)="(expandedElement = expandedElement === element ? null : element);
+                    $event.stopPropagation()">
+
+              <mat-icon *ngIf="expandedElement !== element">keyboard_arrow_down</mat-icon>
+              <mat-icon *ngIf="expandedElement === element">keyboard_arrow_up</mat-icon>
             </button>
-            <button mat-flat-button color="warn" class="action-btn">Delete</button>
+          </div>
+
+        </td>
+      </ng-container>
+
+
+      <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+      <ng-container matColumnDef="expandedDetail">
+        <td mat-cell *matCellDef="let element"
+            [attr.colspan]="columnsToDisplayWithExpand.length"
+            [class.row-is-expanded]="expandedElement === element">
+          <div [className]="" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+
+            <app-dashboard-add-lecturer [courseIndex]="element.id">
+
+            </app-dashboard-add-lecturer>
 
           </div>
         </td>
       </ng-container>
-  
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+
+      <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
+
+      <tr mat-row *matRowDef="let element; columns: columnsToDisplayWithExpand;"
+          (click)="expandedElement = expandedElement === element ? null : element"
+          class="element-row">
+      </tr>
+      <tr mat-row *matRowDef="let element; columns: ['expandedDetail']"
+          class="expanded-row"></tr>
     </table>
                    <!--[length]="resultsLength"-->
     <mat-paginator 

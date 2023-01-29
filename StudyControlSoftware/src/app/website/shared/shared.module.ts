@@ -49,7 +49,8 @@ import { DeleteDialogComponent } from './dashboard/dialogs';
     AuthLayoutComponent,
     DashboardLayoutComponent,
     ActionsNewComponent,
-    DeleteDialogComponent
+    DeleteDialogComponent,
+    
   ],
 })
 export class SharedModule { }

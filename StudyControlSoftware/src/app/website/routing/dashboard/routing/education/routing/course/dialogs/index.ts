@@ -1,0 +1,1 @@
+export * from './set-lecturer/set-lecturer.component';

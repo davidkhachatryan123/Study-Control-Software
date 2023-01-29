@@ -7,8 +7,7 @@ import { AddCourseDialogComponent } from '../../dialogs';
 
 @Component({
   selector: 'app-dashboard-add-course-list',
-  templateUrl: 'add-course-list.component.html',
-  styleUrls: [ 'add-course-list.component.css' ]
+  templateUrl: 'add-course-list.component.html'
 })
 export class AddCourseListComponent implements AfterContentInit {
   @Input() facultyIndex: number;

@@ -36,3 +36,26 @@ body {
 .spacer {
   flex: 1 1 auto;
 }
+
+.mat-column-actions {
+  min-width: 200px;
+}
+
+.mat-column-expand {
+  width: 60px;
+}
+
+
+.mat-mdc-list-item {
+  height: 70px;
+}
+
+.add-list-item:hover {
+  background: whitesmoke;
+
+  cursor: pointer !important;
+}
+
+.add-list-item:active {
+  background: #efefef;
+}
