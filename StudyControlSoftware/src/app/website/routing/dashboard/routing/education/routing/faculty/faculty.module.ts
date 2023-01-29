@@ -13,13 +13,15 @@ import { MatListModule } from '@angular/material/list';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { SharedModule } from 'src/app/website/shared/shared.module';
 
 import { FacultyComponent } from './faculty.component';
 import { FaculityCardComponent } from './components/faculty-card/faculty-card.component';
 import { AddCourseListComponent } from './components/add-course-list/add-course-list.component';
-import { NewDialogComponent } from './dialogs/new/new.component';
+import { NewDialogComponent, AddCourseDialogComponent } from './dialogs';
 
 const routes: Routes = [
   {
@@ -45,12 +47,15 @@ const routes: Routes = [
     MatFormFieldModule,
     MatInputModule,
     MatDialogModule,
+    MatChipsModule,
+    MatAutocompleteModule,
   ],
   declarations: [
     FacultyComponent,
     FaculityCardComponent,
     AddCourseListComponent,
-    NewDialogComponent
+    NewDialogComponent,
+    AddCourseDialogComponent
   ]
 })
 export class FacultyModule { }

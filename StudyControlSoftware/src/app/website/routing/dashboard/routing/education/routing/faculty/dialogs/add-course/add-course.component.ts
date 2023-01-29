@@ -1,0 +1,67 @@
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { MatChipInputEvent } from '@angular/material/chips';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+
+import { Course } from '../../../../models';
+
+@Component({
+  selector: 'app-dashboard-faculty-new',
+  templateUrl: 'add-course.component.html'
+})
+export class AddCourseDialogComponent {
+  @Output() onSubmit = new EventEmitter<Course[]>();
+
+  courseCtrl = new FormControl('');
+  filteredCourses: Observable<string[]>;
+  courses: Course[] = [];
+
+  // Get this values in ngOnInit() function
+  allCourses: Course[] = [
+    new Course(1, 'C# ծրագրավորում', 'Սովորում ենք գրել ծրագրեր օգտագործելով C# ծրագրավորման լեզուն'),
+    new Course(2, 'C++ ծրագրավորում', 'Սովորում ենք գրել ծրագրեր օգտագործելով C++ ծրագրավորման լեզուն'),
+    new Course(3, 'ASP.NET Core', 'Սովորում ենք գրել ծրագրեր օգտագործելով ASP.NET Core framework-ը')
+  ];
+
+  @ViewChild('courseInput') courseInput: ElementRef<HTMLInputElement>;
+
+  constructor() {
+    this.filteredCourses = this.courseCtrl.valueChanges.pipe(
+      startWith(null),
+      map((course: string | null) =>
+      (course ? this._filter(course) : this.allCourses.map(data => data.name).slice())),
+    );
+  }
+
+  remove(course: Course): void {
+    const index = this.courses.indexOf(course);
+
+    if (index >= 0) {
+      this.courses.splice(index, 1);
+    }
+  }
+
+  selected(event: MatAutocompleteSelectedEvent): void {
+    this.courses.push(new Course(
+      this.allCourses.find(course => course.name == event.option.value).id,
+      event.option.value,
+      ''));
+
+    this.courseInput.nativeElement.value = '';
+    this.courseCtrl.setValue(null);
+  }
+
+  onSubmitEvent() {
+    this.onSubmit.emit(this.courses);
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.allCourses.map(course => course.name)
+    .filter(course => course.toLowerCase().includes(filterValue));
+  }
+}
