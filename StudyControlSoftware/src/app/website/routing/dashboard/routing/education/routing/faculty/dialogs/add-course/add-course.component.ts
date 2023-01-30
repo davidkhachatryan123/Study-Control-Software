@@ -1,8 +1,6 @@
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { MatChipInputEvent } from '@angular/material/chips';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
@@ -32,7 +30,7 @@ export class AddCourseDialogComponent {
     this.filteredCourses = this.courseCtrl.valueChanges.pipe(
       startWith(null),
       map((course: string | null) =>
-      (course ? this._filter(course) : this.allCourses.map(data => data.name).slice())),
+      (course ? this._filter(course) : this.allCourses.map(data => data.title).slice())),
     );
   }
 
@@ -46,7 +44,7 @@ export class AddCourseDialogComponent {
 
   selected(event: MatAutocompleteSelectedEvent): void {
     this.courses.push(new Course(
-      this.allCourses.find(course => course.name == event.option.value).id,
+      this.allCourses.find(course => course.title == event.option.value).id,
       event.option.value,
       ''));
 
@@ -61,7 +59,7 @@ export class AddCourseDialogComponent {
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
 
-    return this.allCourses.map(course => course.name)
+    return this.allCourses.map(course => course.title)
     .filter(course => course.toLowerCase().includes(filterValue));
   }
 }

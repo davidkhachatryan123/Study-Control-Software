@@ -2,18 +2,18 @@ import { Component, Input, Output, EventEmitter, Inject } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-import { Faculty } from '../../../../models';
+import { Course } from '../../../../models';
 
 @Component({
-  selector: 'app-dashboard-faculty-new',
+  selector: 'app-dashboard-course-new',
   templateUrl: 'new.component.html',
   styleUrls: [ 'new.component.css' ]
 })
 export class NewDialogComponent {
-  @Input() title: string;
+  @Input() dialogTitle: string;
   @Input() submitBtnText: string;
 
-  @Output() onSubmit = new EventEmitter<Faculty>();
+  @Output() onSubmit = new EventEmitter<Course>();
 
   newFormGroup: FormGroup;
 
@@ -23,17 +23,21 @@ export class NewDialogComponent {
   ) {
 
     this.newFormGroup = new FormGroup({
-      "faculty": new FormControl(data.model.name, [
-        Validators.required, Validators.minLength(1), Validators.maxLength(100)
+      "title": new FormControl(data.model.title, [
+        Validators.required, Validators.minLength(1), Validators.maxLength(64)
+      ]),
+      "description": new FormControl(data.model.description, [
+        Validators.required, Validators.minLength(1), Validators.maxLength(256)
       ])
     });
   }
 
   onSubmitEvent() {
     if(this.newFormGroup.valid) {
-      this.onSubmit.emit(new Faculty(
+      this.onSubmit.emit(new Course(
         this.data.model.id,
-        this.newFormGroup.controls['faculty'].value
+        this.newFormGroup.controls['title'].value,
+        this.newFormGroup.controls['description'].value
       ));
     }
   }

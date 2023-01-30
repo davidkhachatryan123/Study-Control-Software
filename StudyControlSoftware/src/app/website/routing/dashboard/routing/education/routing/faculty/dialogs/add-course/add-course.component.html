@@ -9,7 +9,7 @@
   
       <mat-chip-grid #chipGrid>
         <mat-chip-row *ngFor="let course of courses" (removed)="remove(course)">
-          {{course.name}}
+          {{course.title}}
   
           <button matChipRemove>
             <mat-icon>cancel</mat-icon>

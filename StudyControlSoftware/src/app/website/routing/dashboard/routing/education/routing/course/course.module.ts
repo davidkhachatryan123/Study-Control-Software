@@ -22,6 +22,7 @@ import { CourseComponent } from './course.component';
 import { CourseCardComponent } from './components/course-card/course-card.component';
 import { AddLecturerComponent } from './components/add-lecturer/add-lecturer.component';
 import { SetLecturerDialogComponent } from './dialogs';
+import { NewDialogComponent } from './dialogs/new/new.component';
 
 const routes: Routes = [
   {
@@ -54,7 +55,8 @@ const routes: Routes = [
     CourseComponent,
     CourseCardComponent,
     AddLecturerComponent,
-    SetLecturerDialogComponent
+    SetLecturerDialogComponent,
+    NewDialogComponent
   ]
 })
 export class CourseModule { }

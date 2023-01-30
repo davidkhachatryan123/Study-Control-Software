@@ -59,7 +59,7 @@ export class AddCourseListComponent implements AfterContentInit {
   openDeleteDialog(course: Course) {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       width: '250px',
-      data: { value: course.name, isDelete: 'false' }
+      data: { value: course.title, isDelete: 'false' }
     });
 
     dialogRef.afterClosed().subscribe(result => {

@@ -2,7 +2,8 @@
   <app-dashboard-actions-new (onNew)="onNew()">
   </app-dashboard-actions-new>
 
-  <app-dashboard-course-card>
+  <app-dashboard-course-card (onEdit)="onEdit($event)"
+                             (onDelete)="onDelete($event)">
     
   </app-dashboard-course-card>
 </app-dashboard-layout>

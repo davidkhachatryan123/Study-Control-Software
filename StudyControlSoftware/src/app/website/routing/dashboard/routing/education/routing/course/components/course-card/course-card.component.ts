@@ -15,7 +15,7 @@ export class CourseCardComponent {
   @Output() onEdit = new EventEmitter<Course>;
   @Output() onDelete = new EventEmitter<Course>;
 
-  columnsToDisplay: string[] = [ 'name', 'description', 'actions' ];
+  columnsToDisplay: string[] = [ 'title', 'description', 'actions' ];
   columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
 
   expandedElement: Course | null;

@@ -1,20 +1,41 @@
-<h1 mat-dialog-title>{{title}}</h1>
+<h1 mat-dialog-title>{{dialogTitle}}</h1>
 
 <div mat-dialog-content>
 
   <form #userForm [formGroup]="newFormGroup" novalidate>
     <mat-card-content>
+
       <mat-form-field appearance="outline">
   
-        <mat-label>Faculty name</mat-label>
-        <input matInput
+        <mat-label>Course title</mat-label>
+        <input #title
+               matInput
                type="text"
-               placeholder="Faculty"
-               formControlName="faculty">
+               placeholder="Title"
+               formControlName="title">
         
-        <mat-error>Faculty Name is invalid</mat-error>
+        <mat-error>Course title is invalid</mat-error>
+        <mat-hint align="end">{{title.value.length}} / 64</mat-hint>
 
       </mat-form-field>
+
+      <br><br>
+
+      <mat-form-field appearance="outline">
+  
+        <mat-label>Course decription</mat-label>
+        <textarea #description
+                  matInput
+                  type="text"
+                  placeholder="Decription"
+                  formControlName="description">
+        </textarea>
+        
+        <mat-error>Course decription is invalid</mat-error>
+        <mat-hint align="end">{{description.value.length}} / 256</mat-hint>
+
+      </mat-form-field>
+
     </mat-card-content>
   </form>
 
