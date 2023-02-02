@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { MatCardModule } from '@angular/material/card'
@@ -14,6 +15,8 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { AuthLayoutComponent } from './auth/auth-layout.component';
 import { DashboardLayoutComponent, ToolBarComponent, UserComponent, SidenavComponent, ActionsNewComponent } from './dashboard';
@@ -32,6 +35,8 @@ import { DeleteDialogComponent } from './dashboard/dialogs';
   imports: [
     CommonModule,
     RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
     MatCardModule,
     MatToolbarModule,
     MatSidenavModule,
@@ -44,13 +49,14 @@ import { DeleteDialogComponent } from './dashboard/dialogs';
     MatFormFieldModule,
     MatInputModule,
     MatDialogModule,
+    MatChipsModule,
+    MatAutocompleteModule,
   ],
   exports: [
     AuthLayoutComponent,
     DashboardLayoutComponent,
     ActionsNewComponent,
     DeleteDialogComponent,
-    
   ],
 })
 export class SharedModule { }

@@ -18,15 +18,12 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { SharedModule } from 'src/app/website/shared/shared.module';
 
-import { CourseComponent } from './course.component';
-import { CourseCardComponent } from './components/course-card/course-card.component';
-import { AddLecturerComponent } from './components/add-lecturer/add-lecturer.component';
-import { NewDialogComponent, SetLecturerDialogComponent } from './dialogs';
+import { AdminsComponent } from './admins.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: CourseComponent
+    component: AdminsComponent
   }
 ];
 
@@ -51,11 +48,7 @@ const routes: Routes = [
     MatAutocompleteModule,
   ],
   declarations: [
-    CourseComponent,
-    CourseCardComponent,
-    AddLecturerComponent,
-    SetLecturerDialogComponent,
-    NewDialogComponent
+    AdminsComponent
   ]
 })
-export class CourseModule { }
+export class AdminsModule { }

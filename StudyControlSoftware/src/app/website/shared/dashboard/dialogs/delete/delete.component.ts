@@ -3,7 +3,7 @@ import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-dashboard-user-delete-dialog',
+  selector: 'app-dashboard-delete-dialog',
   templateUrl: 'delete.component.html'
 })
 

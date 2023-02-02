@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { appRoutes } from 'src/app/website/consts';
 
+import { AdminsModule } from './routing/admins/admins.module';
+
 
 import { TestComponent } from '../../test/test.component';
 
@@ -22,7 +24,7 @@ const routes: Routes = [
   },
   {
     path: appRoutes.DASHBOARD_USERS_ADMINS,
-    component: TestComponent
+    loadChildren: () => import('./routing/admins/admins.module').then(module => module.AdminsModule)
   }
 ];
 
