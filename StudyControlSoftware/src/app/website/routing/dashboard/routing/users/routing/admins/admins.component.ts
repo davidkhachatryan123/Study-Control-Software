@@ -5,7 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { TableOptions } from 'src/app/website/models';
 import { DeleteDialogComponent } from 'src/app/website/shared/dashboard/dialogs';
 
-import { Admin, NewUser } from '../../models';
+import { Admin } from '../../models';
 import { NewDialogComponent } from './dialogs';
 import { roles } from 'src/app/website/routing/auth/models';
 
@@ -15,8 +15,8 @@ import { roles } from 'src/app/website/routing/auth/models';
 })
 export class AdminsComponent {
   data: Admin[] = [
-    new Admin(1, 'david', 'davidkhachatryan359@gmail.com', true, '+37441214803', roles.admin),
-    new Admin(2, 'hayk', 'haykkhachatryan359@gmail.com', false, '+37494214803', roles.admin)
+    new Admin(1, 'david', '', 'davidkhachatryan359@gmail.com', true, '+37441214803'),
+    new Admin(2, 'hayk', '', 'haykkhachatryan359@gmail.com', false, '+37494214803')
   ];
   resultsLength: number = 0;
 
@@ -53,7 +53,7 @@ export class AdminsComponent {
   openNewDialog() {
     this.createDialogRef = this.dialog.open(NewDialogComponent, {
       width: '500px',
-      data: { user: new Admin(-1, '', '', false, '', roles.admin) }
+      data: { user: new Admin(-1, '', '', '', false, '') }
     });
 
     this.createDialogRef.componentInstance.title = "Create new Admin";
@@ -63,7 +63,7 @@ export class AdminsComponent {
       this.new(data);
     });
   }
-  new(newAdmin: NewUser) {
+  new(newAdmin: Admin) {
     console.log(newAdmin);
 
     /*this.usersManagmentService.createAdminUser(newUser).subscribe(

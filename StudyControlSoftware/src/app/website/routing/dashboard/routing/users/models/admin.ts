@@ -1,10 +1,14 @@
-export class Admin {
+import { UserSkel } from "./user-skel";
+
+export class Admin extends UserSkel {
   constructor(
     public id: number,
     public username: string,
+    public password: string,
     public email: string,
     public emailConfirmed: boolean,
-    public phone: string,
-    public role: string
-  ) { }
+    public phoneNumber: string
+  ) {
+    super(id, username, password, email, emailConfirmed, phoneNumber);
+  }
 }

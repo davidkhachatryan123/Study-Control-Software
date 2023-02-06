@@ -66,15 +66,8 @@ export class AdminsCardComponent implements OnInit, AfterViewInit {
     this.onDelete.emit({id, username});
   }
 
-  onEditEvent(element: any) {
-    this.onEdit.emit(new Admin(
-      element.id,
-      element.username,
-      element.email,
-      element.emailConfirmed,
-      element.phone,
-      element.role
-    ));
+  onEditEvent(element: Admin) {
+    this.onEdit.emit(element);
   }
 
   onConfirmEmailEvent(email: string) {

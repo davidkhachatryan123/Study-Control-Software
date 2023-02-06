@@ -4,7 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { roles } from 'src/app/website/routing/auth/models';
-import { NewUser } from '../../../../models';
+import { Admin } from '../../../../models';
 
 @Component({
   selector: 'app-dashboard-admin-new',
@@ -18,7 +18,7 @@ export class NewDialogComponent {
   @Input() title: string = "";
   @Input() submitBtnText: string = "";
 
-  @Output() onSubmit = new EventEmitter<NewUser>();
+  @Output() onSubmit = new EventEmitter<Admin>();
 
   constructor(
     public dialogRef: MatDialogRef<NewDialogComponent>,
@@ -40,10 +40,7 @@ export class NewDialogComponent {
       "email": new FormControl(data.user.email, [
         Validators.required, Validators.email
       ]),
-      "phoneNumber": new FormControl(data.user.phone),
-      "role": new FormControl(data.user.role, [
-        Validators.required
-      ])
+      "phoneNumber": new FormControl(data.user.phoneNumber)
     }, /*{
       validators: this.validation.MatchPassword("password", "confirmPassword")
     }*/);
@@ -51,13 +48,13 @@ export class NewDialogComponent {
 
   onSubmitEvent() {
     if(this.newUserForm.valid) {
-      this.onSubmit.emit(new NewUser(
+      this.onSubmit.emit(new Admin(
         this.data.user.id,
         this.newUserForm.controls['username'].value,
         this.newUserForm.controls['password'].value,
         this.newUserForm.controls['email'].value,
-        this.newUserForm.controls['phoneNumber'].value,
-        this.newUserForm.controls['role'].value
+        false,
+        this.newUserForm.controls['phoneNumber'].value
       ));
     }
   }
