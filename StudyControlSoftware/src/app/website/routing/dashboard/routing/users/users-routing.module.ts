@@ -3,8 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { appRoutes } from 'src/app/website/consts';
 
-import { AdminsModule } from './routing/admins/admins.module';
-
 
 import { TestComponent } from '../../test/test.component';
 
@@ -16,7 +14,7 @@ const routes: Routes = [
   },
   {
     path: appRoutes.DASHBOARD_USERS_LECTURERS,
-    component: TestComponent
+    loadChildren: () => import('./routing/lecturers/lecturers.module').then(module => module.LecturersModule)
   },
   {
     path: appRoutes.DASHBOARD_USERS_STUDENTS,
