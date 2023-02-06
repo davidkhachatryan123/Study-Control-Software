@@ -6,8 +6,7 @@ import { Course } from '../../../../models';
 
 @Component({
   selector: 'app-dashboard-course-new',
-  templateUrl: 'new.component.html',
-  styleUrls: [ 'new.component.css' ]
+  templateUrl: 'new.component.html'
 })
 export class NewDialogComponent {
   @Input() dialogTitle: string;

@@ -15,10 +15,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatRadioModule } from '@angular/material/radio';
 
 import { SharedModule } from 'src/app/website/shared/shared.module';
 
 import { AdminsComponent } from './admins.component';
+import { AdminsCardComponent } from './components/admins-card.component';
+import { NewDialogComponent } from './dialogs';
 
 const routes: Routes = [
   {
@@ -46,9 +49,12 @@ const routes: Routes = [
     MatDialogModule,
     MatChipsModule,
     MatAutocompleteModule,
+    MatRadioModule,
   ],
   declarations: [
-    AdminsComponent
+    AdminsComponent,
+    AdminsCardComponent,
+    NewDialogComponent
   ]
 })
 export class AdminsModule { }
