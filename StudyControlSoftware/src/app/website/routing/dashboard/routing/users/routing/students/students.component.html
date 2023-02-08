@@ -1,0 +1,12 @@
+<app-dashboard-layout>
+  <app-dashboard-actions-new (onNew)="onNew()">
+  </app-dashboard-actions-new>
+
+  <app-dashboard-students-card [data]="data"
+                               [resultsLength]="resultsLength"
+                               (onChange)="onChangeUserCard($event)"
+                               (onDelete)="onDelete($event)"
+                               (onEdit)="onEdit($event)"
+                               (onConfirmEmail)="onConfirmEmail($event)">
+  </app-dashboard-students-card>
+</app-dashboard-layout>

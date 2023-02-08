@@ -1,0 +1,31 @@
+<mat-card>
+
+  <mat-card-header>
+    <mat-card-title>Faculty</mat-card-title>
+    <mat-card-subtitle>Manage faculty for current student</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-list>
+
+    <mat-list-item *ngIf="faculty === undefined; else faultyItem"
+                   class="add-list-item" role="lecturer"
+                   (click)="setFaculty()">
+      <mat-icon matListItemIcon>add</mat-icon>
+      <div matListItemTitle>Set Faculty</div>
+    </mat-list-item>
+
+    <ng-template #faultyItem>
+      <mat-list-item role="faculty">
+        <mat-icon matListItemIcon color="primary">account_box</mat-icon>
+        <div matListItemTitle>{{faculty.name}}</div>
+
+        <button mat-icon-button matListItemMeta
+                (click)="removeFaculty()">
+          <mat-icon color="warn">close</mat-icon>
+        </button>
+      </mat-list-item>
+    </ng-template>
+
+  </mat-list>
+
+</mat-card>

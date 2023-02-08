@@ -4,12 +4,13 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { roles } from 'src/app/website/routing/auth/models';
-import { Lecturer } from '../../../../models';
+import { Student } from '../../../../models/student';
 
 @Component({
-  selector: 'app-dashboard-admin-new',
+  selector: 'app-dashboard-student-new',
   templateUrl: 'new.component.html'
 })
+
 export class NewDialogComponent {
   newUserForm: FormGroup;
   roles: typeof roles = roles;
@@ -17,7 +18,7 @@ export class NewDialogComponent {
   @Input() title: string = "";
   @Input() submitBtnText: string = "";
 
-  @Output() onSubmit = new EventEmitter<Lecturer>();
+  @Output() onSubmit = new EventEmitter<Student>();
 
   constructor(
     public dialogRef: MatDialogRef<NewDialogComponent>,
@@ -53,7 +54,7 @@ export class NewDialogComponent {
 
   onSubmitEvent() {
     if(this.newUserForm.valid) {
-      this.onSubmit.emit(new Lecturer(
+      this.onSubmit.emit(new Student(
         this.data.user.id,
         this.newUserForm.controls['surname'].value,
         this.newUserForm.controls['lastname'].value,

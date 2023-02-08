@@ -1,0 +1,48 @@
+<h1 mat-dialog-title>Set Faculty</h1>
+
+<div mat-dialog-content>
+
+  <form>
+    <mat-form-field appearance="fill" style="width: 100%;">
+  
+      <mat-label>Faculty</mat-label>
+  
+      <mat-chip-grid #chipGrid>
+        <mat-chip-row *ngIf="faculty" (removed)="remove()">
+          {{faculty?.name}}
+  
+          <button matChipRemove>
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </mat-chip-row>
+      </mat-chip-grid>
+  
+     <input placeholder="Type faculty name" #facultyInput [formControl]="facultyCtrl"
+        [matChipInputFor]="chipGrid" [matAutocomplete]="auto"/>
+  
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+        <mat-option *ngFor="let facultyOpt of filteredFacultys | async" [value]="facultyOpt.id">
+          {{facultyOpt.name}}
+        </mat-option>
+      </mat-autocomplete>
+  
+    </mat-form-field>
+  </form>
+
+</div>
+
+<div mat-dialog-actions class="actions">
+  <button mat-flat-button
+          mat-dialog-close
+          color="warn">
+          Cancle
+  </button>
+
+  <button mat-flat-button
+          color="primary"
+          (click)="onSubmitEvent()"
+          type="submit"
+          cdkFocusInitial>
+          Add
+  </button>
+</div>

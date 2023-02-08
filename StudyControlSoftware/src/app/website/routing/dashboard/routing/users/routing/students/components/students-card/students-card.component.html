@@ -1,0 +1,129 @@
+<mat-card class="card">
+  <mat-card-header>
+    <mat-card-title>
+      Students
+    </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+
+    <table mat-table [dataSource]="data" multiTemplateDataRows
+           matSort matSortActive="name" matSortDirection="asc" matSortDisableClear>
+
+      <!-- Id Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+      </ng-container>
+  
+      <!-- FullName Column -->
+      <ng-container matColumnDef="fullName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Full Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.getFullName()}} </td>
+      </ng-container>
+
+      <!-- Username Column -->
+      <ng-container matColumnDef="username">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Username </th>
+        <td mat-cell *matCellDef="let element"> {{element.username}} </td>
+      </ng-container>
+  
+      <!-- Email Column -->
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+        <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+      </ng-container>
+
+      <!-- EmailConfirmed Column -->
+      <ng-container matColumnDef="emailConfirmed">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Email Confirmed </th>
+        <td mat-cell *matCellDef="let element">
+          <span *ngIf="element.emailConfirmed">true</span>
+          <button *ngIf="!element.emailConfirmed"
+                  mat-flat-button color="accent"
+                  (click)="onConfirmEmailEvent(element.email)">
+                  Send Confirm Email
+          </button>
+        </td>
+      </ng-container>
+
+      <!-- Phone Column -->
+      <ng-container matColumnDef="phone">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Phone </th>
+        <td mat-cell *matCellDef="let element"> {{element.phoneNumber}} </td>
+      </ng-container>
+  
+       <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let element">
+
+          <button mat-flat-button
+                  color="accent"
+                  class="action-btn"
+                  (click)="onEditEvent(element)">
+            Edit
+          </button>
+          <button mat-flat-button
+                  color="warn"
+                  class="action-btn"
+                  (click)="onDeleteEvent(element.id, element.getFullName())">
+            Delete
+          </button>
+
+        </td>
+      </ng-container>
+
+      <!-- Expand Column -->
+      <ng-container matColumnDef="expand" stickyEnd>
+        <th mat-header-cell *matHeaderCellDef aria-label="row actions">Add lecturer</th>
+        <td mat-cell *matCellDef="let element">
+
+          <div class="expand-row-container">
+            <button mat-icon-button aria-label="expand row"
+                    (click)="(expandedElement = expandedElement === element ? null : element);
+                    $event.stopPropagation()">
+
+              <mat-icon *ngIf="expandedElement !== element">keyboard_arrow_down</mat-icon>
+              <mat-icon *ngIf="expandedElement === element">keyboard_arrow_up</mat-icon>
+            </button>
+          </div>
+
+        </td>
+      </ng-container>
+
+
+      <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+      <ng-container matColumnDef="expandedDetail">
+        <td mat-cell *matCellDef="let element"
+            [attr.colspan]="columnsToDisplayWithExpand.length"
+            [class.row-is-expanded]="expandedElement === element">
+          <div [className]="" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+
+            <app-dashboard-set-faculty [studentIndex]="element.id">
+
+            </app-dashboard-set-faculty>
+
+          </div>
+        </td>
+      </ng-container>
+
+
+      <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
+
+      <tr mat-row *matRowDef="let element; columns: columnsToDisplayWithExpand;"
+          (click)="expandedElement = expandedElement === element ? null : element"
+          class="element-row">
+      </tr>
+      <tr mat-row *matRowDef="let element; columns: ['expandedDetail']"
+          class="expanded-row"></tr>
+    </table>
+                   <!--[length]="resultsLength"-->
+    <mat-paginator 
+                   [pageSizeOptions]="[5, 10, 20]"
+                   showFirstLastButtons
+                   aria-label="Select page of periodic elements">
+    </mat-paginator>
+
+  </mat-card-content>
+</mat-card>
