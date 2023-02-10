@@ -6,12 +6,13 @@ namespace StudyControlSoftware_API.Database.Models
     {
         public Faculty()
         {
-            Students = new HashSet<ApplicationUser>();
+            Students = new HashSet<Student>();
+            Courses = new HashSet<FacultyCourse>();
         }
 
         public string Name { get; set; } = null!;
-        public int StudentId { get; set; }
 
-        public virtual ICollection<ApplicationUser> Students { get; set; }
+        public virtual ICollection<Student> Students { get; set; }
+        public virtual ICollection<FacultyCourse> Courses { get; set; }
     }
 }

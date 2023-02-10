@@ -10,7 +10,7 @@ namespace StudyControlSoftware_API.Database.ModelConfigurations
         protected override void AddBuilder(EntityTypeBuilder<Course> builder)
         {
             builder.Property(x => x.Title).HasMaxLength(128);
-            builder.Property(x => x.Description).HasMaxLength(255);
+            builder.Property(x => x.Description).HasMaxLength(256);
         }
 
         protected override string TableName()

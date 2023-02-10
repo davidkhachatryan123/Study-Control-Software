@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using StudyControlSoftware_API.Database;
 using StudyControlSoftware_API.Database.Models;
@@ -35,7 +36,10 @@ namespace StudyControlSoftware_API
 
         public static void ConfigureIdentity(this IServiceCollection services)
         {
-            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationContext>().AddDefaultTokenProviders();
+
+            services.Configure<IdentityOptions>(options =>
             {
                 // Password settings.
                 options.Password.RequireDigit = true;
@@ -57,11 +61,10 @@ namespace StudyControlSoftware_API
                 options.User.AllowedUserNameCharacters =
                 "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@$!%*?&=#";
                 options.User.RequireUniqueEmail = true;
-            })
-                .AddEntityFrameworkStores<ApplicationContext>().AddDefaultTokenProviders();
+            });
         }
 
-        public static void ConfigureAdditionalServices(this IServiceCollection services)
+        public static void RegisterDependencies(this IServiceCollection services)
         {
 
         }

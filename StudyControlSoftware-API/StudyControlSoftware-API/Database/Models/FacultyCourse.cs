@@ -2,18 +2,12 @@
 
 namespace StudyControlSoftware_API.Database.Models
 {
-    public class FacultyCourse : Identity
+    public class FacultyCourse: Identity
     {
-        public FacultyCourse()
-        {
-            Faculties = new HashSet<Faculty>();
-            Courses = new HashSet<Course>();
-        }
-
         public int FacultyId { get; set; }
         public int CourseId { get; set; }
 
-        public virtual ICollection<Faculty> Faculties { get; set; }
-        public virtual ICollection<Course> Courses { get; set; }
+        public virtual Faculty Faculty { get; set; } = null!;
+        public virtual Course Course { get; set; } = null!;
     }
 }
