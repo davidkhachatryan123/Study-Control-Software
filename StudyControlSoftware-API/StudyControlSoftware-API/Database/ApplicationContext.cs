@@ -27,6 +27,8 @@ namespace StudyControlSoftware_API.Database
             .HasCharSet("utf8mb4");
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(IdentityModelConfiguration<Identity>).Assembly);
+            modelBuilder.ApplyConfiguration(new LecturerModelConfiguration());
+            modelBuilder.ApplyConfiguration(new StudentModelConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }
