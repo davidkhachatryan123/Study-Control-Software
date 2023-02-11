@@ -5,8 +5,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using StudyControlSoftware_API.Database;
 using StudyControlSoftware_API.Database.Models;
+using StudyControlSoftware_API.Filters;
+using StudyControlSoftware_API.Interfaces;
+using StudyControlSoftware_API.Services;
 
-namespace StudyControlSoftware_API
+namespace StudyControlSoftware_API.Extensions
 {
     public static class ServiceCollectionExtension
     {
@@ -27,12 +30,17 @@ namespace StudyControlSoftware_API
             });
         }
 
-        public static void ConfigureDatabase(this IServiceCollection services, string connection)
+        public static void ConfigureDatabase(this IServiceCollection services, IConfiguration configuration)
         {
             var serverVersion = new MySqlServerVersion(new Version(8, 0, 31));
+            string connection = configuration.GetConnectionString("DefaultConnection")!;
 
-            services.AddDbContext<ApplicationContext>(options => options.UseMySql(connection, serverVersion));
+            services.AddDbContext<ApplicationContext>(options
+                => options.UseMySql(connection, serverVersion));
         }
+
+        public static void ConfigureRepositoryManager(this IServiceCollection services)
+        => services.AddScoped<IRepositoryManager, RepositoryManager>();
 
         public static void ConfigureIdentity(this IServiceCollection services)
         {
@@ -64,9 +72,17 @@ namespace StudyControlSoftware_API
             });
         }
 
+        public static void ConfigureControllers(this IServiceCollection services)
+        {
+            services.AddControllers(options =>
+            {
+                options.Filters.Add<SetupResourceFilter>();
+            });
+        }
+
         public static void RegisterDependencies(this IServiceCollection services)
         {
-
+            //services.AddScoped<IUserAuthenticationRepository, UserAuthenticationRepository>();
         }
     }
 }

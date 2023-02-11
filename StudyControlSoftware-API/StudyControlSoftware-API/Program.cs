@@ -1,17 +1,19 @@
-using StudyControlSoftware_API;
+using StudyControlSoftware_API.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.RegisterDependencies();
+
 builder.Services.ConfigureCORS();
 
-builder.Services.ConfigureDatabase(
-    builder.Configuration.GetConnectionString("DefaultConnection")!);
+builder.Services.ConfigureDatabase(builder.Configuration);
+builder.Services.ConfigureRepositoryManager();
 
 builder.Services.AddAuthentication();
 builder.Services.AddAuthorization();
 builder.Services.ConfigureIdentity();
 
-builder.Services.AddControllers();
+builder.Services.ConfigureControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
