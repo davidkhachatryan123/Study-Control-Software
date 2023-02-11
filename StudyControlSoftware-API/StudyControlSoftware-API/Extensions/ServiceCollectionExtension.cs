@@ -1,13 +1,9 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using StudyControlSoftware_API.Database;
 using StudyControlSoftware_API.Database.Models;
-using StudyControlSoftware_API.Filters;
+using StudyControlSoftware_API.HostedServices;
 using StudyControlSoftware_API.Interfaces;
-using StudyControlSoftware_API.Services;
 
 namespace StudyControlSoftware_API.Extensions
 {
@@ -74,15 +70,20 @@ namespace StudyControlSoftware_API.Extensions
 
         public static void ConfigureControllers(this IServiceCollection services)
         {
-            services.AddControllers(options =>
+            services.AddControllers(/*options =>
             {
                 options.Filters.Add<SetupResourceFilter>();
-            });
+            }*/);
         }
 
         public static void RegisterDependencies(this IServiceCollection services)
         {
-            //services.AddScoped<IUserAuthenticationRepository, UserAuthenticationRepository>();
+
+        }
+
+        public static void ConfigureHostedServices(this IServiceCollection services)
+        {
+            services.AddHostedService<SetupDefaultUserHostedService>();
         }
     }
 }

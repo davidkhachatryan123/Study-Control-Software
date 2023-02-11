@@ -15,6 +15,8 @@ builder.Services.ConfigureIdentity();
 
 builder.Services.ConfigureControllers();
 
+builder.Services.ConfigureHostedServices();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

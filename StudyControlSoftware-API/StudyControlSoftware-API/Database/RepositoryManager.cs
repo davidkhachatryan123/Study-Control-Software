@@ -37,7 +37,7 @@ namespace StudyControlSoftware_API.Database
             {
                 if (_userAuthenticationRepository is null)
                     _userAuthenticationRepository = new UserAuthenticationRepository(
-                        _userManager, _roleManager, _configuration);
+                        _userManager, _roleManager, _context, _configuration);
 
                 return _userAuthenticationRepository;
             }
