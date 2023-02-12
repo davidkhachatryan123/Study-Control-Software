@@ -6,19 +6,21 @@ builder.Services.RegisterDependencies();
 
 builder.Services.ConfigureCORS();
 
+builder.Services.ConfigureMapping();
+
 builder.Services.ConfigureDatabase(builder.Configuration);
 builder.Services.ConfigureRepositoryManager();
 
-builder.Services.AddAuthentication();
-builder.Services.AddAuthorization();
 builder.Services.ConfigureIdentity();
+builder.Services.ConfigureJWT(builder.Configuration);
+builder.Services.AddAuthorization();
 
 builder.Services.ConfigureControllers();
 
 builder.Services.ConfigureHostedServices();
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.ConfigureSwagger();
 
 var app = builder.Build();
 

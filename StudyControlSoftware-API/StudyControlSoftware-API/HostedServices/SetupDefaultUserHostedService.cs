@@ -29,7 +29,7 @@ namespace StudyControlSoftware_API.HostedServices
                 IdentityResult result = new IdentityResult();
 
                 if (repositoryManager != null)
-                    result = await repositoryManager.UserAuthentication.Setup();
+                    result = await repositoryManager.UserAuthentication.SetupAsync();
 
                 if (result.Succeeded)
                     _logger.LogInformation(

@@ -12,34 +12,61 @@ namespace StudyControlSoftware_API.Database
 
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        //private readonly IMapper _mapper;
+        private readonly IMapper _mapper;
+        private readonly LinkGenerator _linkGenerator;
         private readonly IConfiguration _configuration;
+        private readonly ILogger<RepositoryManager> _logger;
 
         private IUserAuthenticationRepository _userAuthenticationRepository;
+        private IEmailRepository _emailRepository;
+        private IAssetsRepository _assetsRepository;
 
         public RepositoryManager(
             ApplicationContext context,
             UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole> roleManager,
-            //IMapper mapper,
-            IConfiguration configuration)
+            IMapper mapper,
+            LinkGenerator linkGenerator,
+            IConfiguration configuration,
+            ILogger<RepositoryManager> logger)
         {
             _context = context;
             _userManager = userManager;
             _roleManager = roleManager;
-            //_mapper = mapper;
+            _mapper = mapper;
+            _linkGenerator = linkGenerator;
             _configuration = configuration;
+            _logger = logger;
         }
 
         public IUserAuthenticationRepository UserAuthentication
         {
             get
             {
-                if (_userAuthenticationRepository is null)
-                    _userAuthenticationRepository = new UserAuthenticationRepository(
-                        _userManager, _roleManager, _context, _configuration);
+                _userAuthenticationRepository ??= new UserAuthenticationRepository(
+                        _context, Email, Assets, _userManager, _roleManager, _configuration, _linkGenerator);
 
                 return _userAuthenticationRepository;
+            }
+        }
+
+        public IEmailRepository Email
+        { 
+            get
+            {
+                _emailRepository ??= new EmailRepository(_logger, _configuration);
+
+                return _emailRepository;
+            }
+        }
+
+        public IAssetsRepository Assets
+        {
+            get
+            {
+                _assetsRepository ??= new AssetsRepository(_configuration);
+
+                return _assetsRepository;
             }
         }
 
