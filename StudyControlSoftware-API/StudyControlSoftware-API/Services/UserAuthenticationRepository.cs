@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.IdentityModel.Tokens;
-using StudyControlSoftware_API.Controllers;
 using StudyControlSoftware_API.Database;
 using StudyControlSoftware_API.Database.Models;
 using StudyControlSoftware_API.Dto;
@@ -9,7 +7,6 @@ using StudyControlSoftware_API.Enums;
 using StudyControlSoftware_API.Interfaces;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Security.Policy;
 using System.Text;
 
 namespace StudyControlSoftware_API.Services
@@ -17,37 +14,28 @@ namespace StudyControlSoftware_API.Services
     public class UserAuthenticationRepository : IUserAuthenticationRepository
     {
         private readonly ApplicationContext _context;
-        private readonly IEmailRepository _emailRepository;
-        private readonly IAssetsRepository _assetsRepository;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _configuration;
-        private readonly LinkGenerator _linkGenerator;
 
         private ApplicationUser? _user;
 
         public UserAuthenticationRepository(
             ApplicationContext context,
-            IEmailRepository emailRepository,
-            IAssetsRepository assetsRepository,
             UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole> roleManager,
-            IConfiguration configuration,
-            LinkGenerator linkGenerator)
+            IConfiguration configuration)
         {
             _context = context;
-            _emailRepository = emailRepository;
-            _assetsRepository = assetsRepository;
             _userManager = userManager;
             _roleManager = roleManager;
             _configuration = configuration;
-            _linkGenerator = linkGenerator;
         }
 
         public async Task<IdentityResult> SetupAsync()
         {
-            /*if (_context == null || _context!.Users.Any())
-                return IdentityResult.Failed();*/
+            if (_context == null || _context!.Users.Any())
+                return IdentityResult.Failed();
 
             ApplicationUser defaultUser = new ApplicationUser
             {
@@ -69,28 +57,16 @@ namespace StudyControlSoftware_API.Services
 
             result = await _userManager.AddToRoleAsync(defaultUser, nameof(UserRoles.Admin));
 
-
-            var token = await _userManager.GenerateEmailConfirmationTokenAsync(defaultUser);
-            var confirmationLink = ControllerLinkGeneratorExtensions.GetPathByAction(
-                _linkGenerator,
-                "ConfirmEmail",
-                "AccountController"
-                );
-
-            /*var confirmationLink = Url.Action(
-                "ConfirmEmail",
-                nameof(AccountController),
-                new ConfirmEmailDto { Email = defaultUser.Email!, Token = token }, Request.Scheme);*/
-
-            _emailRepository.SendEmail(
-                defaultUser.Email!,
-                "StudyControlSoftware - Confirm Your Email",
-                _assetsRepository.GetEmailConfirmationMessage(confirmationLink!));
-
-
             return result;
         }
 
+
+        public async Task<bool> IsEmailConfirmed(UserLoginDto userLoginDto)
+        {
+            _user = await _userManager.FindByNameAsync(userLoginDto.UserName);
+
+            return _user != null && _user.EmailConfirmed;
+        }
 
         public async Task<bool> ConfirmEmail(ConfirmEmailDto confirmEmail)
         {
@@ -100,12 +76,22 @@ namespace StudyControlSoftware_API.Services
                 ? true : false;
         }
 
+        public async Task<string> GenerateEmailConfirmToken(UserLoginDto userLogin)
+        {
+            _user = await _userManager.FindByNameAsync(userLogin.UserName);
+
+            return await _userManager.GenerateEmailConfirmationTokenAsync(_user!);
+        }
+
 
         public async Task<bool> ValidateUserAsync(UserLoginDto userLoginDto)
         {
             _user = await _userManager.FindByNameAsync(userLoginDto.UserName);
 
-            var result = _user != null && await _userManager.CheckPasswordAsync(_user, userLoginDto.Password);
+            var result = 
+                _user != null
+                && await _userManager.CheckPasswordAsync(_user, userLoginDto.Password)
+                && await _userManager.IsEmailConfirmedAsync(_user);
 
             return result;
         }

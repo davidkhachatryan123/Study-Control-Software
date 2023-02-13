@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualBasic;
 using StudyControlSoftware_API.Dto;
 using StudyControlSoftware_API.Interfaces;
 
@@ -30,6 +31,26 @@ namespace StudyControlSoftware_API.Controllers
 
                 return Ok();
             }
+            else if (!await _repositoryManager.UserAuthentication.IsEmailConfirmed(user))
+            {
+                var confirmationLink = Url.Action(
+                    "ConfirmEmail",
+                    "Account",
+                    new ConfirmEmailDto
+                    {
+                        Email = _repositoryManager.UserAuthentication.GetEmail(),
+                        Token = await _repositoryManager.UserAuthentication.GenerateEmailConfirmToken(user)
+                    },
+                    Request.Scheme);
+
+                _repositoryManager.Email.SendEmail(
+                    _repositoryManager.UserAuthentication.GetEmail(),
+                    "StudyControlSoftware - Confirmation Email",
+                    _repositoryManager.Assets.GetEmailConfirmationMessage(
+                        confirmationLink!));
+
+                return Unauthorized("Confirmation Email Sended!");
+            }
             else
                 return Unauthorized();
         }
@@ -45,9 +66,9 @@ namespace StudyControlSoftware_API.Controllers
 
         [Route("ConfirmEmail")]
         [HttpGet]
-        public async Task<IActionResult> ConfirmEmail(ConfirmEmailDto confirmEmail)
+        public async Task<IActionResult> ConfirmEmail([FromQuery] ConfirmEmailDto confirmEmailDto)
         {
-            return !await _repositoryManager.UserAuthentication.ConfirmEmail(confirmEmail)
+            return !await _repositoryManager.UserAuthentication.ConfirmEmail(confirmEmailDto)
                 ? Unauthorized()
                 : Content(_repositoryManager.Assets.GetRedirectToLogin(), "text/html");
         }

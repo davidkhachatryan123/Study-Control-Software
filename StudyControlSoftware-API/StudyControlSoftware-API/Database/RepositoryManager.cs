@@ -13,7 +13,6 @@ namespace StudyControlSoftware_API.Database
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IMapper _mapper;
-        private readonly LinkGenerator _linkGenerator;
         private readonly IConfiguration _configuration;
         private readonly ILogger<RepositoryManager> _logger;
 
@@ -26,7 +25,6 @@ namespace StudyControlSoftware_API.Database
             UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole> roleManager,
             IMapper mapper,
-            LinkGenerator linkGenerator,
             IConfiguration configuration,
             ILogger<RepositoryManager> logger)
         {
@@ -34,7 +32,6 @@ namespace StudyControlSoftware_API.Database
             _userManager = userManager;
             _roleManager = roleManager;
             _mapper = mapper;
-            _linkGenerator = linkGenerator;
             _configuration = configuration;
             _logger = logger;
         }
@@ -44,7 +41,7 @@ namespace StudyControlSoftware_API.Database
             get
             {
                 _userAuthenticationRepository ??= new UserAuthenticationRepository(
-                        _context, Email, Assets, _userManager, _roleManager, _configuration, _linkGenerator);
+                        _context, _userManager, _roleManager, _configuration);
 
                 return _userAuthenticationRepository;
             }

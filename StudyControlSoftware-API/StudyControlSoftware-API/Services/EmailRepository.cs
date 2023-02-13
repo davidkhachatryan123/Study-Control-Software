@@ -40,7 +40,8 @@ namespace StudyControlSoftware_API.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Cannot send Email to Address: {0}\nException Message: {ex.Message}", to);
+                _logger.LogError($"Cannot send Email to Address: {to}" +
+                    $"\nException Message: {ex.Message}");
             }
 
             return false;
