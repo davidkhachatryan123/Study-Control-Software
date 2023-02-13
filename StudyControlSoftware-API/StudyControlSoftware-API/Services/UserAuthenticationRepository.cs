@@ -96,7 +96,8 @@ namespace StudyControlSoftware_API.Services
             return result;
         }
 
-        public async Task<string> Get2FACode() => await _userManager.GenerateTwoFactorTokenAsync(_user!, "Email");
+        public async Task<string> Get2FACode()
+            => await _userManager.GenerateTwoFactorTokenAsync(_user!, TokenOptions.DefaultEmailProvider);
 
         public async Task<bool> Validate2FACodeAsync(TwoFADto twoFA)
         {
@@ -104,7 +105,7 @@ namespace StudyControlSoftware_API.Services
 
             return await _userManager.VerifyTwoFactorTokenAsync(
                 _user!,
-                _userManager.Options.Tokens.AuthenticatorTokenProvider,
+                TokenOptions.DefaultEmailProvider,
                 twoFA.Code);
         }
 
@@ -135,7 +136,7 @@ namespace StudyControlSoftware_API.Services
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, _user.UserName)
+                new Claim(ClaimTypes.Name, _user!.UserName!)
             };
 
             var roles = await _userManager.GetRolesAsync(_user);

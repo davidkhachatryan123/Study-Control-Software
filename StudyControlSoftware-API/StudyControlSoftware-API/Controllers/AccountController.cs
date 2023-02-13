@@ -49,7 +49,7 @@ namespace StudyControlSoftware_API.Controllers
                     _repositoryManager.Assets.GetEmailConfirmationMessage(
                         confirmationLink!));
 
-                return Unauthorized("Confirmation Email Sended!");
+                return Unauthorized("Email doesn't confirmed! Confirmation email send to Your Email!");
             }
             else
                 return Unauthorized();
