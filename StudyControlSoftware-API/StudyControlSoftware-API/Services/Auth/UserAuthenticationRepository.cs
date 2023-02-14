@@ -2,14 +2,14 @@
 using Microsoft.IdentityModel.Tokens;
 using StudyControlSoftware_API.Database;
 using StudyControlSoftware_API.Database.Models;
-using StudyControlSoftware_API.Dto;
+using StudyControlSoftware_API.Dto.Auth;
 using StudyControlSoftware_API.Enums;
-using StudyControlSoftware_API.Interfaces;
+using StudyControlSoftware_API.Interfaces.Auth;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace StudyControlSoftware_API.Services
+namespace StudyControlSoftware_API.Services.Auth
 {
     public class UserAuthenticationRepository : IUserAuthenticationRepository
     {

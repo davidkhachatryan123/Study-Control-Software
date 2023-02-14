@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using StudyControlSoftware_API.Database.Models;
-using StudyControlSoftware_API.Dto;
+using StudyControlSoftware_API.Dto.Auth;
 
-namespace StudyControlSoftware_API.Interfaces
+namespace StudyControlSoftware_API.Interfaces.Auth
 {
     public interface IUserAuthenticationRepository
     {

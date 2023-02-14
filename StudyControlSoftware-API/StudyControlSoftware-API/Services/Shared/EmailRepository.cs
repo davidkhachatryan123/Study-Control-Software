@@ -1,9 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
-using StudyControlSoftware_API.Database.Models;
-using StudyControlSoftware_API.Interfaces;
+﻿using StudyControlSoftware_API.Interfaces.Shared;
 using System.Net.Mail;
 
-namespace StudyControlSoftware_API.Services
+namespace StudyControlSoftware_API.Services.Shared
 {
     public class EmailRepository : IEmailRepository
     {

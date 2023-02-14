@@ -1,6 +1,6 @@
-﻿using StudyControlSoftware_API.Interfaces;
+﻿using StudyControlSoftware_API.Interfaces.Shared;
 
-namespace StudyControlSoftware_API.Services
+namespace StudyControlSoftware_API.Services.Shared
 {
     public class AssetsRepository : IAssetsRepository
     {

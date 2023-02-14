@@ -1,20 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using StudyControlSoftware_API.Dto;
+using StudyControlSoftware_API.Dto.Users;
+using StudyControlSoftware_API.Interfaces;
 
 namespace StudyControlSoftware_API.Controllers
 {
     [Route("api/[controller]")]
-    public class ManageAdmins : ControllerBase
+    public class ManageAdminsController : ControllerBase
     {
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private readonly IRepositoryManager _repositoryManager;
+
+        public ManageAdminsController(IRepositoryManager repositoryManager)
         {
-            return new string[] { "value1", "value2" };
+            _repositoryManager = repositoryManager;
+        }
+
+        [HttpGet]
+        public async Task<UsersTableDto> Get([FromQuery] TableOptionsDto options)
+        {
+            return await _repositoryManager.Admins.GetAdminsAsync(options);
         }
 
         [HttpGet("{id}")]

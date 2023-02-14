@@ -1,4 +1,4 @@
-﻿namespace StudyControlSoftware_API.Interfaces
+﻿namespace StudyControlSoftware_API.Interfaces.Shared
 {
     public interface IEmailRepository
     {

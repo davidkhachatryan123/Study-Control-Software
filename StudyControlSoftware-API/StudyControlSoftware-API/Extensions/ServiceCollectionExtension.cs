@@ -10,6 +10,7 @@ using StudyControlSoftware_API.Database.Models;
 using StudyControlSoftware_API.HostedServices;
 using StudyControlSoftware_API.Interfaces;
 using StudyControlSoftware_API.Mappings;
+using StudyControlSoftware_API.Services;
 using System.Text;
 
 namespace StudyControlSoftware_API.Extensions

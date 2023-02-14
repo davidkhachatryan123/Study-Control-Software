@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace StudyControlSoftware_API.Dto
+namespace StudyControlSoftware_API.Dto.Auth
 {
     public class UserLoginDto
     {

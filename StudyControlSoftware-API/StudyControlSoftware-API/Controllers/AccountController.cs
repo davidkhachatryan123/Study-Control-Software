@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualBasic;
-using StudyControlSoftware_API.Dto;
+using StudyControlSoftware_API.Dto.Auth;
 using StudyControlSoftware_API.Interfaces;
 
 namespace StudyControlSoftware_API.Controllers
