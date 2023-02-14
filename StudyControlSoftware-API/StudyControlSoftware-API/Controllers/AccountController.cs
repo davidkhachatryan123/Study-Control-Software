@@ -31,7 +31,7 @@ namespace StudyControlSoftware_API.Controllers
 
                 return Ok();
             }
-            else if (!await _repositoryManager.UserAuthentication.IsEmailConfirmed(user))
+            else if (!await _repositoryManager.UserAuthentication.IsEmailConfirmed(user) != null)
             {
                 var confirmationLink = Url.Action(
                     "ConfirmEmail",

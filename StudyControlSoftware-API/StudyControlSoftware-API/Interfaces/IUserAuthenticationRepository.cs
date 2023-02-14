@@ -8,7 +8,7 @@ namespace StudyControlSoftware_API.Interfaces
     {
         Task<IdentityResult> SetupAsync();
 
-        Task<bool> IsEmailConfirmed(UserLoginDto userLogin);
+        Task<bool?> IsEmailConfirmed(UserLoginDto userLogin);
         Task<bool> ConfirmEmail(ConfirmEmailDto confirmEmail);
         Task<string> GenerateEmailConfirmToken(UserLoginDto userLogin);
 

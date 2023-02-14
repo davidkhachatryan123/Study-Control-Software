@@ -61,11 +61,13 @@ namespace StudyControlSoftware_API.Services
         }
 
 
-        public async Task<bool> IsEmailConfirmed(UserLoginDto userLoginDto)
+        public async Task<bool?> IsEmailConfirmed(UserLoginDto userLoginDto)
         {
             _user = await _userManager.FindByNameAsync(userLoginDto.UserName);
 
-            return _user != null && _user.EmailConfirmed;
+            return _user != null
+                ? _user.EmailConfirmed
+                : null;
         }
 
         public async Task<bool> ConfirmEmail(ConfirmEmailDto confirmEmail)
@@ -88,12 +90,9 @@ namespace StudyControlSoftware_API.Services
         {
             _user = await _userManager.FindByNameAsync(userLoginDto.UserName);
 
-            var result = 
-                _user != null
+            return _user != null
                 && await _userManager.CheckPasswordAsync(_user, userLoginDto.Password)
                 && await _userManager.IsEmailConfirmedAsync(_user);
-
-            return result;
         }
 
         public async Task<string> Get2FACode()
@@ -103,7 +102,8 @@ namespace StudyControlSoftware_API.Services
         {
             _user = await _userManager.FindByNameAsync(twoFA.UserName);
 
-            return await _userManager.VerifyTwoFactorTokenAsync(
+            return _user != null
+                && await _userManager.VerifyTwoFactorTokenAsync(
                 _user!,
                 TokenOptions.DefaultEmailProvider,
                 twoFA.Code);
