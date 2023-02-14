@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualBasic;
 using StudyControlSoftware_API.Dto.Auth;
 using StudyControlSoftware_API.Interfaces;
 
 namespace StudyControlSoftware_API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class AccountController : ControllerBase
@@ -17,6 +17,7 @@ namespace StudyControlSoftware_API.Controllers
             _repositoryManager = repositoryManager;
         }
 
+        [AllowAnonymous]
         [Route("Login")]
         [HttpPost]
         public async Task<IActionResult> Login([FromBody] UserLoginDto user)
@@ -56,6 +57,7 @@ namespace StudyControlSoftware_API.Controllers
                 return Unauthorized();
         }
 
+        [AllowAnonymous]
         [Route("2FA")]
         [HttpPost]
         public async Task<IActionResult> Login2FA([FromBody] TwoFADto twoFA)
@@ -65,6 +67,7 @@ namespace StudyControlSoftware_API.Controllers
                 : Ok(new { Token = await _repositoryManager.UserAuthentication.CreateTokenAsync() });
         }
 
+        [AllowAnonymous]
         [Route("ConfirmEmail")]
         [HttpGet]
         public async Task<IActionResult> ConfirmEmail([FromQuery] ConfirmEmailDto confirmEmailDto)

@@ -7,10 +7,12 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using StudyControlSoftware_API.Database;
 using StudyControlSoftware_API.Database.Models;
+using StudyControlSoftware_API.Enums;
 using StudyControlSoftware_API.HostedServices;
 using StudyControlSoftware_API.Interfaces;
 using StudyControlSoftware_API.Mappings;
 using StudyControlSoftware_API.Services;
+using System.Security.Claims;
 using System.Text;
 
 namespace StudyControlSoftware_API.Extensions
@@ -109,6 +111,16 @@ namespace StudyControlSoftware_API.Extensions
                     ValidAudience = jwtConfig["validAudience"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey!))
                 };
+            });
+        }
+
+        public static void ConfigureAuthorization(this IServiceCollection services)
+        {
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(nameof(UserRoles.Admin), policy => {
+                    policy.RequireClaim(ClaimTypes.Role, nameof(UserRoles.Admin));
+                });
             });
         }
 

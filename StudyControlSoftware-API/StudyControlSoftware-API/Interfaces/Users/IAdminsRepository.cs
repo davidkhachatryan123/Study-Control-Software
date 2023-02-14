@@ -6,5 +6,6 @@ namespace StudyControlSoftware_API.Interfaces.Users
     public interface IAdminsRepository
     {
         Task<UsersTableDto> GetAdminsAsync(TableOptionsDto options);
+        Task<UserDto?> RegisterNewAdmin(UserRegisterDto user);
     }
 }

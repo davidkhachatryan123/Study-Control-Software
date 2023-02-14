@@ -58,7 +58,7 @@ namespace StudyControlSoftware_API.Services
         {
             get
             {
-                _adminsRepository ??= new AdminsRepository(_userManager);
+                _adminsRepository ??= new AdminsRepository(_userManager, _mapper);
 
                 return _adminsRepository;
             }

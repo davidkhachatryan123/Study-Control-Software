@@ -1,12 +1,15 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StudyControlSoftware_API.Dto;
 using StudyControlSoftware_API.Dto.Users;
+using StudyControlSoftware_API.Enums;
 using StudyControlSoftware_API.Interfaces;
 
 namespace StudyControlSoftware_API.Controllers
 {
+    [Authorize(Policy = nameof(UserRoles.Admin))]
     [Route("api/[controller]")]
+    [ApiController]
     public class ManageAdminsController : ControllerBase
     {
         private readonly IRepositoryManager _repositoryManager;
@@ -17,21 +20,21 @@ namespace StudyControlSoftware_API.Controllers
         }
 
         [HttpGet]
-        public async Task<UsersTableDto> Get([FromQuery] TableOptionsDto options)
+        public async Task<IActionResult> Get([FromQuery] TableOptionsDto options)
         {
-            return await _repositoryManager.Admins.GetAdminsAsync(options);
-        }
-
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
+            return Ok(await _repositoryManager.Admins.GetAdminsAsync(options));
         }
 
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> Post([FromBody] UserRegisterDto user)
         {
+            var _user = await _repositoryManager.Admins.RegisterNewAdmin(user);
 
+            // TODO: Send email for Confirm Email!
+
+            return _user == null
+                ? BadRequest()
+                : Ok(_user);
         }
 
         [HttpPut("{id}")]

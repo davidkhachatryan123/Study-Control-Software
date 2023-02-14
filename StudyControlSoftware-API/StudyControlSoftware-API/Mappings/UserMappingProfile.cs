@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using StudyControlSoftware_API.Database.Models;
-using StudyControlSoftware_API.Dto.Auth;
+using StudyControlSoftware_API.Dto.Users;
 
 namespace StudyControlSoftware_API.Mappings
 {
@@ -8,7 +8,11 @@ namespace StudyControlSoftware_API.Mappings
     {
         public UserMappingProfile()
         {
-            CreateMap<UserLoginDto, ApplicationUser>();
+            CreateMap<ApplicationUser, UserDto>();
+
+            CreateMap<UserRegisterDto, ApplicationUser>()
+                .ForMember(x => x.Id, opt => opt.Ignore());
+            CreateMap<ApplicationUser, UserRegisterDto>();
         }
     }
 }

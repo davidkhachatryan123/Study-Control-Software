@@ -13,7 +13,7 @@ builder.Services.ConfigureRepositoryManager();
 
 builder.Services.ConfigureIdentity();
 builder.Services.ConfigureJWT(builder.Configuration);
-builder.Services.AddAuthorization();
+builder.Services.ConfigureAuthorization();
 
 builder.Services.ConfigureControllers();
 
