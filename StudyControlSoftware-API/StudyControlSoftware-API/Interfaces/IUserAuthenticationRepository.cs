@@ -8,10 +8,11 @@ namespace StudyControlSoftware_API.Interfaces
     {
         Task<IdentityResult> SetupAsync();
 
-        Task<bool?> IsEmailConfirmed(UserLoginDto userLogin);
+        Task<bool> IsEmailConfirmed(UserLoginDto userLogin);
         Task<bool> ConfirmEmail(ConfirmEmailDto confirmEmail);
         Task<string> GenerateEmailConfirmToken(UserLoginDto userLogin);
 
+        Task<bool> IsUserExists(UserLoginDto userLogin);
         Task<bool> ValidateUserAsync(UserLoginDto userLogin);
         Task<string> Get2FACode();
         Task<bool> Validate2FACodeAsync(TwoFADto twoFA);

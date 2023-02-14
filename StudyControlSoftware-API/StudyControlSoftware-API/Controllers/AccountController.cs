@@ -31,7 +31,8 @@ namespace StudyControlSoftware_API.Controllers
 
                 return Ok();
             }
-            else if (!await _repositoryManager.UserAuthentication.IsEmailConfirmed(user) != null)
+            else if (await _repositoryManager.UserAuthentication.IsUserExists(user)
+                && !await _repositoryManager.UserAuthentication.IsEmailConfirmed(user))
             {
                 var confirmationLink = Url.Action(
                     "ConfirmEmail",
@@ -49,7 +50,7 @@ namespace StudyControlSoftware_API.Controllers
                     _repositoryManager.Assets.GetEmailConfirmationMessage(
                         confirmationLink!));
 
-                return Unauthorized("Email doesn't confirmed! Confirmation email send to Your Email!");
+                return Unauthorized("Email doesn't confirmed! Confirmation email sended to Your Email!");
             }
             else
                 return Unauthorized();

@@ -61,13 +61,11 @@ namespace StudyControlSoftware_API.Services
         }
 
 
-        public async Task<bool?> IsEmailConfirmed(UserLoginDto userLoginDto)
+        public async Task<bool> IsEmailConfirmed(UserLoginDto userLoginDto)
         {
             _user = await _userManager.FindByNameAsync(userLoginDto.UserName);
 
-            return _user != null
-                ? _user.EmailConfirmed
-                : null;
+            return _user != null && _user.EmailConfirmed;
         }
 
         public async Task<bool> ConfirmEmail(ConfirmEmailDto confirmEmail)
@@ -85,6 +83,9 @@ namespace StudyControlSoftware_API.Services
             return await _userManager.GenerateEmailConfirmationTokenAsync(_user!);
         }
 
+
+        public async Task<bool> IsUserExists(UserLoginDto userLogin)
+             => await _userManager.FindByNameAsync(userLogin.UserName) != null ? true : false;
 
         public async Task<bool> ValidateUserAsync(UserLoginDto userLoginDto)
         {
@@ -119,7 +120,8 @@ namespace StudyControlSoftware_API.Services
         }
 
 
-        public string GetEmail() => _user!.Email!;
+        public string GetEmail()
+            => _user!.Email!;
 
 
         private SigningCredentials GetSigningCredentials()
