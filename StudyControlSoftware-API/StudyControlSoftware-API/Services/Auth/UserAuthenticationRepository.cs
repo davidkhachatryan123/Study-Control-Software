@@ -76,9 +76,9 @@ namespace StudyControlSoftware_API.Services.Auth
                 ? true : false;
         }
 
-        public async Task<string> GenerateEmailConfirmToken(UserLoginDto userLogin)
+        public async Task<string> GenerateEmailConfirmToken(string username)
         {
-            _user = await _userManager.FindByNameAsync(userLogin.UserName);
+            _user = await _userManager.FindByNameAsync(username);
 
             return await _userManager.GenerateEmailConfirmationTokenAsync(_user!);
         }
@@ -120,8 +120,14 @@ namespace StudyControlSoftware_API.Services.Auth
         }
 
 
-        public string GetEmail()
-            => _user!.Email!;
+        public async Task<string?> GetEmailAsync(string username)
+        {
+            _user = await _userManager.FindByNameAsync(username);
+
+            return _user == null
+                ? null
+                : await _userManager.GetEmailAsync(_user);
+        }
 
 
         private SigningCredentials GetSigningCredentials()

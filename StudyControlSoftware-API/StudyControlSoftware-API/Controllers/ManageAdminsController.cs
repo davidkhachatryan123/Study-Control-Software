@@ -1,8 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using StudyControlSoftware_API.Database.Models;
 using StudyControlSoftware_API.Dto;
+using StudyControlSoftware_API.Dto.Auth;
 using StudyControlSoftware_API.Dto.Users;
 using StudyControlSoftware_API.Enums;
+using StudyControlSoftware_API.Extensions;
 using StudyControlSoftware_API.Interfaces;
 
 namespace StudyControlSoftware_API.Controllers
@@ -30,7 +34,16 @@ namespace StudyControlSoftware_API.Controllers
         {
             var _user = await _repositoryManager.Admins.RegisterNewAdmin(user);
 
-            // TODO: Send email for Confirm Email!
+            var confirmationLink = await Url.GenerateConfirmationEmailLinkAsync(
+                    _repositoryManager, user.UserName);
+
+            if (confirmationLink == null) return BadRequest();
+
+            _repositoryManager.Email.SendEmail(
+                (await _repositoryManager.UserAuthentication.GetEmailAsync(user.UserName))!,
+                "StudyControlSoftware - Confirmation Email",
+                _repositoryManager.Assets.GetEmailConfirmationMessage(
+                    confirmationLink));
 
             return _user == null
                 ? BadRequest()

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StudyControlSoftware_API.Dto.Auth;
+using StudyControlSoftware_API.Extensions;
 using StudyControlSoftware_API.Interfaces;
 
 namespace StudyControlSoftware_API.Controllers
@@ -22,10 +23,12 @@ namespace StudyControlSoftware_API.Controllers
         [HttpPost]
         public async Task<IActionResult> Login([FromBody] UserLoginDto user)
         {
+            string email = (await _repositoryManager.UserAuthentication.GetEmailAsync(user.UserName))!;
+
             if (await _repositoryManager.UserAuthentication.ValidateUserAsync(user))
             {
                 _repositoryManager.Email.SendEmail(
-                    _repositoryManager.UserAuthentication.GetEmail(),
+                    email,
                     "StudyControlSoftware - 2FA",
                     _repositoryManager.Assets.Get2FAMessage(
                         await _repositoryManager.UserAuthentication.Get2FACode()));
@@ -35,21 +38,17 @@ namespace StudyControlSoftware_API.Controllers
             else if (await _repositoryManager.UserAuthentication.IsUserExists(user)
                 && !await _repositoryManager.UserAuthentication.IsEmailConfirmed(user))
             {
-                var confirmationLink = Url.Action(
-                    "ConfirmEmail",
-                    "Account",
-                    new ConfirmEmailDto
-                    {
-                        Email = _repositoryManager.UserAuthentication.GetEmail(),
-                        Token = await _repositoryManager.UserAuthentication.GenerateEmailConfirmToken(user)
-                    },
-                    Request.Scheme);
+                var confirmationLink = await Url.GenerateConfirmationEmailLinkAsync(
+                    _repositoryManager, user.UserName);
+
+                if (confirmationLink == null)
+                    return Unauthorized("Confirmation Email doesn't generated!");
 
                 _repositoryManager.Email.SendEmail(
-                    _repositoryManager.UserAuthentication.GetEmail(),
+                    email,
                     "StudyControlSoftware - Confirmation Email",
                     _repositoryManager.Assets.GetEmailConfirmationMessage(
-                        confirmationLink!));
+                        confirmationLink));
 
                 return Unauthorized("Email doesn't confirmed! Confirmation email sended to Your Email!");
             }
