@@ -5,7 +5,6 @@ using StudyControlSoftware_API.Dto;
 using StudyControlSoftware_API.Dto.Users;
 using StudyControlSoftware_API.Enums;
 using StudyControlSoftware_API.Interfaces.Users;
-using System.Diagnostics.CodeAnalysis;
 
 namespace StudyControlSoftware_API.Services.Users
 {

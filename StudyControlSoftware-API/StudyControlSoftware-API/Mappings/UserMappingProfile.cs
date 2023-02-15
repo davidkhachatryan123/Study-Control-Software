@@ -9,8 +9,8 @@ namespace StudyControlSoftware_API.Mappings
         public UserMappingProfile()
         {
             CreateMap<ApplicationUser, UserDto>();
-            CreateMap<ApplicationUser, UserRegisterDto>();
 
+            CreateMap<ApplicationUser, UserRegisterDto>();
             CreateMap<UserRegisterDto, ApplicationUser>()
                 .ForMember(x => x.Id, opt => opt.Ignore());
         }

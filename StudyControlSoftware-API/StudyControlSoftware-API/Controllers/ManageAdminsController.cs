@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using StudyControlSoftware_API.Database.Models;
 using StudyControlSoftware_API.Dto;
-using StudyControlSoftware_API.Dto.Auth;
 using StudyControlSoftware_API.Dto.Users;
 using StudyControlSoftware_API.Enums;
 using StudyControlSoftware_API.Extensions;
