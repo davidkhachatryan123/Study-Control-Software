@@ -10,7 +10,7 @@ namespace StudyControlSoftware_API.Interfaces.Auth
 
         Task<bool> IsEmailConfirmed(UserLoginDto userLogin);
         Task<bool> ConfirmEmail(ConfirmEmailDto confirmEmail);
-        Task<string> GenerateEmailConfirmToken(string username);
+        Task<string?> GenerateEmailConfirmToken(string username);
 
         Task<bool> IsUserExists(UserLoginDto userLogin);
         Task<bool> ValidateUserAsync(UserLoginDto userLogin);

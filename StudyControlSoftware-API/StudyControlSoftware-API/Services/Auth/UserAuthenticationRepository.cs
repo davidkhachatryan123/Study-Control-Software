@@ -76,11 +76,13 @@ namespace StudyControlSoftware_API.Services.Auth
                 ? true : false;
         }
 
-        public async Task<string> GenerateEmailConfirmToken(string username)
+        public async Task<string?> GenerateEmailConfirmToken(string username)
         {
             _user = await _userManager.FindByNameAsync(username);
 
-            return await _userManager.GenerateEmailConfirmationTokenAsync(_user!);
+            return _user == null
+                ? null
+                : await _userManager.GenerateEmailConfirmationTokenAsync(_user!);
         }
 
 

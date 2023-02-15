@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StudyControlSoftware_API.Dto.Auth;
+using StudyControlSoftware_API.Dto.Users;
+using StudyControlSoftware_API.Enums;
 using StudyControlSoftware_API.Extensions;
 using StudyControlSoftware_API.Interfaces;
 
 namespace StudyControlSoftware_API.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class AccountController : ControllerBase
@@ -18,7 +19,6 @@ namespace StudyControlSoftware_API.Controllers
             _repositoryManager = repositoryManager;
         }
 
-        [AllowAnonymous]
         [Route("Login")]
         [HttpPost]
         public async Task<IActionResult> Login([FromBody] UserLoginDto user)
@@ -56,7 +56,6 @@ namespace StudyControlSoftware_API.Controllers
                 return Unauthorized();
         }
 
-        [AllowAnonymous]
         [Route("2FA")]
         [HttpPost]
         public async Task<IActionResult> Login2FA([FromBody] TwoFADto twoFA)
@@ -66,7 +65,6 @@ namespace StudyControlSoftware_API.Controllers
                 : Ok(new { Token = await _repositoryManager.UserAuthentication.CreateTokenAsync() });
         }
 
-        [AllowAnonymous]
         [Route("ConfirmEmail")]
         [HttpGet]
         public async Task<IActionResult> ConfirmEmail([FromQuery] ConfirmEmailDto confirmEmailDto)
@@ -74,6 +72,28 @@ namespace StudyControlSoftware_API.Controllers
             return !await _repositoryManager.UserAuthentication.ConfirmEmail(confirmEmailDto)
                 ? Unauthorized()
                 : Content(_repositoryManager.Assets.GetRedirectToLogin(), "text/html");
+        }
+
+        [Authorize(Policy = nameof(UserRoles.Admin))]
+        [Route("SendConfirmEmailMessage")]
+        [HttpPost]
+        public async Task<IActionResult> SendConfirmEmailMessage([FromBody] string username)
+        {
+            var email = await _repositoryManager.UserAuthentication.GetEmailAsync(username);
+            var confirmationLink = await Url.GenerateConfirmationEmailLinkAsync(
+                    _repositoryManager, username);
+
+            if (email == null || confirmationLink == null) return BadRequest();
+
+            var result = _repositoryManager.Email.SendEmail(
+                email,
+                "StudyControlSoftware - Confirmation Email",
+                _repositoryManager.Assets.GetEmailConfirmationMessage(
+                    confirmationLink));
+
+            return !result
+                ? BadRequest()
+                : Ok();
         }
     }
 }

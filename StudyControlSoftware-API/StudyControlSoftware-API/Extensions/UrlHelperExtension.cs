@@ -16,7 +16,7 @@ namespace StudyControlSoftware_API.Extensions
             var token =
                 await repositoryManager.UserAuthentication.GenerateEmailConfirmToken(username);
 
-            return email == null
+            return email == null || token == null
                 ? null
                 : url.Action("ConfirmEmail",
                     "Account",
