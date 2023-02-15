@@ -26,13 +26,13 @@ namespace StudyControlSoftware_API.Controllers
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery] TableOptionsDto options)
         {
-            return Ok(await _repositoryManager.Admins.GetAdminsAsync(options));
+            return Ok(await _repositoryManager.Admins.GetAllAsync(options));
         }
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] UserRegisterDto user)
         {
-            var _user = await _repositoryManager.Admins.RegisterNewAdmin(user);
+            var _user = await _repositoryManager.Admins.CreateAsync(user);
 
             var confirmationLink = await Url.GenerateConfirmationEmailLinkAsync(
                     _repositoryManager, user.UserName);
@@ -51,15 +51,23 @@ namespace StudyControlSoftware_API.Controllers
         }
 
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> Put(string id, [FromBody] UserRegisterDto user)
         {
+            var _user = await _repositoryManager.Admins.UpdateAsync(id, user);
 
+            return _user == null
+                ? BadRequest()
+                : Ok(_user);
         }
 
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(string id)
         {
+            var removedUserId = await _repositoryManager.Admins.DeleteAsync(id);
 
+            return removedUserId == null
+               ? BadRequest()
+               : Ok(removedUserId);
         }
     }
 }

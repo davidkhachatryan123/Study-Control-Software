@@ -18,6 +18,7 @@ namespace StudyControlSoftware_API.Services
 
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IPasswordHasher<ApplicationUser> _passwordHasher;
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
         private readonly ILogger<RepositoryManager> _logger;
@@ -31,6 +32,7 @@ namespace StudyControlSoftware_API.Services
             ApplicationContext context,
             UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole> roleManager,
+            IPasswordHasher<ApplicationUser> passwordHasher,
             IMapper mapper,
             IConfiguration configuration,
             ILogger<RepositoryManager> logger)
@@ -38,6 +40,7 @@ namespace StudyControlSoftware_API.Services
             _context = context;
             _userManager = userManager;
             _roleManager = roleManager;
+            _passwordHasher = passwordHasher;
             _mapper = mapper;
             _configuration = configuration;
             _logger = logger;
@@ -58,7 +61,7 @@ namespace StudyControlSoftware_API.Services
         {
             get
             {
-                _adminsRepository ??= new AdminsRepository(_userManager, _mapper);
+                _adminsRepository ??= new AdminsRepository(_userManager, _passwordHasher, _mapper);
 
                 return _adminsRepository;
             }
