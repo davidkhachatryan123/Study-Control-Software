@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using StudyControlSoftware_API.Dto.Users;
 using StudyControlSoftware_API.Enums;
+using StudyControlSoftware_API.Filters;
 using StudyControlSoftware_API.Interfaces;
 
 namespace StudyControlSoftware_API.Controllers
@@ -19,6 +20,7 @@ namespace StudyControlSoftware_API.Controllers
         }
 
         [HttpPost]
+        [ServiceFilter(typeof(EnsureUserNoExistsFilter))]
         public async Task<IActionResult> Create([FromBody] UserRegisterDto user)
         {
             UserDto? newUser = await _repositoryManager.Lecturers.CreateLecturer(user);

@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using StudyControlSoftware_API.Database;
 using StudyControlSoftware_API.Database.Models;
 using StudyControlSoftware_API.Enums;
+using StudyControlSoftware_API.Filters;
 using StudyControlSoftware_API.HostedServices;
 using StudyControlSoftware_API.Interfaces;
 using StudyControlSoftware_API.Mappings;
@@ -118,7 +118,8 @@ namespace StudyControlSoftware_API.Extensions
         {
             services.AddAuthorization(options =>
             {
-                options.AddPolicy(nameof(UserRoles.Admin), policy => {
+                options.AddPolicy(nameof(UserRoles.Admin), policy =>
+                {
                     policy.RequireClaim(ClaimTypes.Role, nameof(UserRoles.Admin));
                 });
             });
@@ -130,6 +131,11 @@ namespace StudyControlSoftware_API.Extensions
             {
                 options.Filters.Add<SetupResourceFilter>();
             }*/);
+        }
+
+        public static void ConfigureFilters(this IServiceCollection services)
+        {
+            services.AddScoped<EnsureUserNoExistsFilter>();
         }
 
         public static void RegisterDependencies(this IServiceCollection services)

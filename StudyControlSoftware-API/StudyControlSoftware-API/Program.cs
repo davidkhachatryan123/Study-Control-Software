@@ -16,6 +16,7 @@ builder.Services.ConfigureJWT(builder.Configuration);
 builder.Services.ConfigureAuthorization();
 
 builder.Services.ConfigureControllers();
+builder.Services.ConfigureFilters();
 
 builder.Services.ConfigureHostedServices();
 
