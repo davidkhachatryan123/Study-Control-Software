@@ -25,6 +25,7 @@ namespace StudyControlSoftware_API.Services
 
         private IUserAuthenticationRepository _userAuthenticationRepository;
         private IAdminsRepository _adminsRepository;
+        private ILecturersRepository _lecturersRepository;
         private IEmailRepository _emailRepository;
         private IAssetsRepository _assetsRepository;
 
@@ -64,6 +65,16 @@ namespace StudyControlSoftware_API.Services
                 _adminsRepository ??= new AdminsRepository(_userManager, _passwordHasher, _mapper);
 
                 return _adminsRepository;
+            }
+        }
+
+        public ILecturersRepository Lecturers
+        {
+            get
+            {
+                _lecturersRepository ??= new LecturersRepository(_context, _userManager, _mapper);
+
+                return _lecturersRepository;
             }
         }
 

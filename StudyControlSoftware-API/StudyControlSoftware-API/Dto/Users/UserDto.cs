@@ -7,7 +7,7 @@ namespace StudyControlSoftware_API.Dto.Users
         [Required(ErrorMessage = "Id is required")]
         public string Id { get; set; } = null!;
 
-        public string? FirtName { get; set; }
+        public string? FirstName { get; set; }
         public string? LastName { get; set; }
 
 
