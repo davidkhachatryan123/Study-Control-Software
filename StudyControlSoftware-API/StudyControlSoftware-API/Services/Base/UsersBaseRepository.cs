@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
 using StudyControlSoftware_API.Database;
 using StudyControlSoftware_API.Database.Base;
 using StudyControlSoftware_API.Database.Models;
+using StudyControlSoftware_API.Dto;
 using StudyControlSoftware_API.Dto.Users;
 using StudyControlSoftware_API.Enums;
 using StudyControlSoftware_API.Interfaces.Base;
@@ -25,8 +27,10 @@ namespace StudyControlSoftware_API.Services.Base
             _mapper = mapper;
         }
 
-        public async Task<IQueryable<TEntity>> FindAllAsync()
-            => await Task.Run(() => _context.Set<TEntity>());
+        public async Task<UsersTableDto> FindAllAsync(TableOptionsDto options)
+        {
+            
+        }
 
         public async Task<UserDto?> CreateAsync(UserRegisterDto user)
         {

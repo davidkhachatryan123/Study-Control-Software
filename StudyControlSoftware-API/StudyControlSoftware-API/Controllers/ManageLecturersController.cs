@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using StudyControlSoftware_API.Dto;
 using StudyControlSoftware_API.Dto.Users;
 using StudyControlSoftware_API.Enums;
 using StudyControlSoftware_API.Filters;
@@ -17,6 +18,12 @@ namespace StudyControlSoftware_API.Controllers
         public ManageLecturersController(IRepositoryManager repositoryManager)
         {
             _repositoryManager = repositoryManager;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll([FromQuery] TableOptionsDto options)
+        {
+            return Ok(await _repositoryManager.Lecturers.GetAllAsync(options));
         }
 
         [HttpPost]
