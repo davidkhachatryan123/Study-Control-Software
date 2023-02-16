@@ -20,6 +20,6 @@ namespace StudyControlSoftware_API.Services.Users
             => await CreateAsync(user);
 
         public async Task<UsersTableDto> GetAllAsync(TableOptionsDto options)
-            => await FindAllAsync(options);
+            => await FindAllAsync(options, x => x.LecturerId);
     }
 }

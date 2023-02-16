@@ -5,6 +5,7 @@ using StudyControlSoftware_API.Dto;
 using StudyControlSoftware_API.Dto.Users;
 using StudyControlSoftware_API.Enums;
 using StudyControlSoftware_API.Interfaces.Users;
+using System.Reflection;
 
 namespace StudyControlSoftware_API.Services.Users
 {
@@ -24,34 +25,20 @@ namespace StudyControlSoftware_API.Services.Users
             _mapper = mapper;
         }
 
-        private Func<ApplicationUser, Object?> orderByFunc = null!;
-
         public async Task<UsersTableDto> GetAllAsync(TableOptionsDto options)
         {
-            switch ((UsersSort)Enum.Parse(typeof(UsersSort), options.Sort, true))
-            {
-                case UsersSort.Id:
-                    orderByFunc = x => x.Id;
-                    break;
-                case UsersSort.Username:
-                    orderByFunc = x => x.UserName!;
-                    break;
-                case UsersSort.Email:
-                    orderByFunc = x => x.Email!;
-                    break;
-                case UsersSort.EmailConfirmed:
-                    orderByFunc = x => x.EmailConfirmed;
-                    break;
-                case UsersSort.Phone:
-                    orderByFunc = x => x.PhoneNumber;
-                    break;
-            }
+            var propertyInfos = 
+                typeof(ApplicationUser).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            var objectProperty = 
+                propertyInfos.FirstOrDefault(pi => pi.Name.Equals(options.Sort, StringComparison.InvariantCultureIgnoreCase));
 
             return new UsersTableDto
             {
-                Users = (options.OrderDirection == "asc"
-                    ? (await _userManager.GetUsersInRoleAsync(nameof(UserRoles.Admin))).OrderBy(orderByFunc)
-                    : (await _userManager.GetUsersInRoleAsync(nameof(UserRoles.Admin))).OrderByDescending(orderByFunc))
+                Users = (await _userManager.GetUsersInRoleAsync(nameof(UserRoles.Admin)))
+
+                        .OrderBy(x => options.OrderDirection == "asc" ? objectProperty!.GetValue(x, null) : null)
+                        .OrderByDescending(x => options.OrderDirection == "desc" ? objectProperty!.GetValue(x, null) : null)
+
                         .Skip((options.Page - 1) * options.PageSize)
                         .Take(options.PageSize)
                         .Select(appUser => _mapper.Map<UserDto>(appUser)),
