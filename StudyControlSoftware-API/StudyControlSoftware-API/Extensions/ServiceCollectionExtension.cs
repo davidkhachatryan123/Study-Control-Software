@@ -127,15 +127,12 @@ namespace StudyControlSoftware_API.Extensions
 
         public static void ConfigureControllers(this IServiceCollection services)
         {
-            services.AddControllers(/*options =>
-            {
-                options.Filters.Add<SetupResourceFilter>();
-            }*/);
+            services.AddControllers();
         }
 
         public static void ConfigureFilters(this IServiceCollection services)
         {
-            services.AddScoped<EnsureUserNoExistsFilter>();
+            //services.AddScoped<EnsureUserExistsFilter>();
         }
 
         public static void RegisterDependencies(this IServiceCollection services)

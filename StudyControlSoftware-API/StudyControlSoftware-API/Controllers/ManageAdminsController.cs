@@ -5,6 +5,7 @@ using StudyControlSoftware_API.Dto;
 using StudyControlSoftware_API.Dto.Users;
 using StudyControlSoftware_API.Enums;
 using StudyControlSoftware_API.Extensions;
+using StudyControlSoftware_API.Filters;
 using StudyControlSoftware_API.Interfaces;
 
 namespace StudyControlSoftware_API.Controllers
@@ -28,6 +29,7 @@ namespace StudyControlSoftware_API.Controllers
         }
 
         [HttpPost]
+        [EnsureUserExistsFilter(No = true)]
         public async Task<IActionResult> Post([FromBody] UserRegisterDto user)
         {
             var _user = await _repositoryManager.Admins.CreateAsync(user);
@@ -61,7 +63,7 @@ namespace StudyControlSoftware_API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
-            var removedUserId = await _repositoryManager.Admins.DeleteAsync(id);
+            var removedUserId = await _repositoryManager.Admins.RemoveAsync(id);
 
             return removedUserId == null
                ? BadRequest()

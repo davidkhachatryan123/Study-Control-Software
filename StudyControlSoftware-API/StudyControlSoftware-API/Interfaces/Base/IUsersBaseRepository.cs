@@ -8,7 +8,7 @@ namespace StudyControlSoftware_API.Interfaces.Base
     {
         Task<UsersTableDto> FindAllAsync(TableOptionsDto options, Func<T, string> foreignKey);
         Task<UserDto?> CreateAsync(UserRegisterDto user);
-        Task UpdateAsync(T entity);
-        Task RemoveAsync(T entity);
+        Task<UserDto?> UpdateAsync(string id, UserRegisterDto user);
+        Task<string?> RemoveAsync(string id);
     }
 }

@@ -13,19 +13,22 @@ using System.Reflection;
 
 namespace StudyControlSoftware_API.Services.Base
 {
-    public class UsersBaseRepository<TEntity> : IUsersBaseRepository<TEntity> where TEntity : class
+    public abstract class UsersBaseRepository<TEntity> : IUsersBaseRepository<TEntity> where TEntity : class
     {
         protected readonly ApplicationContext _context;
         protected readonly UserManager<ApplicationUser> _userManager;
+        private readonly IPasswordHasher<ApplicationUser> _passwordHasher;
         protected readonly IMapper _mapper;
 
         public UsersBaseRepository(
             ApplicationContext context,
             UserManager<ApplicationUser> userManager,
+            IPasswordHasher<ApplicationUser> passwordHasher,
             IMapper mapper)
         {
             _context = context;
             _userManager = userManager;
+            _passwordHasher = passwordHasher;
             _mapper = mapper;
         }
 
@@ -74,9 +77,43 @@ namespace StudyControlSoftware_API.Services.Base
                 _mapper.Map<ApplicationUser, UserDto>(newUser));
         }
 
-        public async Task UpdateAsync(TEntity entity)
-            => await Task.Run(() => _context.Set<TEntity>().Update(entity));
-        public async Task RemoveAsync(TEntity entity)
-            => await Task.Run(() => _context.Set<TEntity>().Remove(entity));
+        public async Task<UserDto?> UpdateAsync(string id, UserRegisterDto user)
+        {
+            var updateUser = await _userManager.FindByIdAsync(id);
+            if (updateUser == null) return null;
+
+            updateUser.UserName = user.UserName;
+            updateUser.Email = user.Email;
+            updateUser.EmailConfirmed = false;
+            updateUser.PasswordHash =
+                _passwordHasher.HashPassword(updateUser, user.Password);
+            updateUser.PhoneNumber = user.PhoneNumber;
+
+            var result = await _userManager.UpdateAsync(updateUser);
+            if (!result.Succeeded) return null;
+
+            TEntity entity =
+                _mapper.Map(user,
+                _mapper.Map<ApplicationUser, TEntity>(updateUser));
+
+            await Task.Run(() => _context.Set<TEntity>().Update(entity));
+            await _context.SaveChangesAsync();
+
+            return _mapper.Map(
+                entity,
+                _mapper.Map<ApplicationUser, UserDto>(updateUser));
+        }
+
+        public async Task<string?> RemoveAsync(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null) return null;
+
+            var result = await _userManager.DeleteAsync(user);
+
+            return !result.Succeeded
+                ? null
+                : id;
+        }
     }
 }

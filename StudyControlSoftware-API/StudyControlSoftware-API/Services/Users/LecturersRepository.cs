@@ -4,22 +4,20 @@ using StudyControlSoftware_API.Database;
 using StudyControlSoftware_API.Database.Models;
 using StudyControlSoftware_API.Dto;
 using StudyControlSoftware_API.Dto.Users;
-using StudyControlSoftware_API.Interfaces.Users;
+using StudyControlSoftware_API.Interfaces.Base;
 using StudyControlSoftware_API.Services.Base;
 
 namespace StudyControlSoftware_API.Services.Users
 {
-    public class LecturersRepository : UsersBaseRepository<Lecturer>, ILecturersRepository
+    public class LecturersRepository : UsersBaseRepository<Lecturer>, IUsersBase
     {
         public LecturersRepository(
             ApplicationContext context,
             UserManager<ApplicationUser> userManager,
-            IMapper mapper) : base(context, userManager, mapper) { }
-
-        public async Task<UserDto?> CreateLecturer(UserRegisterDto user)
-            => await CreateAsync(user);
+            IPasswordHasher<ApplicationUser> passwordHasher,
+            IMapper mapper) : base(context, userManager, passwordHasher, mapper) { }
 
         public async Task<UsersTableDto> GetAllAsync(TableOptionsDto options)
-            => await FindAllAsync(options, x => x.LecturerId);
+            => await base.FindAllAsync(options, x => x.LecturerId);
     }
 }

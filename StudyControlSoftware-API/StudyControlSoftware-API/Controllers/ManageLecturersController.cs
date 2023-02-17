@@ -27,14 +27,34 @@ namespace StudyControlSoftware_API.Controllers
         }
 
         [HttpPost]
-        [ServiceFilter(typeof(EnsureUserNoExistsFilter))]
+        [EnsureUserExistsFilter(No = true)]
         public async Task<IActionResult> Create([FromBody] UserRegisterDto user)
         {
-            UserDto? newUser = await _repositoryManager.Lecturers.CreateLecturer(user);
+            UserDto? newUser = await _repositoryManager.Lecturers.CreateAsync(user);
 
             return newUser == null
                 ? StatusCode(StatusCodes.Status500InternalServerError)
                 : Ok(newUser);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Update(string id, [FromBody] UserRegisterDto user)
+        {
+            var _user = await _repositoryManager.Lecturers.UpdateAsync(id, user);
+
+            return _user == null
+                ? BadRequest()
+                : Ok(_user);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(string id)
+        {
+            var removedUserId = await _repositoryManager.Lecturers.RemoveAsync(id);
+
+            return removedUserId == null
+               ? BadRequest()
+               : Ok(removedUserId);
         }
     }
 }

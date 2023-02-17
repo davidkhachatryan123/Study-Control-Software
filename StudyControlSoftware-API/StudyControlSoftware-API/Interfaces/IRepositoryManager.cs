@@ -1,14 +1,14 @@
 ﻿using StudyControlSoftware_API.Interfaces.Auth;
+using StudyControlSoftware_API.Interfaces.Base;
 using StudyControlSoftware_API.Interfaces.Shared;
-using StudyControlSoftware_API.Interfaces.Users;
 
 namespace StudyControlSoftware_API.Interfaces
 {
     public interface IRepositoryManager
     {
         IUserAuthenticationRepository UserAuthentication { get; }
-        IAdminsRepository Admins { get; }
-        ILecturersRepository Lecturers { get; }
+        IUsersBase Admins { get; }
+        IUsersBase Lecturers { get; }
 
         IEmailRepository Email { get; }
         IAssetsRepository Assets { get; }

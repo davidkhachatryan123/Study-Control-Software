@@ -1,13 +1,15 @@
-﻿using StudyControlSoftware_API.Dto;
+﻿using System;
+using StudyControlSoftware_API.Dto;
 using StudyControlSoftware_API.Dto.Users;
 
-namespace StudyControlSoftware_API.Interfaces.Users
+namespace StudyControlSoftware_API.Interfaces.Base
 {
-    public interface IAdminsRepository
+    public interface IUsersBase
     {
         Task<UsersTableDto> GetAllAsync(TableOptionsDto options);
         Task<UserDto?> CreateAsync(UserRegisterDto user);
         Task<UserDto?> UpdateAsync(string id, UserRegisterDto user);
-        Task<string?> DeleteAsync(string id);
+        Task<string?> RemoveAsync(string id);
     }
 }
+

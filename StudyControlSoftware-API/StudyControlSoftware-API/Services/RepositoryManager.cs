@@ -4,8 +4,8 @@ using StudyControlSoftware_API.Database;
 using StudyControlSoftware_API.Database.Models;
 using StudyControlSoftware_API.Interfaces;
 using StudyControlSoftware_API.Interfaces.Auth;
+using StudyControlSoftware_API.Interfaces.Base;
 using StudyControlSoftware_API.Interfaces.Shared;
-using StudyControlSoftware_API.Interfaces.Users;
 using StudyControlSoftware_API.Services.Auth;
 using StudyControlSoftware_API.Services.Shared;
 using StudyControlSoftware_API.Services.Users;
@@ -24,8 +24,8 @@ namespace StudyControlSoftware_API.Services
         private readonly ILogger<RepositoryManager> _logger;
 
         private IUserAuthenticationRepository _userAuthenticationRepository;
-        private IAdminsRepository _adminsRepository;
-        private ILecturersRepository _lecturersRepository;
+        private IUsersBase _adminsRepository;
+        private IUsersBase _lecturersRepository;
         private IEmailRepository _emailRepository;
         private IAssetsRepository _assetsRepository;
 
@@ -58,7 +58,7 @@ namespace StudyControlSoftware_API.Services
             }
         }
 
-        public IAdminsRepository Admins
+        public IUsersBase Admins
         {
             get
             {
@@ -68,11 +68,11 @@ namespace StudyControlSoftware_API.Services
             }
         }
 
-        public ILecturersRepository Lecturers
+        public IUsersBase Lecturers
         {
             get
             {
-                _lecturersRepository ??= new LecturersRepository(_context, _userManager, _mapper);
+                _lecturersRepository ??= new LecturersRepository(_context, _userManager, _passwordHasher, _mapper);
 
                 return _lecturersRepository;
             }

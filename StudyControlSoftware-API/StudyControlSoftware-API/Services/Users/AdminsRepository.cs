@@ -4,12 +4,12 @@ using StudyControlSoftware_API.Database.Models;
 using StudyControlSoftware_API.Dto;
 using StudyControlSoftware_API.Dto.Users;
 using StudyControlSoftware_API.Enums;
-using StudyControlSoftware_API.Interfaces.Users;
+using StudyControlSoftware_API.Interfaces.Base;
 using System.Reflection;
 
 namespace StudyControlSoftware_API.Services.Users
 {
-    public class AdminsRepository : IAdminsRepository
+    public class AdminsRepository : IUsersBase
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IPasswordHasher<ApplicationUser> _passwordHasher;
@@ -73,12 +73,12 @@ namespace StudyControlSoftware_API.Services.Users
 
             var result = await _userManager.UpdateAsync(updateUser);
 
-            return !result.Succeeded || updateUser == null
+            return !result.Succeeded
                 ? null
                 : _mapper.Map<UserDto>(updateUser);
         }
 
-        public async Task<string?> DeleteAsync(string id)
+        public async Task<string?> RemoveAsync(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
             if (user == null) return null;
