@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using StudyControlSoftware_API.Database.Models;
 using StudyControlSoftware_API.Dto;
+using StudyControlSoftware_API.Dto.Education;
 using StudyControlSoftware_API.Enums;
 using StudyControlSoftware_API.Interfaces;
 
@@ -26,15 +26,15 @@ namespace StudyControlSoftware_API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] Course course)
+        public async Task<IActionResult> Create([FromBody] CourseDto course)
         {
             return Ok(await _repositoryManager.Courses.CreateAsync(course));
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update(int id, [FromBody] Course course)
+        public async Task<IActionResult> Update(int id, [FromBody] CourseDto course)
         {
-            Course? updatedCourse = await _repositoryManager.Courses.UpdateAsync(id, course);
+            CourseDto? updatedCourse = await _repositoryManager.Courses.UpdateAsync(id, course);
 
             return updatedCourse == null
                 ? BadRequest()

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using StudyControlSoftware_API.Database;
 using StudyControlSoftware_API.Database.Models;
+using StudyControlSoftware_API.Dto.Education;
 using StudyControlSoftware_API.Interfaces;
 using StudyControlSoftware_API.Interfaces.Auth;
 using StudyControlSoftware_API.Interfaces.Base;
@@ -31,8 +32,8 @@ namespace StudyControlSoftware_API.Services
         private IUsersBase _lecturersRepository;
         private IUsersBase _studentsRepository;
 
-        private IEducationBase<Course> _coursesRepository;
-        private IEducationBase<Faculty> _facultiesRepository;
+        private IEducationBaseRepository<Course, CourseDto> _coursesRepository;
+        private IEducationBaseRepository<Faculty, FacultyDto> _facultiesRepository;
 
         private IEmailRepository _emailRepository;
         private IAssetsRepository _assetsRepository;
@@ -98,7 +99,7 @@ namespace StudyControlSoftware_API.Services
         }
 
 
-        public IEducationBase<Course> Courses
+        public IEducationBaseRepository<Course, CourseDto> Courses
         {
             get
             {
@@ -108,7 +109,7 @@ namespace StudyControlSoftware_API.Services
             }
         }
 
-        public IEducationBase<Faculty> Faculties
+        public IEducationBaseRepository<Faculty, FacultyDto> Faculties
         {
             get
             {

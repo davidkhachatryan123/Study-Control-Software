@@ -54,6 +54,7 @@ namespace StudyControlSoftware_API.Extensions
             var mapperConfig = new MapperConfiguration(map =>
             {
                 map.AddProfile<UserMappingProfile>();
+                map.AddProfile<EducationMappingProfile>();
             });
 
             services.AddSingleton(mapperConfig.CreateMapper());

@@ -5,11 +5,14 @@ using StudyControlSoftware_API.Dto.Shared;
 using StudyControlSoftware_API.Interfaces.Base;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
+using StudyControlSoftware_API.Database.Base;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace StudyControlSoftware_API.Services.Base
 {
-	public class EducationBaseRepository<T> : IEducationBase<T> where T : class
-	{
+	public class EducationBaseRepository<TEntity, TDto>
+        : IEducationBaseRepository<TEntity, TDto> where TEntity : class where TDto : class
+    {
         private readonly ApplicationContext _context;
         private readonly IMapper _mapper;
 
@@ -21,56 +24,58 @@ namespace StudyControlSoftware_API.Services.Base
             _mapper = mapper;
         }
 
-        public async Task<TablesDataDto<T>> GetAllAsync(TableOptionsDto options)
+        public async Task<TablesDataDto<TDto>> GetAllAsync(TableOptionsDto options)
         {
             var propertyInfos =
-                typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+                typeof(TEntity).GetProperties(BindingFlags.Public | BindingFlags.Instance);
             var objectProperty =
                 propertyInfos.FirstOrDefault(
                     pi => pi.Name.Equals(
                         options.Sort, StringComparison.InvariantCultureIgnoreCase));
 
-            return new TablesDataDto<T>
+            return new TablesDataDto<TDto>
             {
-                Entities = (await _context.Set<T>().ToArrayAsync())
+                Entities = (await _context.Set<TEntity>().ToArrayAsync())
                         .OrderBy(x => options.OrderDirection == "asc" ? objectProperty!.GetValue(x, null) : null)
                         .OrderByDescending(x => options.OrderDirection == "desc" ? objectProperty!.GetValue(x, null) : null)
                         .Skip((options.Page - 1) * options.PageSize)
-                        .Take(options.PageSize),
+                        .Take(options.PageSize)
+                        .Select(e => _mapper.Map<TDto>(e)),
 
-                TotalCount = _context.Courses.Count()
+                TotalCount = _context.Set<TEntity>().Count()
             };
         }
 
-        public async Task<T> CreateAsync(T entity)
+        public async Task<TDto> CreateAsync(TDto data)
         {
-            _context.Set<T>().Add(entity);
+            _context.Set<TEntity>().Add(
+                _mapper.Map<TEntity>(data));
+
             await _context.SaveChangesAsync();
 
-            return entity;
+            return data;
         }
 
-        public async Task<T?> UpdateAsync(int id, T entity)
+        public async Task<TDto?> UpdateAsync(int id, TDto data)
         {
             var propertyInfos =
-                typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+                typeof(TEntity).GetProperties(BindingFlags.Public | BindingFlags.Instance);
             var objectProperty =
                 propertyInfos.FirstOrDefault(
             pi => pi.Name.Equals(
                         "id", StringComparison.InvariantCultureIgnoreCase));
 
-            var updateEntity = (await _context.Set<T>().ToListAsync())
+            var updateEntity = (await _context.Set<TEntity>().ToListAsync())
                 .FirstOrDefault(c =>
                 Convert.ToInt32(objectProperty!.GetValue(c, null)) == id);
 
             if (updateEntity != null)
             {
-                var a = _mapper.Map(updateEntity, entity);
+                updateEntity = _mapper.Map(data, updateEntity);
 
-                //_context.Set<T>().Update(updateEntity);
                 await _context.SaveChangesAsync();
 
-                return updateEntity;
+                return _mapper.Map<TDto>(updateEntity);
             }
             else
                 return null;
@@ -79,19 +84,19 @@ namespace StudyControlSoftware_API.Services.Base
         public async Task<int?> DeleteAsync(int id)
         {
             var propertyInfos =
-                typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+                typeof(TEntity).GetProperties(BindingFlags.Public | BindingFlags.Instance);
             var objectProperty =
                 propertyInfos.FirstOrDefault(
             pi => pi.Name.Equals(
                         "id", StringComparison.InvariantCultureIgnoreCase));
 
-            var entity = (await _context.Set<T>().ToListAsync())
+            var entity = (await _context.Set<TEntity>().ToListAsync())
                 .FirstOrDefault(c =>
                 Convert.ToInt32(objectProperty!.GetValue(c, null)) == id);
 
             if (entity != null)
             {
-                _context.Set<T>().Remove(entity);
+                _context.Set<TEntity>().Remove(entity);
                 await _context.SaveChangesAsync();
 
                 return int.Parse(objectProperty!.GetValue(entity, null)!.ToString()!);

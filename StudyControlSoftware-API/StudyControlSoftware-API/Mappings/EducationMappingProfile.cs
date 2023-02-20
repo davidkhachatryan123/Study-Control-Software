@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using StudyControlSoftware_API.Database.Models;
+using StudyControlSoftware_API.Dto.Education;
 
 namespace StudyControlSoftware_API.Mappings
 {
@@ -7,7 +8,12 @@ namespace StudyControlSoftware_API.Mappings
     {
         public EducationMappingProfile()
         {
-            CreateMap<Course, Course>()
+            CreateMap<Course, CourseDto>();
+            CreateMap<Faculty, FacultyDto>();
+
+            CreateMap<CourseDto, Course>()
+                .ForMember(x => x.Id, opt => opt.Ignore());
+            CreateMap<FacultyDto, Faculty>()
                 .ForMember(x => x.Id, opt => opt.Ignore());
         }
     }
