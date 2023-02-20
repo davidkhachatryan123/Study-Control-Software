@@ -26,6 +26,14 @@
 
   <ItemGroup>
     <Folder Include="Assets\" />
+    <Folder Include="Interfaces\Education\" />
+    <Folder Include="Services\Education\" />
+    <Folder Include="Dto\Education\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Interfaces\Education\" />
+    <None Remove="Services\Education\" />
+    <None Remove="Dto\Education\" />
+  </ItemGroup>
 </Project>
