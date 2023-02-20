@@ -6,9 +6,9 @@ using StudyControlSoftware_API.Services.Base;
 
 namespace StudyControlSoftware_API.Services.Education
 {
-    public class CoursesRepository : EducationBaseRepository<Course>, ICoursesRepository
+	public class FacultiesRepository : EducationBaseRepository<Faculty>, ICoursesRepository
     {
-        public CoursesRepository(
+        public FacultiesRepository(
             ApplicationContext context,
             IMapper mapper) : base(context, mapper) { }
     }

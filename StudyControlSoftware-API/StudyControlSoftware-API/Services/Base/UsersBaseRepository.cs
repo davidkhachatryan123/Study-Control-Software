@@ -6,6 +6,7 @@ using StudyControlSoftware_API.Database;
 using StudyControlSoftware_API.Database.Base;
 using StudyControlSoftware_API.Database.Models;
 using StudyControlSoftware_API.Dto;
+using StudyControlSoftware_API.Dto.Shared;
 using StudyControlSoftware_API.Dto.Users;
 using StudyControlSoftware_API.Enums;
 using StudyControlSoftware_API.Interfaces.Base;
@@ -32,16 +33,16 @@ namespace StudyControlSoftware_API.Services.Base
             _mapper = mapper;
         }
 
-        public async Task<UsersTableDto> FindAllAsync(TableOptionsDto options, Func<TEntity, string> foreignKey)
+        public async Task<TablesDataDto<UserDto>> FindAllAsync(TableOptionsDto options, Func<TEntity, string> foreignKey)
         {
             var propertyInfos =
                typeof(UserDto).GetProperties(BindingFlags.Public | BindingFlags.Instance);
             var objectProperty =
                 propertyInfos.FirstOrDefault(pi => pi.Name.Equals(options.Sort, StringComparison.InvariantCultureIgnoreCase));
 
-            return new UsersTableDto
+            return new TablesDataDto<UserDto>
             {
-                Users = (await _userManager.GetUsersInRoleAsync(typeof(TEntity).Name))
+                Entities = (await _userManager.GetUsersInRoleAsync(typeof(TEntity).Name))
                         .Join(_context.Set<TEntity>(), u => u.Id, foreignKey,
                             (u, e) => _mapper.Map(
                                 e,

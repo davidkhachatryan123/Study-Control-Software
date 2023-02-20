@@ -1,6 +1,6 @@
-﻿using StudyControlSoftware_API.Interfaces.Auth;
+﻿using StudyControlSoftware_API.Database.Models;
+using StudyControlSoftware_API.Interfaces.Auth;
 using StudyControlSoftware_API.Interfaces.Base;
-using StudyControlSoftware_API.Interfaces.Education;
 using StudyControlSoftware_API.Interfaces.Shared;
 
 namespace StudyControlSoftware_API.Interfaces
@@ -13,7 +13,8 @@ namespace StudyControlSoftware_API.Interfaces
         IUsersBase Lecturers { get; }
         IUsersBase Students { get; }
 
-        ICoursesRepository Courses { get; }
+        IEducationBase<Course> Courses { get; }
+        IEducationBase<Faculty> Faculties { get; }
 
         IEmailRepository Email { get; }
         IAssetsRepository Assets { get; }

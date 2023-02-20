@@ -1,4 +1,5 @@
-﻿using StudyControlSoftware_API.Database.Base;
+﻿using System.Text.Json.Serialization;
+using StudyControlSoftware_API.Database.Base;
 
 namespace StudyControlSoftware_API.Database.Models
 {
@@ -12,7 +13,9 @@ namespace StudyControlSoftware_API.Database.Models
 
         public string Name { get; set; } = null!;
 
+        [JsonIgnore]
         public virtual ICollection<Student> Students { get; set; }
+        [JsonIgnore]
         public virtual ICollection<FacultyCourse> Courses { get; set; }
     }
 }

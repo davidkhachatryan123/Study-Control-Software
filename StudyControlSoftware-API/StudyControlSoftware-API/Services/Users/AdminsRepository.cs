@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using StudyControlSoftware_API.Database.Models;
 using StudyControlSoftware_API.Dto;
+using StudyControlSoftware_API.Dto.Shared;
 using StudyControlSoftware_API.Dto.Users;
 using StudyControlSoftware_API.Enums;
 using StudyControlSoftware_API.Interfaces.Base;
@@ -25,16 +26,16 @@ namespace StudyControlSoftware_API.Services.Users
             _mapper = mapper;
         }
 
-        public async Task<UsersTableDto> GetAllAsync(TableOptionsDto options)
+        public async Task<TablesDataDto<UserDto>> GetAllAsync(TableOptionsDto options)
         {
             var propertyInfos = 
                 typeof(ApplicationUser).GetProperties(BindingFlags.Public | BindingFlags.Instance);
             var objectProperty = 
                 propertyInfos.FirstOrDefault(pi => pi.Name.Equals(options.Sort, StringComparison.InvariantCultureIgnoreCase));
 
-            return new UsersTableDto
+            return new TablesDataDto<UserDto>
             {
-                Users = (await _userManager.GetUsersInRoleAsync(nameof(UserRoles.Admin)))
+                Entities = (await _userManager.GetUsersInRoleAsync(nameof(UserRoles.Admin)))
 
                         .OrderBy(x => options.OrderDirection == "asc" ? objectProperty!.GetValue(x, null) : null)
                         .OrderByDescending(x => options.OrderDirection == "desc" ? objectProperty!.GetValue(x, null) : null)

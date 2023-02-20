@@ -31,7 +31,8 @@ namespace StudyControlSoftware_API.Services
         private IUsersBase _lecturersRepository;
         private IUsersBase _studentsRepository;
 
-        private ICoursesRepository _coursesRepository;
+        private IEducationBase<Course> _coursesRepository;
+        private IEducationBase<Faculty> _facultiesRepository;
 
         private IEmailRepository _emailRepository;
         private IAssetsRepository _assetsRepository;
@@ -97,13 +98,23 @@ namespace StudyControlSoftware_API.Services
         }
 
 
-        public ICoursesRepository Courses
+        public IEducationBase<Course> Courses
         {
             get
             {
-                _coursesRepository ??= new CoursesRepository(_context);
+                _coursesRepository ??= new CoursesRepository(_context, _mapper);
 
                 return _coursesRepository;
+            }
+        }
+
+        public IEducationBase<Faculty> Faculties
+        {
+            get
+            {
+                _facultiesRepository ??= new FacultiesRepository(_context, _mapper);
+
+                return _facultiesRepository;
             }
         }
 

@@ -28,12 +28,12 @@
     <Folder Include="Assets\" />
     <Folder Include="Interfaces\Education\" />
     <Folder Include="Services\Education\" />
-    <Folder Include="Dto\Education\" />
+    <Folder Include="Dto\Shared\" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="Interfaces\Education\" />
     <None Remove="Services\Education\" />
-    <None Remove="Dto\Education\" />
+    <None Remove="Dto\Shared\" />
   </ItemGroup>
 </Project>
