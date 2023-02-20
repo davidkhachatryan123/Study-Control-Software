@@ -9,6 +9,7 @@ namespace StudyControlSoftware_API.Interfaces
         IUserAuthenticationRepository UserAuthentication { get; }
         IUsersBase Admins { get; }
         IUsersBase Lecturers { get; }
+        IUsersBase Students { get; }
 
         IEmailRepository Email { get; }
         IAssetsRepository Assets { get; }

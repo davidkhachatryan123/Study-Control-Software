@@ -22,7 +22,11 @@ namespace StudyControlSoftware_API.Mappings
             CreateMap<Lecturer, UserDto>();
 
 
-            CreateMap<ApplicationUser, Student>();
+            CreateMap<ApplicationUser, Student>()
+                .ForMember(l => l.StudentId, opt => opt.MapFrom(u => u.Id));
+            CreateMap<UserRegisterDto, Student>();
+
+            CreateMap<Student, UserDto>();
         }
     }
 }
