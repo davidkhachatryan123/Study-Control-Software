@@ -1,5 +1,4 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using StudyControlSoftware_API.Database;
 using StudyControlSoftware_API.Database.Models;
