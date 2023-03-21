@@ -6,7 +6,6 @@ using StudyControlSoftware_API.Dto.Education;
 using StudyControlSoftware_API.Interfaces;
 using StudyControlSoftware_API.Interfaces.Auth;
 using StudyControlSoftware_API.Interfaces.Base;
-using StudyControlSoftware_API.Interfaces.Education;
 using StudyControlSoftware_API.Interfaces.Shared;
 using StudyControlSoftware_API.Services.Auth;
 using StudyControlSoftware_API.Services.Education;
@@ -30,10 +29,10 @@ namespace StudyControlSoftware_API.Services
 
         private IUsersBase _adminsRepository;
         private IUsersBase _lecturersRepository;
-        private IUsersBase _studentsRepository;
+        private StudentsRepository _studentsRepository;
 
-        private IEducationBaseRepository<Course, CourseDto> _coursesRepository;
-        private IEducationBaseRepository<Faculty, FacultyDto> _facultiesRepository;
+        private FacultiesRepository<Faculty, FacultyDto> _facultiesRepository;
+        private CoursesRepository<Course, CourseDto> _coursesRepository;
 
         private IEmailRepository _emailRepository;
         private IAssetsRepository _assetsRepository;
@@ -88,7 +87,7 @@ namespace StudyControlSoftware_API.Services
             }
         }
 
-        public IUsersBase Students
+        public StudentsRepository Students
         {
             get
             {
@@ -99,23 +98,23 @@ namespace StudyControlSoftware_API.Services
         }
 
 
-        public IEducationBaseRepository<Course, CourseDto> Courses
+        public FacultiesRepository<Faculty, FacultyDto> Faculties
         {
             get
             {
-                _coursesRepository ??= new CoursesRepository(_context, _mapper);
+                _facultiesRepository ??= new FacultiesRepository<Faculty, FacultyDto>(_context, _mapper);
 
-                return _coursesRepository;
+                return _facultiesRepository;
             }
         }
 
-        public IEducationBaseRepository<Faculty, FacultyDto> Faculties
+        public CoursesRepository<Course, CourseDto> Courses
         {
             get
             {
-                _facultiesRepository ??= new FacultiesRepository(_context, _mapper);
+                _coursesRepository ??= new CoursesRepository<Course, CourseDto>(_context, _mapper);
 
-                return _facultiesRepository;
+                return _coursesRepository;
             }
         }
 

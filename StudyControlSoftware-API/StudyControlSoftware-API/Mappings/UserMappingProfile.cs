@@ -27,6 +27,10 @@ namespace StudyControlSoftware_API.Mappings
             CreateMap<UserRegisterDto, Student>();
 
             CreateMap<Student, UserDto>();
+
+
+            CreateMap<Lecturer, LecturerDto>()
+                .ForMember(l => l.Id, opt => opt.MapFrom(u => u.LecturerId));
         }
     }
 }

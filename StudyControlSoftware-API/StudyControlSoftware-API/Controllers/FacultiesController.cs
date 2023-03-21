@@ -51,6 +51,31 @@ namespace StudyControlSoftware_API.Controllers
                 ? BadRequest()
                 : Ok(deleteId);
         }
+
+
+        [HttpPost("{id}/GetCourses")]
+        public async Task<IActionResult> GetCourses(int id)
+        {
+            return Ok(await _repositoryManager.Faculties.GetAllCoursesAsync(id));
+        }
+
+        [HttpPost("{id}/AddCourse")]
+        public async Task<IActionResult> AddCourse(int id, [FromBody] List<int> courses)
+        {
+            await _repositoryManager.Faculties.AddCoursesAsync(id, courses);
+
+            return Ok();
+        }
+
+        [HttpDelete("{id}/DeleteCourse/{courseId}")]
+        public async Task<IActionResult> DeleteCourse(int id, int courseId)
+        {
+            bool result = await _repositoryManager.Faculties.DeleteCourseAsync(id, courseId);
+
+            return !result
+                ? BadRequest()
+                : Ok();
+        }
     }
 }
 

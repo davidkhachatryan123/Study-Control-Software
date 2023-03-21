@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using StudyControlSoftware_API.Database.Models;
 using StudyControlSoftware_API.Dto;
 using StudyControlSoftware_API.Dto.Users;
 using StudyControlSoftware_API.Enums;
@@ -55,6 +56,37 @@ namespace StudyControlSoftware_API.Controllers
             return removedUserId == null
                ? BadRequest()
                : Ok(removedUserId);
+        }
+
+
+        [HttpGet("{id}/GetFaculty")]
+        public async Task<IActionResult> GetFaculty(string id)
+        {
+            var faculty = await _repositoryManager.Students.GetFacultyAsync(id);
+
+            return faculty == null
+                ? BadRequest()
+                : Ok(faculty);
+        }
+
+        [HttpPost("{id}/SetFaculty")]
+        public async Task<IActionResult> SetFaculty(string id, [FromBody] int facultyId)
+        {
+            var faculty = await _repositoryManager.Students.SetFacultyAsync(id, facultyId);
+
+            return faculty == null
+                ? BadRequest()
+                : Ok(faculty);
+        }
+
+        [HttpDelete("{id}/DeleteFaculty")]
+        public async Task<IActionResult> DeleteFaculty(string id)
+        {
+            var faculty = await _repositoryManager.Students.DeleteFacultyAsync(id);
+
+            return faculty == null
+                ? BadRequest()
+                : Ok(faculty);
         }
     }
 }

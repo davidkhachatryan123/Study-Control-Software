@@ -6,7 +6,6 @@ using StudyControlSoftware_API.Interfaces.Base;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using StudyControlSoftware_API.Database.Base;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace StudyControlSoftware_API.Services.Base
 {

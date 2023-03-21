@@ -2,7 +2,11 @@
 using StudyControlSoftware_API.Dto.Education;
 using StudyControlSoftware_API.Interfaces.Auth;
 using StudyControlSoftware_API.Interfaces.Base;
+using StudyControlSoftware_API.Interfaces.Education;
 using StudyControlSoftware_API.Interfaces.Shared;
+using StudyControlSoftware_API.Services.Auth;
+using StudyControlSoftware_API.Services.Education;
+using StudyControlSoftware_API.Services.Users;
 
 namespace StudyControlSoftware_API.Interfaces
 {
@@ -12,10 +16,10 @@ namespace StudyControlSoftware_API.Interfaces
 
         IUsersBase Admins { get; }
         IUsersBase Lecturers { get; }
-        IUsersBase Students { get; }
+        StudentsRepository Students { get; }
 
-        IEducationBaseRepository<Course, CourseDto> Courses { get; }
-        IEducationBaseRepository<Faculty, FacultyDto> Faculties { get; }
+        FacultiesRepository<Faculty, FacultyDto> Faculties { get; }
+        CoursesRepository<Course, CourseDto> Courses { get; }
 
         IEmailRepository Email { get; }
         IAssetsRepository Assets { get; }
