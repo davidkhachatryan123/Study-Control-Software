@@ -5,9 +5,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from '../../../../services';
 import { User } from '../../../../models';
 import { ResponseModel } from 'src/app/website/models';
-import { LoginDto } from 'src/app/website/dto';
-import { catchError } from 'rxjs';
+import { AuthResponseDto, LoginDto } from 'src/app/website/dto';
+import { catchError, combineLatest } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'login-user',
@@ -17,11 +18,13 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 export class UserComponent {
   @Output() loginForm: FormGroup;
-  @Output() nextEvent = new EventEmitter<boolean>();
+  @Output() nextEvent = new EventEmitter();
 
   constructor(
     private authService: AuthService,
     private _snackBar: MatSnackBar,
+    private _router: Router,
+    private _route: ActivatedRoute,
     ) {
 
     this.loginForm = new FormGroup({
@@ -44,11 +47,21 @@ export class UserComponent {
         this.loginForm.controls['password'].value
       ))
       .subscribe({
-        next: (data: string) => {
+        next: () => {
+
+          this._router.navigate([], {
+            relativeTo: this._route,
+            queryParams: {
+              username: this.loginForm.controls['username'].value
+            },
+            queryParamsHandling: 'merge',
+            skipLocationChange: false
+          });
+
           this.nextEvent.emit();
         },
         error: (error: HttpErrorResponse) => {
-          this._snackBar.open(error.error, 'Ok', {
+          this._snackBar.open(error.error.errorMessage, 'Ok', {
             duration: 10000,
           });
         }

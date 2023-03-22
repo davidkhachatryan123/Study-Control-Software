@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from "src/environments/environment";
 import { map, Observable } from 'rxjs';
 
-import { AppUser, User, TwoFA } from '../models';
+import { AppUser, User } from '../models';
 import { ResponseModel } from 'src/app/website/models';
-import { LoginDto } from 'src/app/website/dto';
+import { AuthResponseDto, LoginDto, TwoFADto } from 'src/app/website/dto';
 
 @Injectable({
   providedIn: 'root'
@@ -19,10 +19,17 @@ export class AuthService {
   }
 
   login(loginDto: LoginDto) {
-    return this.http.post(this.apiUrl + "/login", loginDto);
+    return this.http.post<AuthResponseDto>(this.apiUrl + "/login", loginDto);
   }
 
-  twoFA(twoFA: TwoFA) {
-    return this.http.post(this.apiUrl + "/2fa", twoFA);
+  twoFA(twoFADto: TwoFADto) {
+    return this.http.post<AuthResponseDto>(this.apiUrl + "/2fa", twoFADto);
+  }
+
+  sendConfirmEmail(email: string) {
+    const params = new HttpParams()
+    .set('email', email);
+
+    return this.http.post(this.apiUrl + "/SendConfirmEmailMessage", null, { params: params });
   }
 }

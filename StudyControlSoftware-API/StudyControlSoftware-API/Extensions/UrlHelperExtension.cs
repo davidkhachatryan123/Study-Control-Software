@@ -9,12 +9,12 @@ namespace StudyControlSoftware_API.Extensions
 {
     public static class UrlHelperExtension
     {
-        public static async Task<string?> GenerateConfirmationEmailLinkAsync(this IUrlHelper url, IRepositoryManager repositoryManager, string username)
+        public static async Task<string?> GenerateConfirmationEmailLinkAsync(this IUrlHelper url, IRepositoryManager repositoryManager, string email)
         {
-            var email =
-                await repositoryManager.UserAuthentication.GetEmailAsync(username);
+            //var email =
+            //x    await repositoryManager.UserAuthentication.GetEmailAsync(username);
             var token =
-                await repositoryManager.UserAuthentication.GenerateEmailConfirmToken(username);
+                await repositoryManager.UserAuthentication.GenerateEmailConfirmToken(email);
 
             return email == null || token == null
                 ? null

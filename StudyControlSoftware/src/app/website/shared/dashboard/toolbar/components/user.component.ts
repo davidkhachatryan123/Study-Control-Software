@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 
 import { AuthService } from 'src/app/website/routing/auth/services';
 import { appRoutes } from 'src/app/website/consts';
+import { StorageService } from 'src/app/website/services';
 
 @Component({
   selector: 'app-dashboard-toolbar-user',
@@ -14,19 +15,19 @@ import { appRoutes } from 'src/app/website/consts';
 
 export class UserComponent implements OnInit {
   public routers: typeof appRoutes = appRoutes;
-  public user: AppUser | undefined = new AppUser('', '', '', '');
+  public user: AppUser | undefined = new AppUser('', '', '');
 
   constructor(
-    private authService: AuthService,
+    private storageService: StorageService,
     private router: Router
   ) { }
 
   ngOnInit() {
-    //this.authService.getUser().subscribe(data => this.user = data);
+    this.user = this.storageService.getUser();
   }
 
   signOut() {
-    //this.authService.signOut().subscribe();
+    this.storageService.clean();
     this.router.navigate([this.routers.AUTH]);
   }
 }

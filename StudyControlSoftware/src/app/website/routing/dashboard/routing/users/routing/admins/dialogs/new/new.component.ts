@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { AdminDto } from 'src/app/website/dto/adminDto';
 
 import { roles } from 'src/app/website/routing/auth/models';
 import { Admin } from '../../../../models';
@@ -18,7 +19,7 @@ export class NewDialogComponent {
   @Input() title: string = "";
   @Input() submitBtnText: string = "";
 
-  @Output() onSubmit = new EventEmitter<Admin>();
+  @Output() onSubmit = new EventEmitter<any>();
 
   constructor(
     public dialogRef: MatDialogRef<NewDialogComponent>,
@@ -48,14 +49,17 @@ export class NewDialogComponent {
 
   onSubmitEvent() {
     if(this.newUserForm.valid) {
-      this.onSubmit.emit(new Admin(
-        this.data.user.id,
-        this.newUserForm.controls['username'].value,
-        this.newUserForm.controls['password'].value,
-        this.newUserForm.controls['email'].value,
-        false,
-        this.newUserForm.controls['phoneNumber'].value
-      ));
+      this.onSubmit.emit({
+        id: this.data.user.id,
+        user: new AdminDto(
+          this.data.user.id,
+          this.newUserForm.controls['username'].value,
+          this.newUserForm.controls['password'].value,
+          this.newUserForm.controls['confirmPassword'].value,
+          this.newUserForm.controls['email'].value,
+          this.newUserForm.controls['phoneNumber'].value
+        )
+      });
     }
   }
 }

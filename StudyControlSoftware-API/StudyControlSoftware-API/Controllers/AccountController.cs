@@ -50,19 +50,36 @@ namespace StudyControlSoftware_API.Controllers
                     _repositoryManager.Assets.GetEmailConfirmationMessage(
                         confirmationLink));
 
-                return Unauthorized("Email doesn't confirmed! Confirmation email sended to Your Email!");
+                return Unauthorized(new AuthResponseDto
+                {
+                    ErrorMessage = "Email doesn't confirmed! Confirmation email sended to Your Email!"
+                });
             }
             else
-                return Unauthorized("Wrong login or password");
+                return Unauthorized(new AuthResponseDto
+                {
+                    ErrorMessage = "Wrong login or password!"
+                });
         }
 
         [Route("2FA")]
         [HttpPost]
         public async Task<IActionResult> Login2FA([FromBody] TwoFADto twoFA)
         {
+            var email = await _repositoryManager.UserAuthentication.GetEmailAsync(twoFA.Username);
+
             return !await _repositoryManager.UserAuthentication.Validate2FACodeAsync(twoFA)
-                ? Unauthorized("Incorrect 2FA token!")
-                : Ok(new { Token = await _repositoryManager.UserAuthentication.CreateTokenAsync() });
+                ? Unauthorized(new AuthResponseDto
+                {
+                    ErrorMessage = "Incorrect 2FA token!"
+                })
+                : Ok(new AuthResponseDto
+                {
+                    IsAuthSuccessful = true,
+                    Token = await _repositoryManager.UserAuthentication.CreateTokenAsync(),
+                    Email = email,
+                    Role = await _repositoryManager.UserAuthentication.GetRole(email!)
+                });
         }
 
         [Route("ConfirmEmail")]
@@ -77,11 +94,11 @@ namespace StudyControlSoftware_API.Controllers
         [Authorize(Policy = nameof(UserRoles.Admin))]
         [Route("SendConfirmEmailMessage")]
         [HttpPost]
-        public async Task<IActionResult> SendConfirmEmailMessage([FromBody] string username)
+        public async Task<IActionResult> SendConfirmEmailMessage(string email)
         {
-            var email = await _repositoryManager.UserAuthentication.GetEmailAsync(username);
+            //var email = await _repositoryManager.UserAuthentication.GetEmailAsync(username);
             var confirmationLink = await Url.GenerateConfirmationEmailLinkAsync(
-                    _repositoryManager, username);
+                    _repositoryManager, email);
 
             if (email == null || confirmationLink == null) return BadRequest();
 

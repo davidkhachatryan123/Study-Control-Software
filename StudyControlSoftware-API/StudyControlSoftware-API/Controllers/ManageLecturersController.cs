@@ -37,7 +37,7 @@ namespace StudyControlSoftware_API.Controllers
                 : Ok(newUser);
         }
 
-        [HttpPut]
+        [HttpPut("{id}")]
         public async Task<IActionResult> Update(string id, [FromBody] UserRegisterDto user)
         {
             var _user = await _repositoryManager.Lecturers.UpdateAsync(id, user);

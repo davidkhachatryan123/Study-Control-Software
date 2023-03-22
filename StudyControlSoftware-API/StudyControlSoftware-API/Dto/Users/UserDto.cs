@@ -12,7 +12,7 @@ namespace StudyControlSoftware_API.Dto.Users
 
 
         [Required(ErrorMessage = "UserName is required")]
-        public string UserName { get; set; } = null!;
+        public string Username { get; set; } = null!;
 
 
         [Required(ErrorMessage = "Email is required")]

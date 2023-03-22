@@ -13,10 +13,7 @@ import { NewDialogComponent } from '../lecturers/dialogs';
   templateUrl: 'students.component.html'
 })
 export class StudentsComponent {
-  data: Student[] = [
-    new Student(1, 'David', 'Khachatryan', 'david', '', 'davidkhachatryan359@gmail.com', true, '+37441214803'),
-    new Student(2, 'Hayk', 'Khachatryan', 'hayk', '', 'haykkhachatryan359@gmail.com', false, '+37494214803')
-  ];
+  data: Student[] = [];
   resultsLength: number = 0;
 
   private userListOptions: TableOptions;
@@ -52,7 +49,7 @@ export class StudentsComponent {
   openNewDialog() {
     this.createDialogRef = this.dialog.open(NewDialogComponent, {
       width: '500px',
-      data: { user: new Student(-1, '', '', '', '', '', false, '') }
+      data: { user: new Student('', '', '', '', '', '', false, '') }
     });
 
     this.createDialogRef.componentInstance.title = "Create new Student";

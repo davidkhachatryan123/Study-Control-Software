@@ -30,7 +30,7 @@ export class LecturersCardComponent implements OnInit, AfterViewInit {
 
   private userListOptions: TableOptions = new TableOptions('', '', 0, 0);
 
-  appUser: AppUser = new AppUser('', '', '', '');
+  appUser: AppUser = new AppUser('', '', '');
 
   constructor(
     /*private authService: AuthService*/

@@ -2,7 +2,7 @@ import { UserSkel } from "./user-skel";
 
 export class Admin extends UserSkel {
   constructor(
-    public id: number,
+    public id: string,
     public username: string,
     public password: string,
     public email: string,

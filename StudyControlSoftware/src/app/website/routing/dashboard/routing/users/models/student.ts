@@ -2,7 +2,7 @@ import { UserSkel } from "./user-skel";
 
 export class Student extends UserSkel {
   constructor(
-    public id: number,
+    public id: string,
     public surname: string,
     public lastname: string,
     public username: string = '',

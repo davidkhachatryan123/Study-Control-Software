@@ -1,12 +1,15 @@
 import { Component, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { AuthService } from '../../../../services/auth.service';
 import { ResponseModel } from 'src/app/website/models';
-import { TwoFA } from '../../../../models';
 import { appRoutes } from 'src/app/website/consts';
+import { AuthResponseDto, TwoFADto } from 'src/app/website/dto';
+import { HttpErrorResponse } from '@angular/common/http';
+import { StorageService } from 'src/app/website/services';
+import { AppUser } from '../../../../models';
 
 @Component({
   selector: 'login-2fa',
@@ -20,8 +23,10 @@ export class TwoFAComponent {
 
   constructor(
     private authService: AuthService,
+    private storageService: StorageService,
     private _snackBar: MatSnackBar,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
     ) {
     this.twoFAForm = new FormGroup({
         "token": new FormControl('', [
@@ -34,18 +39,22 @@ export class TwoFAComponent {
   submit(){
     if(this.twoFAForm.valid) {
 
-      this.authService.twoFA(new TwoFA(
-        this.twoFAForm.controls['token'].value,
-      )).subscribe({
-        next: (data: any) => {
-          console.log(data);
+      let username = this.route.snapshot.queryParams['username'];
 
-          this.router.navigate([this.routers.DASHBOARD])
+      this.authService.twoFA(new TwoFADto(
+        username,
+        this.twoFAForm.controls['token'].value
+      )).subscribe({
+        next: (data: AuthResponseDto) => {
+          if (data.isAuthSuccessful) {
+            this.storageService.saveUser(new AppUser(username, data.email, data.role));
+            this.storageService.saveToken(data.token);
+
+            this.router.navigate([this.routers.DASHBOARD])
+          }
         },
-        error: (error: any) => {
-          console.log(error);
-          
-          this._snackBar.open(error.error, 'Ok', {
+        error: (error: HttpErrorResponse) => {
+          this._snackBar.open(error.error.errorMessage, 'Ok', {
             duration: 10000,
           });
         }

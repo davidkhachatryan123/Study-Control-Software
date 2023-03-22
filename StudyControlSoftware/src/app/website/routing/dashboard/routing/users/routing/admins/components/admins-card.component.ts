@@ -6,6 +6,7 @@ import { MatTable } from '@angular/material/table';
 
 import { TableOptions } from 'src/app/website/models';
 import { AppUser } from 'src/app/website/routing/auth/models';
+import { StorageService } from 'src/app/website/services';
 import { Admin } from '../../../models';
 
 @Component({
@@ -14,7 +15,7 @@ import { Admin } from '../../../models';
 })
 
 export class AdminsCardComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['username', 'email', 'emailConfirmed', 'phone', 'actions'];
+  displayedColumns: string[] = ['username', 'email', 'emailConfirmed', 'phoneNumber', 'actions'];
 
   @Input() data: Admin[] = [];
   @Input() resultsLength: number = 0;
@@ -30,14 +31,14 @@ export class AdminsCardComponent implements OnInit, AfterViewInit {
 
   private userListOptions: TableOptions = new TableOptions('', '', 0, 0);
 
-  appUser: AppUser = new AppUser('', '', '', '');
+  appUser: AppUser;
 
   constructor(
-    /*private authService: AuthService*/
+    private storageService: StorageService
   ) { }
 
   ngOnInit() {
-    //this.authService.getUser().subscribe(data => this.appUser = data);
+    this.appUser = this.storageService.getUser();
   }
 
   ngAfterViewInit() {

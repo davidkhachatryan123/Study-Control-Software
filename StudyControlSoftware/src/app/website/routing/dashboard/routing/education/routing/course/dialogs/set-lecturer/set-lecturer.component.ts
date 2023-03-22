@@ -18,10 +18,7 @@ export class SetLecturerDialogComponent {
   lecturer: Lecturer | undefined;
 
   // Get this values in ngOnInit() function
-  allԼecturers: Lecturer[] = [
-    new Lecturer(1, 'Դավիթ', 'Խաչատրյան'),
-    new Lecturer(2, 'Հայկ', 'Խաչատրյան'),
-  ];
+  allԼecturers: Lecturer[] = [];
 
   @ViewChild('lecturerInput') lecturerInput: ElementRef<HTMLInputElement>;
 

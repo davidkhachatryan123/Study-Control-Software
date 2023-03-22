@@ -10,6 +10,7 @@ import { LoadingInterceptor } from './website/loading/interceptor/loading.interc
 
 import { WebSiteModule } from './website/website.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AuthInterceptor } from './website/interceptor/auth.interceptor';
 
 @NgModule({
   imports: [
@@ -26,6 +27,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   providers: [
     {
       provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true
     }
   ]
 })

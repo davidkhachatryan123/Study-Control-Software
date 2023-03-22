@@ -76,9 +76,9 @@ namespace StudyControlSoftware_API.Services.Auth
                 ? true : false;
         }
 
-        public async Task<string?> GenerateEmailConfirmToken(string username)
+        public async Task<string?> GenerateEmailConfirmToken(string email)
         {
-            _user = await _userManager.FindByNameAsync(username);
+            _user = await _userManager.FindByEmailAsync(email);
 
             return _user == null
                 ? null
@@ -103,7 +103,7 @@ namespace StudyControlSoftware_API.Services.Auth
 
         public async Task<bool> Validate2FACodeAsync(TwoFADto twoFA)
         {
-            _user = await _userManager.FindByNameAsync(twoFA.UserName);
+            _user = await _userManager.FindByNameAsync(twoFA.Username);
 
             return _user != null
                 && await _userManager.VerifyTwoFactorTokenAsync(
@@ -129,6 +129,11 @@ namespace StudyControlSoftware_API.Services.Auth
             return _user == null
                 ? null
                 : await _userManager.GetEmailAsync(_user);
+        }
+
+        public async Task<string?> GetRole(string email)
+        {
+            return (await this.GetClaims()).FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;
         }
 
 
