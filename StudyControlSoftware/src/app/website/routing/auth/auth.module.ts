@@ -41,7 +41,8 @@ import { AuthGuard } from './guards';
   providers: [
     AuthGuard,
     AuthService,
-    ValidationService
+    ValidationService,
+    AuthService
   ],
 })
 export class AuthModule { }

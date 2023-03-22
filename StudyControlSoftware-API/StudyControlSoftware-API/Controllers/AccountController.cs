@@ -53,7 +53,7 @@ namespace StudyControlSoftware_API.Controllers
                 return Unauthorized("Email doesn't confirmed! Confirmation email sended to Your Email!");
             }
             else
-                return Unauthorized();
+                return Unauthorized("Wrong login or password");
         }
 
         [Route("2FA")]
@@ -61,7 +61,7 @@ namespace StudyControlSoftware_API.Controllers
         public async Task<IActionResult> Login2FA([FromBody] TwoFADto twoFA)
         {
             return !await _repositoryManager.UserAuthentication.Validate2FACodeAsync(twoFA)
-                ? Unauthorized()
+                ? Unauthorized("Incorrect 2FA token!")
                 : Ok(new { Token = await _repositoryManager.UserAuthentication.CreateTokenAsync() });
         }
 

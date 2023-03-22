@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from './shared/shared.module';
 import { AuthModule } from './routing/auth/auth.module';
 import { WebsiteRoutingModule } from './website-routing.module';
+import { StorageService } from './services';
 
 @NgModule({
   imports: [
@@ -15,6 +16,8 @@ import { WebsiteRoutingModule } from './website-routing.module';
     HttpClientModule,
   ],
   declarations: [],
-  providers: [],
+  providers: [
+    StorageService
+  ],
 })
 export class WebSiteModule { }

@@ -34,20 +34,22 @@ export class TwoFAComponent {
   submit(){
     if(this.twoFAForm.valid) {
 
-      /*this.authService.twoFA(new TwoFA(
+      this.authService.twoFA(new TwoFA(
         this.twoFAForm.controls['token'].value,
-      )).subscribe(
-        (data: ResponseModel) => {
+      )).subscribe({
+        next: (data: any) => {
+          console.log(data);
 
-          this._snackBar.open(data.message, 'Ok', {
+          this.router.navigate([this.routers.DASHBOARD])
+        },
+        error: (error: any) => {
+          console.log(error);
+          
+          this._snackBar.open(error.error, 'Ok', {
             duration: 10000,
           });
-  
-          if(data.statusCode == '200') {
-            this.router.navigate([this.routers.DASHBOARD]);
-          }
         }
-      );*/
+      });
     }
   }
 }

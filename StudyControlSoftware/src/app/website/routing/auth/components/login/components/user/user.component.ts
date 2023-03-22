@@ -5,6 +5,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from '../../../../services';
 import { User } from '../../../../models';
 import { ResponseModel } from 'src/app/website/models';
+import { LoginDto } from 'src/app/website/dto';
+import { catchError } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'login-user',
@@ -36,21 +39,20 @@ export class UserComponent {
   submit(){
     if(this.loginForm.valid) {
 
-      /*this.authService.login(new User(
+      this.authService.login(new LoginDto(
         this.loginForm.controls['username'].value,
         this.loginForm.controls['password'].value
-      )).subscribe(
-        (data: ResponseModel) => {
-
-          this._snackBar.open(data.message, 'Ok', {
+      ))
+      .subscribe({
+        next: (data: string) => {
+          this.nextEvent.emit();
+        },
+        error: (error: HttpErrorResponse) => {
+          this._snackBar.open(error.error, 'Ok', {
             duration: 10000,
           });
-  
-          if(data.statusCode == '200') {
-            this.nextEvent.emit(true);
-          }
         }
-      );*/
+      });
     }
   }
 }
