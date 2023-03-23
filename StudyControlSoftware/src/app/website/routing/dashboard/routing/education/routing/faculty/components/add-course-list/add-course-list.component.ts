@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Course, Faculty } from 'src/app/website/routing/dashboard/routing/education/models';
 import { DeleteDialogComponent } from 'src/app/website/shared/dashboard/dialogs';
@@ -12,6 +13,7 @@ import { FacultyService } from '../../services';
 })
 export class AddCourseListComponent implements OnInit {
   @Input() facultyIndex: number;
+  @Input() allCourses: Course[] = [];
 
   private addCourseDialogRef: MatDialogRef<AddCourseDialogComponent>;
 
@@ -19,10 +21,15 @@ export class AddCourseListComponent implements OnInit {
 
   constructor(
     public dialog: MatDialog,
+    private _snackBar: MatSnackBar,
     private facultyService: FacultyService
   ) { }
 
   ngOnInit() {
+    this.getData();
+  }
+
+  getData() {
     this.facultyService.getCourses(this.facultyIndex)
     .subscribe((data: Array<Course>) => {
       this.addedCourses = data;
@@ -34,7 +41,10 @@ export class AddCourseListComponent implements OnInit {
   }
   openAddCourseDialog() {
     this.addCourseDialogRef = this.dialog.open(AddCourseDialogComponent, {
-      width: '500px'
+      width: '500px',
+      data: {
+        allCourses: this.allCourses
+      }
     });
 
     this.addCourseDialogRef.componentInstance.onSubmit.subscribe((courses: Course[]) => {
@@ -42,16 +52,15 @@ export class AddCourseListComponent implements OnInit {
     });
   }
   add(courses: Course[]) {
-    console.log(courses.map(a => a.id));
-    /*this.usersManagmentService.deleteAdminUser(id)
-    .subscribe((data: ResponseModel) => {
-      this._snackBar.open(data.message, 'Ok', {
+    this.facultyService.addCourses(this.facultyIndex, courses.map(c => c.id))
+    .subscribe(() => {
+      this._snackBar.open("Course(s) added successful!", 'Ok', {
         duration: 10000,
       });
 
-      if(data.statusCode == '200')
-        this.getUsers();
-    });*/
+      this.addCourseDialogRef.close();
+      this.getData();
+    });
   }
 
   deleteCourse(course: Course) {
@@ -69,15 +78,14 @@ export class AddCourseListComponent implements OnInit {
     });
   }
   delete(id: number) {
-    console.log(id);
-    /*this.usersManagmentService.deleteAdminUser(id)
-    .subscribe((data: ResponseModel) => {
-      this._snackBar.open(data.message, 'Ok', {
+    this.facultyService.deleteCourse(this.facultyIndex, id)
+    .subscribe(() => {
+      this._snackBar.open("Deleted successful!", 'Ok', {
         duration: 10000,
       });
 
-      if(data.statusCode == '200')
-        this.getUsers();
-    });*/
+      this.addCourseDialogRef?.close();
+      this.getData();
+    });
   }
 }

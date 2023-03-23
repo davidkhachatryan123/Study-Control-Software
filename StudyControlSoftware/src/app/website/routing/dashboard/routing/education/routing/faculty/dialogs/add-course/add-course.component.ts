@@ -1,6 +1,7 @@
-import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Inject, Output, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { Course } from '../../../../models';
@@ -20,7 +21,11 @@ export class AddCourseDialogComponent {
 
   @ViewChild('courseInput') courseInput: ElementRef<HTMLInputElement>;
 
-  constructor() {
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public dialogData: any
+  ) {
+    this.allCourses = dialogData.allCourses;
+
     this.filteredCourses = this.courseCtrl.valueChanges.pipe(
       startWith(null),
       map((course: string | null) =>

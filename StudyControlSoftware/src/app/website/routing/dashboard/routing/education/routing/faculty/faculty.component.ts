@@ -1,23 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 import { NewDialogComponent } from './dialogs/new/new.component';
 import { DeleteDialogComponent } from 'src/app/website/shared/dashboard/dialogs';
 
-import { Faculty } from '../../models';
+import { Course, Faculty } from '../../models';
 import { TableOptions } from 'src/app/website/models';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FacultyService } from './services';
 import { TableResponseDto } from 'src/app/website/dto/usersResponseDto';
 import { HttpErrorResponse } from '@angular/common/http';
+import { CoursesService } from '../course/services';
 
 @Component({
   selector: 'app-dashboard-faculty',
   templateUrl: 'faculty.component.html'
 })
-export class FacultyComponent {
+export class FacultyComponent implements OnInit {
   data: Faculty[] = [];
   resultsLength: number = 0;
+
+  allCourses: Course[] = [];
 
   private userListOptions: TableOptions;
   private newDialogRef: MatDialogRef<NewDialogComponent>;
@@ -25,8 +28,16 @@ export class FacultyComponent {
   constructor(
     public dialog: MatDialog,
     private _snackBar: MatSnackBar,
-    private facultyService: FacultyService
+    private facultyService: FacultyService,
+    private coursesService: CoursesService
   ) { }
+
+  ngOnInit() {
+    this.coursesService.getAll(new TableOptions('id', 'asc', 0, 999))
+    .subscribe((data: TableResponseDto<Course>) => {
+      this.allCourses = data.entities;
+    });
+  }
 
   onChangeCard(userListOptions: TableOptions) {
     this.userListOptions = userListOptions;
@@ -101,7 +112,7 @@ export class FacultyComponent {
     this.facultyService.edit(id, faculty)
     .subscribe((data: Faculty) => {
   
-      this._snackBar.open("New faculty created!", 'Ok', {
+      this._snackBar.open("Faculty are edited!", 'Ok', {
         duration: 10000,
       });
   

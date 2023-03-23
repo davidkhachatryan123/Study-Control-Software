@@ -69,7 +69,8 @@
             [class.row-is-expanded]="expandedElement === element">
           <div [className]="" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
 
-            <app-dashboard-add-course-list [facultyIndex]="element.id">
+            <app-dashboard-add-course-list [facultyIndex]="element.id"
+                                           [allCourses]="allCourses">
               
             </app-dashboard-add-course-list>
 

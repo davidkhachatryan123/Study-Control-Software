@@ -38,6 +38,8 @@ namespace StudyControlSoftware_API.Services.Education
 
         public async Task AddCoursesAsync(int id, IEnumerable<int> courses)
         {
+            courses = courses.Distinct().ToList();
+
             foreach (var course in courses)
             {
                 if (await _context.FacultysCourses.FirstOrDefaultAsync(x => x.FacultyId == id && x.CourseId == course) == null)

@@ -6,7 +6,7 @@ import { TableOptions } from 'src/app/website/models';
 
 import { tableDetailExpand } from 'src/app/website/shared/dashboard/animations';
 
-import { Faculty } from '../../../../models';
+import { Course, Faculty } from '../../../../models';
 
 @Component({
   selector: 'app-dashboard-faculity-card',
@@ -20,11 +20,15 @@ export class FaculityCardComponent implements AfterViewInit {
   @Input() data: Faculty[] = [];
   @Input() resultsLength: number = 0;
 
+  @Input() allCourses: Course[] = [];
+
+
   @Output() onChange = new EventEmitter<TableOptions>();
 
   @Output() onEdit = new EventEmitter<Faculty>;
   @Output() onDelete = new EventEmitter<Faculty>;
 
+  
   @ViewChild(MatTable) table: MatTable<Faculty>;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
