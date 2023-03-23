@@ -5,9 +5,13 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { TableOptions } from 'src/app/website/models';
 import { DeleteDialogComponent } from 'src/app/website/shared/dashboard/dialogs';
 
-import { roles } from 'src/app/website/routing/auth/models';
 import { Lecturer } from '../../models';
 import { NewDialogComponent } from './dialogs';
+import { AuthService } from 'src/app/website/routing/auth/services';
+import { LecturersService } from './services/lecturers.service';
+import { UsersResponseDto } from 'src/app/website/dto/usersResponseDto';
+import { HttpErrorResponse } from '@angular/common/http';
+import { UserDto } from 'src/app/website/dto/userDto';
 
 @Component({
   selector: 'app-dashboard-admins',
@@ -21,9 +25,10 @@ export class LecturersComponent {
   private createDialogRef: MatDialogRef<NewDialogComponent>;
 
   constructor(
-    /*private usersManagmentService: UsersManagmentService,*/
     public dialog: MatDialog,
     private _snackBar: MatSnackBar,
+    private lecturersService: LecturersService,
+    private authService: AuthService
   ) { }
 
   onChangeUserCard(userListOptions: TableOptions) {
@@ -32,16 +37,16 @@ export class LecturersComponent {
   }
 
   getUsers() {
-    /*this.usersManagmentService.getAdminUsers(new TableOptions(
+    this.lecturersService.getAll(new TableOptions(
       this.userListOptions.sort,
       this.userListOptions.sortDirection,
       this.userListOptions.pageIndex,
       this.userListOptions.pageSize,
     )
-    ).subscribe(data => {
-      this.data = data.users;
+    ).subscribe((data: UsersResponseDto<Lecturer>) => {
+      this.data = data.entities;
       this.resultsLength = data.totalCount;
-    });*/
+    });
   }
 
   onNew() {
@@ -60,21 +65,24 @@ export class LecturersComponent {
       this.new(data);
     });
   }
-  new(newLecturer: Lecturer) {
-    console.log(newLecturer);
+  new(newLecturer: any) {
+    this.lecturersService.create(newLecturer.user)
+    .subscribe({
+      next: (data: Lecturer) => {
 
-    /*this.usersManagmentService.createAdminUser(newUser).subscribe(
-    (data: ResponseModel) => {
+        this._snackBar.open("User created successful!", 'Ok', {
+          duration: 10000,
+        });
 
-      this._snackBar.open(data.message, 'Ok', {
-        duration: 10000,
-      });
-
-      if(data.statusCode == '200') {
         this.createDialogRef.close();
         this.getUsers();
+      },
+      error: (error: HttpErrorResponse) => {
+        this._snackBar.open("Validating error!", 'Ok', {
+          duration: 10000,
+        });
       }
-    });*/
+    });
   }
 
   onDelete($event: any) {
@@ -92,16 +100,14 @@ export class LecturersComponent {
     });
   }
   delete(id: string) {
-    console.log(id);
-    /*this.usersManagmentService.deleteAdminUser(id)
-    .subscribe((data: ResponseModel) => {
-      this._snackBar.open(data.message, 'Ok', {
+    this.lecturersService.delete(id)
+    .subscribe(() => {
+      this._snackBar.open("User deleted!", 'Ok', {
         duration: 10000,
       });
 
-      if(data.statusCode == '200')
-        this.getUsers();
-    });*/
+      this.getUsers();
+    });
   }
 
   onEdit($event: Lecturer) {
@@ -116,39 +122,32 @@ export class LecturersComponent {
     this.createDialogRef.componentInstance.title = "Edit Lecturer";
     this.createDialogRef.componentInstance.submitBtnText = "Edit";
 
-    this.createDialogRef.componentInstance.onSubmit.subscribe((data: Lecturer) => {
-      this.edit(data);
+    this.createDialogRef.componentInstance.onSubmit.subscribe((data: any) => {
+      this.edit(data.id, data.user);
     });
   }
-  edit(editedLecturer: Lecturer) {
-    console.log(editedLecturer);
-
-    /*this.usersManagmentService.updateAdminUser(newUser).subscribe(
-    (data: ResponseModel) => {
+  edit(id: string, editedLecturer: UserDto) {
+    this.lecturersService.edit(id, editedLecturer)
+    .subscribe((data: Lecturer) => {
   
-      this._snackBar.open(data.message, 'Ok', {
+      this._snackBar.open(data.username + " user changed!", 'Ok', {
         duration: 10000,
       });
   
-      if(data.statusCode == '200') {
-        this.createDialogRef.close();
-        this.getUsers();
-      }
-    });*/
+      this.createDialogRef.close();
+      this.getUsers();
+    });
   }
 
   onConfirmEmail($event: string) {
     console.log($event);
 
-    /*this.usersManagmentService.sendConfirmEmail($event).subscribe(
-      (data: ResponseModel) => {
+    this.authService.sendConfirmEmail($event)
+    .subscribe((data: any) => {
     
-        this._snackBar.open(data.message, 'Ok', {
+        this._snackBar.open("Message sended!", 'Ok', {
           duration: 10000,
         });
-    
-        if(data.statusCode == '200')
-          this.getUsers();
-      });*/
+    });
   }
 }

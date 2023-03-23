@@ -9,7 +9,7 @@
   
       <mat-chip-grid #chipGrid>
         <mat-chip-row *ngIf="lecturer" (removed)="remove()">
-          {{lecturer?.getFullName()}}
+          {{lecturer?.fullName}}
   
           <button matChipRemove>
             <mat-icon>cancel</mat-icon>
@@ -22,7 +22,7 @@
   
       <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
         <mat-option *ngFor="let lecturerOpt of filteredLecturers | async" [value]="lecturerOpt.id">
-          {{lecturerOpt.getFullName()}}
+          {{lecturerOpt.fullName}}
         </mat-option>
       </mat-autocomplete>
   

@@ -3,8 +3,8 @@ import { UserSkel } from "./user-skel";
 export class Lecturer extends UserSkel {
   constructor(
     public id: string,
-    public surname: string,
-    public lastname: string,
+    public firstName: string,
+    public lastName: string,
     public username: string = '',
     public password: string = '',
     public email: string = '',
@@ -14,7 +14,7 @@ export class Lecturer extends UserSkel {
     super(id, username, password, email, emailConfirmed, phoneNumber);
   }
 
-  getFullName(): string {
-    return this.surname + ' ' + this.lastname;
+  public get fullName() {
+    return this.firstName + ' ' + this.lastName;
   }
 }

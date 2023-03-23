@@ -5,7 +5,6 @@ import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
 
 import { TableOptions } from 'src/app/website/models';
-import { AppUser } from 'src/app/website/routing/auth/models';
 import { Lecturer } from '../../../models';
 
 @Component({
@@ -13,8 +12,8 @@ import { Lecturer } from '../../../models';
   templateUrl: 'lecturers-card.component.html'
 })
 
-export class LecturersCardComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['fullName', 'username', 'email', 'emailConfirmed', 'phone', 'actions'];
+export class LecturersCardComponent implements AfterViewInit {
+  displayedColumns: string[] = ['fullName', 'username', 'email', 'emailConfirmed', 'phoneNumber', 'actions'];
 
   @Input() data: Lecturer[] = [];
   @Input() resultsLength: number = 0;
@@ -29,16 +28,6 @@ export class LecturersCardComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   private userListOptions: TableOptions = new TableOptions('', '', 0, 0);
-
-  appUser: AppUser = new AppUser('', '', '');
-
-  constructor(
-    /*private authService: AuthService*/
-  ) { }
-
-  ngOnInit() {
-    //this.authService.getUser().subscribe(data => this.appUser = data);
-  }
 
   ngAfterViewInit() {
     this.onChangeEvent();

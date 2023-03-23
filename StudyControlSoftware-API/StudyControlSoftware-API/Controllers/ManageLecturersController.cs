@@ -47,14 +47,14 @@ namespace StudyControlSoftware_API.Controllers
                 : Ok(_user);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete]
         public async Task<IActionResult> Delete(string id)
         {
             var removedUserId = await _repositoryManager.Lecturers.RemoveAsync(id);
 
             return removedUserId == null
                ? BadRequest()
-               : Ok(removedUserId);
+               : Ok(new { removed = removedUserId });
         }
     }
 }

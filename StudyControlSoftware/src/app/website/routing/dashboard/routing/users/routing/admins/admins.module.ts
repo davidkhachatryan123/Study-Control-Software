@@ -22,6 +22,7 @@ import { SharedModule } from 'src/app/website/shared/shared.module';
 import { AdminsComponent } from './admins.component';
 import { AdminsCardComponent } from './components/admins-card.component';
 import { NewDialogComponent } from './dialogs';
+import { AdminsService } from './services/admins.service';
 
 const routes: Routes = [
   {
@@ -55,6 +56,9 @@ const routes: Routes = [
     AdminsComponent,
     AdminsCardComponent,
     NewDialogComponent
+  ],
+  providers: [
+    AdminsService
   ]
 })
 export class AdminsModule { }

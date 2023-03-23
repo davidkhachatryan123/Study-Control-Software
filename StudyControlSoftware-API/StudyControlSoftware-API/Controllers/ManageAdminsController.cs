@@ -35,7 +35,7 @@ namespace StudyControlSoftware_API.Controllers
             var _user = await _repositoryManager.Admins.CreateAsync(user);
 
             var confirmationLink = await Url.GenerateConfirmationEmailLinkAsync(
-                    _repositoryManager, user.UserName);
+                    _repositoryManager, user.Email);
 
             if (confirmationLink == null) return BadRequest();
 

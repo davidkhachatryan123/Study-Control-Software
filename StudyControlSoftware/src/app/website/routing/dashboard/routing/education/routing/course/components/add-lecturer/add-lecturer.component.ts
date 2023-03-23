@@ -56,7 +56,7 @@ export class AddLecturerComponent implements AfterContentInit {
   openDeleteDialog() {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       width: '250px',
-      data: { value: this.lecturer.surname + ' ' + this.lecturer.lastname, isDelete: 'false' }
+      data: { value: this.lecturer.fullName, isDelete: 'false' }
     });
 
     dialogRef.afterClosed().subscribe(result => {

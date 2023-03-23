@@ -49,7 +49,7 @@ export class SetLecturerDialogComponent {
     try {
       const filterValue = value.toLowerCase();
 
-      return this.allԼecturers.filter(lecturer => lecturer.getFullName().toLowerCase().includes(filterValue));
+      return this.allԼecturers.filter(lecturer => lecturer.fullName.toLowerCase().includes(filterValue));
     }
     catch {}
   }

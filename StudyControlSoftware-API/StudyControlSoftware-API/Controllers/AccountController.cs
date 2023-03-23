@@ -39,7 +39,7 @@ namespace StudyControlSoftware_API.Controllers
                 && !await _repositoryManager.UserAuthentication.IsEmailConfirmed(user))
             {
                 var confirmationLink = await Url.GenerateConfirmationEmailLinkAsync(
-                    _repositoryManager, user.UserName);
+                    _repositoryManager, email);
 
                 if (confirmationLink == null)
                     return Unauthorized("Confirmation Email doesn't generated!");

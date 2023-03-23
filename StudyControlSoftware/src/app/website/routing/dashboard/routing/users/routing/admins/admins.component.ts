@@ -7,12 +7,11 @@ import { DeleteDialogComponent } from 'src/app/website/shared/dashboard/dialogs'
 
 import { Admin } from '../../models';
 import { NewDialogComponent } from './dialogs';
-import { roles } from 'src/app/website/routing/auth/models';
-import { ManageAdminsService } from './services/manageAdmins.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AdminDto } from 'src/app/website/dto/adminDto';
-import { AdminsResponseDto } from 'src/app/website/dto/adminsResponseDto';
 import { AuthService } from 'src/app/website/routing/auth/services';
+import { AdminsService } from './services/admins.service';
+import { UsersResponseDto } from 'src/app/website/dto/usersResponseDto';
 
 @Component({
   selector: 'app-dashboard-admins',
@@ -28,7 +27,7 @@ export class AdminsComponent {
   constructor(
     public dialog: MatDialog,
     private _snackBar: MatSnackBar,
-    private manageAdminsService: ManageAdminsService,
+    private adminsService: AdminsService,
     private authService: AuthService
   ) { }
 
@@ -38,12 +37,12 @@ export class AdminsComponent {
   }
 
   getUsers() {
-    this.manageAdminsService.getAll(new TableOptions(
+    this.adminsService.getAll(new TableOptions(
       this.userListOptions.sort,
       this.userListOptions.sortDirection,
       this.userListOptions.pageIndex,
       this.userListOptions.pageSize
-    )).subscribe((data: AdminsResponseDto) => {
+    )).subscribe((data: UsersResponseDto<Admin>) => {
       this.data = data.entities;
       this.resultsLength = data.totalCount;
     });
@@ -61,28 +60,28 @@ export class AdminsComponent {
     this.createDialogRef.componentInstance.title = "Create new Admin";
     this.createDialogRef.componentInstance.submitBtnText = "Create";
 
-    this.createDialogRef.componentInstance.onSubmit.subscribe((data: AdminDto) => {
+    this.createDialogRef.componentInstance.onSubmit.subscribe((data: any) => {
       this.new(data);
     });
   }
-  new(newAdmin: AdminDto) {
-    this.manageAdminsService.create(newAdmin).subscribe(
-      {
-        next: (data: Admin) => {
+  new(newAdmin: any) {
+    this.adminsService.create(newAdmin.user)
+    .subscribe({
+      next: (data: Admin) => {
 
-          this._snackBar.open("User created successful!", 'Ok', {
-            duration: 10000,
-          });
+        this._snackBar.open("User created successful!", 'Ok', {
+          duration: 10000,
+        });
 
-          this.createDialogRef.close();
-          this.getUsers();
-        },
-        error: (error: HttpErrorResponse) => {
-          this._snackBar.open("Validating error!", 'Ok', {
-            duration: 10000,
-          });
-        }
-      });
+        this.createDialogRef.close();
+        this.getUsers();
+      },
+      error: (error: HttpErrorResponse) => {
+        this._snackBar.open("Validating error!", 'Ok', {
+          duration: 10000,
+        });
+      }
+    });
   }
 
   onDelete($event: any) {
@@ -100,7 +99,7 @@ export class AdminsComponent {
     });
   }
   delete(id: string) {
-    this.manageAdminsService.delete(id)
+    this.adminsService.delete(id)
     .subscribe(() => {
       this._snackBar.open("User deleted!", 'Ok', {
         duration: 10000,
@@ -127,10 +126,7 @@ export class AdminsComponent {
     });
   }
   edit(id: string, editedUser: AdminDto) {
-    console.log(editedUser);
-    console.log(id);
-
-    this.manageAdminsService.edit(id, editedUser)
+    this.adminsService.edit(id, editedUser)
     .subscribe((data: Admin) => {
   
       this._snackBar.open(data.username + " user changed!", 'Ok', {

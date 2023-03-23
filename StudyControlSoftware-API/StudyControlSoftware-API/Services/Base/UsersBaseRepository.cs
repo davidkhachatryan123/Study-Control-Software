@@ -37,8 +37,15 @@ namespace StudyControlSoftware_API.Services.Base
         {
             var propertyInfos =
                typeof(UserDto).GetProperties(BindingFlags.Public | BindingFlags.Instance);
-            var objectProperty =
-                propertyInfos.FirstOrDefault(pi => pi.Name.Equals(options.Sort, StringComparison.InvariantCultureIgnoreCase));
+
+            PropertyInfo objectProperty;
+            if (options.Sort != "fullName")
+            {
+                objectProperty =
+                    propertyInfos.FirstOrDefault(pi => pi.Name.Equals(options.Sort, StringComparison.InvariantCultureIgnoreCase));
+            }
+            else
+                objectProperty = typeof(UserDto).GetProperty("FirstName");
 
             return new TablesDataDto<UserDto>
             {

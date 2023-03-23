@@ -1,6 +1,6 @@
 import { Admin } from "../routing/dashboard/routing/users/models";
 
-export class AdminsResponseDto {
-  entities: Admin[];
+export class UsersResponseDto<T> {
+  entities: T[];
   totalCount: number;
 }

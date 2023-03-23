@@ -2,9 +2,9 @@ import { Component, Input, Output, EventEmitter, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { UserDto } from 'src/app/website/dto/userDto';
 
-import { roles } from 'src/app/website/routing/auth/models';
-import { Lecturer } from '../../../../models';
+import { roles, User } from 'src/app/website/routing/auth/models';
 
 @Component({
   selector: 'app-dashboard-admin-new',
@@ -17,17 +17,17 @@ export class NewDialogComponent {
   @Input() title: string = "";
   @Input() submitBtnText: string = "";
 
-  @Output() onSubmit = new EventEmitter<Lecturer>();
+  @Output() onSubmit = new EventEmitter<any>();
 
   constructor(
     public dialogRef: MatDialogRef<NewDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) {
     this.newUserForm = new FormGroup({
-      "surname": new FormControl(data.user.surname, [
+      "surname": new FormControl(data.user.firstName, [
         Validators.required, Validators.minLength(2), Validators.maxLength(255)
       ]),
-      "lastname": new FormControl(data.user.lastname, [
+      "lastname": new FormControl(data.user.lastName, [
         Validators.required, Validators.minLength(2), Validators.maxLength(255)
       ]),
       "username": new FormControl(data.user.username, [
@@ -53,16 +53,19 @@ export class NewDialogComponent {
 
   onSubmitEvent() {
     if(this.newUserForm.valid) {
-      this.onSubmit.emit(new Lecturer(
-        this.data.user.id,
-        this.newUserForm.controls['surname'].value,
-        this.newUserForm.controls['lastname'].value,
-        this.newUserForm.controls['username'].value,
-        this.newUserForm.controls['password'].value,
-        this.newUserForm.controls['email'].value,
-        false,
-        this.newUserForm.controls['phoneNumber'].value
-      ));
+      this.onSubmit.emit({
+        id: this.data.user.id,
+        user: new UserDto(
+          this.data.user.id,
+          this.newUserForm.controls['surname'].value,
+          this.newUserForm.controls['lastname'].value,
+          this.newUserForm.controls['username'].value,
+          this.newUserForm.controls['password'].value,
+          this.newUserForm.controls['confirmPassword'].value,
+          this.newUserForm.controls['email'].value,
+          this.newUserForm.controls['phoneNumber'].value
+        )
+      });
     }
   }
 }
