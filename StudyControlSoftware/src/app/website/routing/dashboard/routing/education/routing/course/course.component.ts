@@ -5,17 +5,45 @@ import { Course } from '../../models';
 
 import { NewDialogComponent } from './dialogs/new/new.component';
 import { DeleteDialogComponent } from 'src/app/website/shared/dashboard/dialogs';
+import { TableOptions } from 'src/app/website/models';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { CoursesService } from './services';
+import { TableResponseDto } from 'src/app/website/dto/usersResponseDto';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-dashboard-course',
   templateUrl: 'course.component.html'
 })
 export class CourseComponent {
+  data: Course[] = [];
+  resultsLength: number = 0;
+
+  private userListOptions: TableOptions;
   private newDialogRef: MatDialogRef<NewDialogComponent>;
 
   constructor(
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private _snackBar: MatSnackBar,
+    private coursesService: CoursesService
   ) { }
+
+  onChangeCard(userListOptions: TableOptions) {
+    this.userListOptions = userListOptions;
+    this.getData();
+  }
+
+  getData() {
+    this.coursesService.getAll(new TableOptions(
+      this.userListOptions.sort,
+      this.userListOptions.sortDirection,
+      this.userListOptions.pageIndex,
+      this.userListOptions.pageSize
+    )).subscribe((data: TableResponseDto<Course>) => {
+      this.data = data.entities;
+      this.resultsLength = data.totalCount;
+    });
+  }
 
   onNew() {
     this.openNewDialog();
@@ -26,27 +54,31 @@ export class CourseComponent {
       data: { model: new Course(0, '', '') }
     });
 
-    this.newDialogRef.componentInstance.dialogTitle = "Create new Course";
+    this.newDialogRef.componentInstance.title = "Create new Course";
     this.newDialogRef.componentInstance.submitBtnText = "Create";
 
     this.newDialogRef.componentInstance.onSubmit.subscribe((data: any) => {
       this.new(data);
     });
   }
-  new(newCourse: Course) {
-    console.log(newCourse);
-    /*this.usersManagmentService.createAdminUser(newUser).subscribe(
-    (data: ResponseModel) => {
+  new(newCourse: any) {
+    this.coursesService.create(newCourse.model)
+    .subscribe({
+      next: (data: Course) => {
 
-      this._snackBar.open(data.message, 'Ok', {
-        duration: 10000,
-      });
+        this._snackBar.open("Course created successful!", 'Ok', {
+          duration: 10000,
+        });
 
-      if(data.statusCode == '200') {
-        this.createDialogRef.close();
-        this.getUsers();
+        this.newDialogRef.close();
+        this.getData();
+      },
+      error: (error: HttpErrorResponse) => {
+        this._snackBar.open("Validating error!", 'Ok', {
+          duration: 10000,
+        });
       }
-    });*/
+    });
   }
 
   onEdit($event: any) {
@@ -58,28 +90,24 @@ export class CourseComponent {
       data: { model: course }
     });
 
-    this.newDialogRef.componentInstance.dialogTitle = "Edit Course";
+    this.newDialogRef.componentInstance.title = "Edit Course";
     this.newDialogRef.componentInstance.submitBtnText = "Edit";
 
-    this.newDialogRef.componentInstance.onSubmit.subscribe((course: Course) => {
-      this.update(course);
+    this.newDialogRef.componentInstance.onSubmit.subscribe((data: any) => {
+      this.edit(data.id, data.model);
     });
   }
-  update(course: Course) {
-    console.log(course);
-
-    /*this.usersManagmentService.updateAdminUser(newUser).subscribe(
-    (data: ResponseModel) => {
+  edit(id: number, course: Course) {
+    this.coursesService.edit(id, course)
+    .subscribe((data: Course) => {
   
-      this._snackBar.open(data.message, 'Ok', {
+      this._snackBar.open("New course created!", 'Ok', {
         duration: 10000,
       });
   
-      if(data.statusCode == '200') {
-        this.createDialogRef.close();
-        this.getUsers();
-      }
-    });*/
+      this.newDialogRef.close();
+      this.getData();
+    });
   }
 
   onDelete($event: any) {
@@ -97,15 +125,13 @@ export class CourseComponent {
     });
   }
   delete(id: number) {
-    console.log(id);
-    /*this.usersManagmentService.deleteAdminUser(id)
-    .subscribe((data: ResponseModel) => {
-      this._snackBar.open(data.message, 'Ok', {
+    this.coursesService.delete(id)
+    .subscribe(() => {
+      this._snackBar.open("Course deleted!", 'Ok', {
         duration: 10000,
       });
 
-      if(data.statusCode == '200')
-        this.getUsers();
-    });*/
+      this.getData();
+    });
   }
 }

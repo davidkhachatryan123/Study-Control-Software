@@ -32,7 +32,7 @@ namespace StudyControlSoftware_API.Controllers
             return Ok(await _repositoryManager.Faculties.CreateAsync(faculty));
         }
 
-        [HttpPut]
+        [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] FacultyDto faculty)
         {
             FacultyDto? updatedFaculty = await _repositoryManager.Faculties.UpdateAsync(id, faculty);
@@ -42,7 +42,7 @@ namespace StudyControlSoftware_API.Controllers
                 : Ok(updatedFaculty);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
             int? deleteId = await _repositoryManager.Faculties.DeleteAsync(id);
@@ -53,7 +53,7 @@ namespace StudyControlSoftware_API.Controllers
         }
 
 
-        [HttpPost("{id}/GetCourses")]
+        [HttpGet("{id}/GetCourses")]
         public async Task<IActionResult> GetCourses(int id)
         {
             return Ok(await _repositoryManager.Faculties.GetAllCoursesAsync(id));

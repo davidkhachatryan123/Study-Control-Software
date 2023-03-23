@@ -1,4 +1,8 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTable } from '@angular/material/table';
+import { TableOptions } from 'src/app/website/models';
 
 import { Course } from 'src/app/website/routing/dashboard/routing/education/models';
 import { tableDetailExpand } from 'src/app/website/shared/dashboard/animations';
@@ -11,20 +15,47 @@ import { tableDetailExpand } from 'src/app/website/shared/dashboard/animations';
     tableDetailExpand
   ],
 })
-export class CourseCardComponent {
+export class CourseCardComponent implements AfterViewInit {
+  @Input() data: Course[] = [];
+  @Input() resultsLength: number = 0;
+
+  @Output() onChange = new EventEmitter<TableOptions>();
+
   @Output() onEdit = new EventEmitter<Course>;
   @Output() onDelete = new EventEmitter<Course>;
+
+  @ViewChild(MatTable) table: MatTable<Course>;
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  private userListOptions: TableOptions = new TableOptions('', '', 0, 0);
 
   columnsToDisplay: string[] = [ 'title', 'description', 'actions' ];
   columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
 
   expandedElement: Course | null;
 
-  data: Course[] = [
-    new Course(1, 'C# ծրագրավորում', 'Սովորում ենք գրել ծրագրեր օգտագործելով C# ծրագրավորման լեզուն'),
-    new Course(2, 'C++ ծրագրավորում', 'Սովորում ենք գրել ծրագրեր օգտագործելով C++ ծրագրավորման լեզուն'),
-    new Course(3, 'ASP.NET Core', 'Սովորում ենք գրել ծրագրեր օգտագործելով ASP.NET Core framework-ը')
-  ];
+  ngAfterViewInit() {
+    this.onChangeEvent();
+
+    this.sort.sortChange.subscribe(() => {
+      this.paginator.pageIndex = 0;
+      this.onChangeEvent();
+    });
+
+    this.paginator.page.subscribe(() => {
+      this.onChangeEvent();
+    });
+  }
+
+  onChangeEvent() {
+    this.userListOptions.sort = this.sort.active;
+    this.userListOptions.sortDirection = this.sort.direction;
+    this.userListOptions.pageIndex = this.paginator.pageIndex;
+    this.userListOptions.pageSize = this.paginator.pageSize;
+
+    this.onChange.emit(this.userListOptions);
+  }
 
   onEditEvent(element: Course) {
     this.onEdit.emit(element);

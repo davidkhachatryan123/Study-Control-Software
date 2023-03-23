@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserDto } from 'src/app/website/dto/userDto';
-import { UsersResponseDto } from 'src/app/website/dto/usersResponseDto';
+import { TableResponseDto } from 'src/app/website/dto/usersResponseDto';
 import { TableOptions } from 'src/app/website/models';
 import { AuthService } from 'src/app/website/routing/auth/services';
 import { DeleteDialogComponent } from 'src/app/website/shared/dashboard/dialogs';
@@ -43,7 +43,7 @@ export class StudentsComponent {
       this.userListOptions.pageIndex,
       this.userListOptions.pageSize,
     )
-    ).subscribe((data: UsersResponseDto<Student>) => {
+    ).subscribe((data: TableResponseDto<Student>) => {
       this.data = data.entities;
       this.resultsLength = data.totalCount;
     });

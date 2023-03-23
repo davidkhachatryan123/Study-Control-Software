@@ -11,7 +11,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { AdminDto } from 'src/app/website/dto/adminDto';
 import { AuthService } from 'src/app/website/routing/auth/services';
 import { AdminsService } from './services/admins.service';
-import { UsersResponseDto } from 'src/app/website/dto/usersResponseDto';
+import { TableResponseDto } from 'src/app/website/dto/usersResponseDto';
 
 @Component({
   selector: 'app-dashboard-admins',
@@ -42,7 +42,7 @@ export class AdminsComponent {
       this.userListOptions.sortDirection,
       this.userListOptions.pageIndex,
       this.userListOptions.pageSize
-    )).subscribe((data: UsersResponseDto<Admin>) => {
+    )).subscribe((data: TableResponseDto<Admin>) => {
       this.data = data.entities;
       this.resultsLength = data.totalCount;
     });

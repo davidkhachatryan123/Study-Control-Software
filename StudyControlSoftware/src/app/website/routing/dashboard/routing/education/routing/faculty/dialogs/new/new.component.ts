@@ -12,7 +12,7 @@ export class NewDialogComponent {
   @Input() title: string;
   @Input() submitBtnText: string;
 
-  @Output() onSubmit = new EventEmitter<Faculty>();
+  @Output() onSubmit = new EventEmitter<any>();
 
   newFormGroup: FormGroup;
 
@@ -30,10 +30,13 @@ export class NewDialogComponent {
 
   onSubmitEvent() {
     if(this.newFormGroup.valid) {
-      this.onSubmit.emit(new Faculty(
-        this.data.model.id,
-        this.newFormGroup.controls['faculty'].value
-      ));
+      this.onSubmit.emit({
+        id: this.data.model.id,
+        model: new Faculty(
+          this.data.model.id,
+          this.newFormGroup.controls['faculty'].value
+        )
+      });
     }
   }
 }

@@ -22,6 +22,7 @@ import { FacultyComponent } from './faculty.component';
 import { FaculityCardComponent } from './components/faculty-card/faculty-card.component';
 import { AddCourseListComponent } from './components/add-course-list/add-course-list.component';
 import { NewDialogComponent, AddCourseDialogComponent } from './dialogs';
+import { FacultyService } from './services';
 
 const routes: Routes = [
   {
@@ -56,6 +57,9 @@ const routes: Routes = [
     AddCourseListComponent,
     NewDialogComponent,
     AddCourseDialogComponent
+  ],
+  providers: [
+    FacultyService
   ]
 })
 export class FacultyModule { }

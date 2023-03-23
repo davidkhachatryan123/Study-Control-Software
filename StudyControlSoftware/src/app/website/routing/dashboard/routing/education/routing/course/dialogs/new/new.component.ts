@@ -9,10 +9,10 @@ import { Course } from '../../../../models';
   templateUrl: 'new.component.html'
 })
 export class NewDialogComponent {
-  @Input() dialogTitle: string;
+  @Input() title: string;
   @Input() submitBtnText: string;
 
-  @Output() onSubmit = new EventEmitter<Course>();
+  @Output() onSubmit = new EventEmitter<any>();
 
   newFormGroup: FormGroup;
 
@@ -33,11 +33,14 @@ export class NewDialogComponent {
 
   onSubmitEvent() {
     if(this.newFormGroup.valid) {
-      this.onSubmit.emit(new Course(
-        this.data.model.id,
-        this.newFormGroup.controls['title'].value,
-        this.newFormGroup.controls['description'].value
-      ));
+      this.onSubmit.emit({
+        id: this.data.model.id,
+        model: new Course(
+          this.data.model.id,
+          this.newFormGroup.controls['title'].value,
+          this.newFormGroup.controls['description'].value
+        )
+      });
     }
   }
 }

@@ -1,4 +1,8 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, AfterViewInit, ViewChild, Input } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTable } from '@angular/material/table';
+import { TableOptions } from 'src/app/website/models';
 
 import { tableDetailExpand } from 'src/app/website/shared/dashboard/animations';
 
@@ -12,20 +16,47 @@ import { Faculty } from '../../../../models';
     tableDetailExpand
   ],
 })
-export class FaculityCardComponent {
+export class FaculityCardComponent implements AfterViewInit {
+  @Input() data: Faculty[] = [];
+  @Input() resultsLength: number = 0;
+
+  @Output() onChange = new EventEmitter<TableOptions>();
+
   @Output() onEdit = new EventEmitter<Faculty>;
   @Output() onDelete = new EventEmitter<Faculty>;
+
+  @ViewChild(MatTable) table: MatTable<Faculty>;
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  private userListOptions: TableOptions = new TableOptions('', '', 0, 0);
 
   columnsToDisplay: string[] = [ 'name', 'actions' ];
   columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
 
   expandedElement: Faculty | null;
 
-  data: Faculty[] = [
-    new Faculty(1, 'Ինֆորմատիկայի ֆակուլտետ'),
-    new Faculty(2, 'Պատմության ֆակուլտետ'),
-    new Faculty(3, 'Լեզվաբանական ֆակուլտետ'),
-  ];
+  ngAfterViewInit() {
+    this.onChangeEvent();
+
+    this.sort.sortChange.subscribe(() => {
+      this.paginator.pageIndex = 0;
+      this.onChangeEvent();
+    });
+
+    this.paginator.page.subscribe(() => {
+      this.onChangeEvent();
+    });
+  }
+
+  onChangeEvent() {
+    this.userListOptions.sort = this.sort.active;
+    this.userListOptions.sortDirection = this.sort.direction;
+    this.userListOptions.pageIndex = this.paginator.pageIndex;
+    this.userListOptions.pageSize = this.paginator.pageSize;
+
+    this.onChange.emit(this.userListOptions);
+  }
 
   onEditEvent(element: Faculty) {
     this.onEdit.emit(element);

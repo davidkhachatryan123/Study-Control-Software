@@ -5,17 +5,45 @@ import { NewDialogComponent } from './dialogs/new/new.component';
 import { DeleteDialogComponent } from 'src/app/website/shared/dashboard/dialogs';
 
 import { Faculty } from '../../models';
+import { TableOptions } from 'src/app/website/models';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { FacultyService } from './services';
+import { TableResponseDto } from 'src/app/website/dto/usersResponseDto';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-dashboard-faculty',
   templateUrl: 'faculty.component.html'
 })
 export class FacultyComponent {
+  data: Faculty[] = [];
+  resultsLength: number = 0;
+
+  private userListOptions: TableOptions;
   private newDialogRef: MatDialogRef<NewDialogComponent>;
 
   constructor(
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private _snackBar: MatSnackBar,
+    private facultyService: FacultyService
   ) { }
+
+  onChangeCard(userListOptions: TableOptions) {
+    this.userListOptions = userListOptions;
+    this.getData();
+  }
+
+  getData() {
+    this.facultyService.getAll(new TableOptions(
+      this.userListOptions.sort,
+      this.userListOptions.sortDirection,
+      this.userListOptions.pageIndex,
+      this.userListOptions.pageSize
+    )).subscribe((data: TableResponseDto<Faculty>) => {
+      this.data = data.entities;
+      this.resultsLength = data.totalCount;
+    });
+  }
 
   onNew() {
     this.openNewDialog();
@@ -33,20 +61,24 @@ export class FacultyComponent {
       this.new(data);
     });
   }
-  new(newFaculty: Faculty) {
-    console.log(newFaculty);
-    /*this.usersManagmentService.createAdminUser(newUser).subscribe(
-    (data: ResponseModel) => {
+  new(newFaculty: any) {
+    this.facultyService.create(newFaculty.model)
+    .subscribe({
+      next: (data: Faculty) => {
 
-      this._snackBar.open(data.message, 'Ok', {
-        duration: 10000,
-      });
+        this._snackBar.open("Faculty created successful!", 'Ok', {
+          duration: 10000,
+        });
 
-      if(data.statusCode == '200') {
-        this.createDialogRef.close();
-        this.getUsers();
+        this.newDialogRef.close();
+        this.getData();
+      },
+      error: (error: HttpErrorResponse) => {
+        this._snackBar.open("Validating error!", 'Ok', {
+          duration: 10000,
+        });
       }
-    });*/
+    });
   }
 
   onEdit($event: any) {
@@ -61,25 +93,21 @@ export class FacultyComponent {
     this.newDialogRef.componentInstance.title = "Edit Faculty";
     this.newDialogRef.componentInstance.submitBtnText = "Edit";
 
-    this.newDialogRef.componentInstance.onSubmit.subscribe((data: Faculty) => {
-      this.update(data);
+    this.newDialogRef.componentInstance.onSubmit.subscribe((data: any) => {
+      this.edit(data.id, data.model);
     });
   }
-  update(faculty: Faculty) {
-    console.log(faculty);
-
-    /*this.usersManagmentService.updateAdminUser(newUser).subscribe(
-    (data: ResponseModel) => {
+  edit(id: number, faculty: Faculty) {
+    this.facultyService.edit(id, faculty)
+    .subscribe((data: Faculty) => {
   
-      this._snackBar.open(data.message, 'Ok', {
+      this._snackBar.open("New faculty created!", 'Ok', {
         duration: 10000,
       });
   
-      if(data.statusCode == '200') {
-        this.createDialogRef.close();
-        this.getUsers();
-      }
-    });*/
+      this.newDialogRef.close();
+      this.getData();
+    });
   }
 
   onDelete($event: any) {
@@ -97,15 +125,13 @@ export class FacultyComponent {
     });
   }
   delete(id: number) {
-    console.log(id);
-    /*this.usersManagmentService.deleteAdminUser(id)
-    .subscribe((data: ResponseModel) => {
-      this._snackBar.open(data.message, 'Ok', {
+    this.facultyService.delete(id)
+    .subscribe(() => {
+      this._snackBar.open("Faculty deleted!", 'Ok', {
         duration: 10000,
       });
 
-      if(data.statusCode == '200')
-        this.getUsers();
-    });*/
+      this.getData();
+    });
   }
 }

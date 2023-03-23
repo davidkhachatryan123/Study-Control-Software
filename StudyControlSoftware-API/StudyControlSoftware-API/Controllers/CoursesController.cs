@@ -32,7 +32,7 @@ namespace StudyControlSoftware_API.Controllers
             return Ok(await _repositoryManager.Courses.CreateAsync(course));
         }
 
-        [HttpPut]
+        [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] CourseDto course)
         {
             CourseDto? updatedCourse = await _repositoryManager.Courses.UpdateAsync(id, course);
@@ -42,7 +42,7 @@ namespace StudyControlSoftware_API.Controllers
                 : Ok(updatedCourse);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
             int? deleteId = await _repositoryManager.Courses.DeleteAsync(id);

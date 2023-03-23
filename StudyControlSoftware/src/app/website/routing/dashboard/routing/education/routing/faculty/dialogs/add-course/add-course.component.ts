@@ -3,7 +3,6 @@ import { FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-
 import { Course } from '../../../../models';
 
 @Component({
@@ -17,12 +16,7 @@ export class AddCourseDialogComponent {
   filteredCourses: Observable<string[]>;
   courses: Course[] = [];
 
-  // Get this values in ngOnInit() function
-  allCourses: Course[] = [
-    new Course(1, 'C# ծրագրավորում', 'Սովորում ենք գրել ծրագրեր օգտագործելով C# ծրագրավորման լեզուն'),
-    new Course(2, 'C++ ծրագրավորում', 'Սովորում ենք գրել ծրագրեր օգտագործելով C++ ծրագրավորման լեզուն'),
-    new Course(3, 'ASP.NET Core', 'Սովորում ենք գրել ծրագրեր օգտագործելով ASP.NET Core framework-ը')
-  ];
+  allCourses: Course[] = [];
 
   @ViewChild('courseInput') courseInput: ElementRef<HTMLInputElement>;
 

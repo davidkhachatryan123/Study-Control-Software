@@ -1,31 +1,32 @@
-import { AfterContentInit, Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
-import { Course } from 'src/app/website/routing/dashboard/routing/education/models';
+import { Course, Faculty } from 'src/app/website/routing/dashboard/routing/education/models';
 import { DeleteDialogComponent } from 'src/app/website/shared/dashboard/dialogs';
 import { AddCourseDialogComponent } from '../../dialogs';
+import { FacultyService } from '../../services';
 
 @Component({
   selector: 'app-dashboard-add-course-list',
   templateUrl: 'add-course-list.component.html'
 })
-export class AddCourseListComponent implements AfterContentInit {
+export class AddCourseListComponent implements OnInit {
   @Input() facultyIndex: number;
 
   private addCourseDialogRef: MatDialogRef<AddCourseDialogComponent>;
 
-  addedCourses: Course[] = [
-    new Course(1, 'C# ծրագրավորում', 'Սովորում ենք գրել ծրագրեր օգտագործելով C# ծրագրավորման լեզուն'),
-    new Course(2, 'C++ ծրագրավորում', 'Սովորում ենք գրել ծրագրեր օգտագործելով C++ ծրագրավորման լեզուն'),
-    new Course(3, 'ASP.NET Core', 'Սովորում ենք գրել ծրագրեր օգտագործելով ASP.NET Core framework-ը')
-  ];
+  addedCourses: Course[] = [];
 
   constructor(
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private facultyService: FacultyService
   ) { }
 
-  ngAfterContentInit() {
-    console.log(this.facultyIndex);
+  ngOnInit() {
+    this.facultyService.getCourses(this.facultyIndex)
+    .subscribe((data: Array<Course>) => {
+      this.addedCourses = data;
+    });
   }
 
   addCourse() {

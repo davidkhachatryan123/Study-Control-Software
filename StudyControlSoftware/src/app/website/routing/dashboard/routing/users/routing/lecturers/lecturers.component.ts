@@ -9,7 +9,7 @@ import { Lecturer } from '../../models';
 import { NewDialogComponent } from './dialogs';
 import { AuthService } from 'src/app/website/routing/auth/services';
 import { LecturersService } from './services/lecturers.service';
-import { UsersResponseDto } from 'src/app/website/dto/usersResponseDto';
+import { TableResponseDto } from 'src/app/website/dto/usersResponseDto';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserDto } from 'src/app/website/dto/userDto';
 
@@ -43,7 +43,7 @@ export class LecturersComponent {
       this.userListOptions.pageIndex,
       this.userListOptions.pageSize,
     )
-    ).subscribe((data: UsersResponseDto<Lecturer>) => {
+    ).subscribe((data: TableResponseDto<Lecturer>) => {
       this.data = data.entities;
       this.resultsLength = data.totalCount;
     });
