@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild, AfterViewInit } from '@angular/core';
 
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -16,7 +16,7 @@ import { Student } from '../../../../models/student';
     tableDetailExpand
   ],
 })
-export class StudentsCardComponent {
+export class StudentsCardComponent implements AfterViewInit {
 
   @Input() data: Student[] = [];
   @Input() resultsLength: number = 0;
@@ -32,11 +32,24 @@ export class StudentsCardComponent {
 
   private userListOptions: TableOptions = new TableOptions('', '', 0, 0);
 
-  columnsToDisplay: string[] = ['fullName', 'username', 'email', 'emailConfirmed', 'phone', 'actions'];
+  columnsToDisplay: string[] = ['fullName', 'username', 'email', 'emailConfirmed', 'phoneNumber', 'actions'];
   columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
 
   expandedElement: Student | null;
 
+  ngAfterViewInit() {
+    this.onChangeEvent();
+
+    this.sort.sortChange.subscribe(() => {
+      this.paginator.pageIndex = 0;
+      this.onChangeEvent();
+    });
+
+    this.paginator.page.subscribe(() => {
+      this.onChangeEvent();
+    });
+  }
+  
   onChangeEvent() {
     this.userListOptions.sort = this.sort.active;
     this.userListOptions.sortDirection = this.sort.direction;

@@ -4,7 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UserDto } from 'src/app/website/dto/userDto';
 
-import { roles, User } from 'src/app/website/routing/auth/models';
+import { roles } from 'src/app/website/routing/auth/models';
 
 @Component({
   selector: 'app-dashboard-admin-new',
@@ -31,7 +31,7 @@ export class NewDialogComponent {
         Validators.required, Validators.minLength(2), Validators.maxLength(255)
       ]),
       "username": new FormControl(data.user.username, [
-        Validators.required, Validators.minLength(5), Validators.maxLength(16),
+        Validators.required, Validators.maxLength(16),
         Validators.pattern('(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$')
       ]),
       "password": new FormControl('', [

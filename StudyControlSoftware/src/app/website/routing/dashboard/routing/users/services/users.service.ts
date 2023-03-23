@@ -28,7 +28,6 @@ export class ManageUsersService<TResponse, TDto, T> {
   }
 
   create(user: TDto) {
-    console.log(user);
     return this.http.post<T>(
       this.apiUrl,
       user);

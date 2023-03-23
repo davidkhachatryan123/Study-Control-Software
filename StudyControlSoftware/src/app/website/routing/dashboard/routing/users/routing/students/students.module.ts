@@ -24,6 +24,7 @@ import { NewDialogComponent } from './dialogs';
 import { StudentsCardComponent } from './components/students-card/students-card.component';
 import { SetFacultyComponent } from './components/set-faculty/set-faculty.component';
 import { SetFacultyDialogComponent } from './dialogs/set-faculty/set-faulty-dialog.component';
+import { StudentsService } from './services/students.service';
 
 const routes: Routes = [
   {
@@ -59,6 +60,9 @@ const routes: Routes = [
     NewDialogComponent,
     SetFacultyComponent,
     SetFacultyDialogComponent
+  ],
+  providers: [
+    StudentsService
   ]
 })
 export class StudentsModule { }
