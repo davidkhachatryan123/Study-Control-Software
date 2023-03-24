@@ -5,7 +5,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from './shared/shared.module';
 import { AuthModule } from './routing/auth/auth.module';
 import { WebsiteRoutingModule } from './website-routing.module';
+
 import { StorageService } from './services';
+import { JwtModule } from '@auth0/angular-jwt';
+import { environment } from 'src/environments/environment';
+
+export function tokenGetter() {
+  return window.localStorage.getItem(environment.sessionStorageConfig.TOKEN_KEY);
+}
 
 @NgModule({
   imports: [
@@ -14,8 +21,14 @@ import { StorageService } from './services';
     AuthModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: [environment.config.api],
+        disallowedRoutes: []
+      }
+    })
   ],
-  declarations: [],
   providers: [
     StorageService
   ],

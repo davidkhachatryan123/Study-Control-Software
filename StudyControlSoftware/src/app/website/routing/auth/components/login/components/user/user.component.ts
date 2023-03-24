@@ -61,9 +61,9 @@ export class UserComponent {
           this.nextEvent.emit();
         },
         error: (error: HttpErrorResponse) => {
-          this._snackBar.open(error.error.errorMessage, 'Ok', {
-            duration: 10000,
-          });
+            this._snackBar.open(error.error.errorMessage, 'Ok', {
+              duration: 10000,
+            });
         }
       });
     }

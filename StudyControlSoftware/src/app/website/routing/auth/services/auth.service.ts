@@ -1,10 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from "src/environments/environment";
-import { map, Observable } from 'rxjs';
-
-import { AppUser, User } from '../models';
-import { ResponseModel } from 'src/app/website/models';
 import { AuthResponseDto, LoginDto, TwoFADto } from 'src/app/website/dto';
 
 @Injectable({

@@ -24,7 +24,7 @@ namespace StudyControlSoftware_API.Extensions
                     {
                         Email = email,
                         Token = token
-                    }, "https");
+                    }, "http");
         }
     }
 }

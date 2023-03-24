@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using StudyControlSoftware_API.Database;
 using StudyControlSoftware_API.Database.Models;
@@ -34,6 +35,8 @@ namespace StudyControlSoftware_API.Services.Auth
 
         public async Task<IdentityResult> SetupAsync()
         {
+            await _context.Database.MigrateAsync();
+
             if (_context == null || _context!.Users.Any())
                 return IdentityResult.Failed();
 

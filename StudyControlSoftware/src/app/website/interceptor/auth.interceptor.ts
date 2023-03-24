@@ -11,7 +11,7 @@ export class AuthInterceptor implements HttpInterceptor {
   ) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token = this.storageService.getToken();
+    /*const token = this.storageService.getToken();
 
     if (token) {
       const cloned = req.clone({
@@ -21,7 +21,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
       return next.handle(cloned);
     }
-    else
+    else*/
       return next.handle(req);
   }
 }

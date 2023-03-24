@@ -12,6 +12,7 @@ using StudyControlSoftware_API.HostedServices;
 using StudyControlSoftware_API.Interfaces;
 using StudyControlSoftware_API.Mappings;
 using StudyControlSoftware_API.Services;
+using System;
 using System.Security.Claims;
 using System.Text;
 
