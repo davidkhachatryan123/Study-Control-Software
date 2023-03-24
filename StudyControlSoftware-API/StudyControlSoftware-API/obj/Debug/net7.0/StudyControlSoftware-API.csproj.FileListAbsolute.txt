@@ -88,3 +88,5 @@ D:\Programming\Web\Study-Control-Software\StudyControlSoftware-API\StudyControlS
 D:\Programming\Web\Study-Control-Software\StudyControlSoftware-API\StudyControlSoftware-API\obj\Debug\net7.0\StudyControlSoftware-API.pdb
 D:\Programming\Web\Study-Control-Software\StudyControlSoftware-API\StudyControlSoftware-API\obj\Debug\net7.0\StudyControlSoftware-API.genruntimeconfig.cache
 D:\Programming\Web\Study-Control-Software\StudyControlSoftware-API\StudyControlSoftware-API\obj\Debug\net7.0\ref\StudyControlSoftware-API.dll
+D:\Programming\Web\Study-Control-Software\StudyControlSoftware-API\StudyControlSoftware-API\bin\Debug\net7.0\Microsoft.AspNetCore.SpaServices.Extensions.dll
+D:\Programming\Web\Study-Control-Software\StudyControlSoftware-API\StudyControlSoftware-API\bin\Debug\net7.0\StudyControlSoftware-API.staticwebassets.runtime.json
