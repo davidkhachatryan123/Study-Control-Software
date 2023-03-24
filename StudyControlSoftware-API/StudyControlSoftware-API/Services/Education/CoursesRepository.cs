@@ -50,9 +50,9 @@ namespace StudyControlSoftware_API.Services.Education
             return null;
         }
 
-        public async Task<LecturerDto?> DeleteLecturerAsync(int id)
+        public async Task<LecturerDto?> DeleteLecturerAsync(int courseId)
         {
-            var course = await _context.Courses.FirstOrDefaultAsync(x => x.Id == id);
+            var course = await _context.Courses.FirstOrDefaultAsync(x => x.Id == courseId);
 
             if (course != null)
             {

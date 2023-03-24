@@ -56,15 +56,11 @@ namespace StudyControlSoftware_API.Controllers
         [HttpGet("{id}/GetLecturer")]
         public async Task<IActionResult> GetLecturer(int id)
         {
-            var lecturer = await _repositoryManager.Courses.GetLecturerAsync(id);
-
-            return lecturer == null
-                ? BadRequest()
-                : Ok(lecturer);
+            return Ok(await _repositoryManager.Courses.GetLecturerAsync(id));
         }
 
         [HttpPost("{id}/SetLecturer")]
-        public async Task<IActionResult> SetLecturer(int id, [FromBody] string lecturerId)
+        public async Task<IActionResult> SetLecturer(int id, string lecturerId)
         {
             var lecturer = await _repositoryManager.Courses.SetLecturerAsync(id, lecturerId);
 

@@ -1,28 +1,40 @@
-import { AfterContentInit, Component, Input } from '@angular/core';
+import { AfterContentInit, Component, Input, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Course } from 'src/app/website/routing/dashboard/routing/education/models';
 import { DeleteDialogComponent } from 'src/app/website/shared/dashboard/dialogs';
 import { Lecturer } from '../../../../../users/models';
 import { SetLecturerDialogComponent } from '../../dialogs';
+import { CoursesService } from '../../services';
 
 @Component({
   selector: 'app-dashboard-add-lecturer',
   templateUrl: 'add-lecturer.component.html'
 })
-export class AddLecturerComponent implements AfterContentInit {
+export class AddLecturerComponent implements OnInit {
   @Input() courseIndex: number;
+  @Input() allԼecturers: Lecturer[] = [];
 
-  lecturer: Lecturer | undefined/* = new Lecturer(1, 'Դավիթ', 'Խաչատրյան')*/;
+  lecturer: Lecturer | undefined;
 
   private setLecturerDialogRef: MatDialogRef<SetLecturerDialogComponent>;
 
   constructor(
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private _snackBar: MatSnackBar,
+    private coursesService: CoursesService
   ) { }
 
-  ngAfterContentInit() {
-    console.log(this.courseIndex);
+  ngOnInit() {
+    this.getData();
+  }
+  
+  getData() {
+    this.coursesService.getLecturer(this.courseIndex)
+    .subscribe((data: Lecturer) => {
+      this.lecturer = data;
+    });
   }
 
   setLecturer() {
@@ -30,7 +42,10 @@ export class AddLecturerComponent implements AfterContentInit {
   }
   openSetLecturerDialog() {
     this.setLecturerDialogRef = this.dialog.open(SetLecturerDialogComponent, {
-      width: '500px'
+      width: '500px',
+      data: {
+        allԼecturers: this.allԼecturers
+      }
     });
 
     this.setLecturerDialogRef.componentInstance.onSubmit.subscribe((lecturer: Lecturer) => {
@@ -38,16 +53,15 @@ export class AddLecturerComponent implements AfterContentInit {
     });
   }
   set(lecturer: Lecturer) {
-    console.log(lecturer.id);
-    /*this.usersManagmentService.deleteAdminUser(id)
-    .subscribe((data: ResponseModel) => {
-      this._snackBar.open(data.message, 'Ok', {
+    this.coursesService.setLecturer(this.courseIndex, lecturer.id)
+    .subscribe((data: Lecturer) => {
+      this._snackBar.open("Lecturer set successful!", 'Ok', {
         duration: 10000,
       });
 
-      if(data.statusCode == '200')
-        this.getUsers();
-    });*/
+      this.setLecturerDialogRef.close();
+      this.getData();
+    });
   }
 
   removeLecturer() {
@@ -56,7 +70,7 @@ export class AddLecturerComponent implements AfterContentInit {
   openDeleteDialog() {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       width: '250px',
-      data: { value: this.lecturer.fullName, isDelete: 'false' }
+      data: { value: this.lecturer.firstName + ' ' + this.lecturer.lastName, isDelete: 'false' }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -65,15 +79,14 @@ export class AddLecturerComponent implements AfterContentInit {
     });
   }
   delete() {
-    console.log('Yes remove!');
-    /*this.usersManagmentService.deleteAdminUser(id)
-    .subscribe((data: ResponseModel) => {
-      this._snackBar.open(data.message, 'Ok', {
+    this.coursesService.deleteLecturer(this.courseIndex)
+    .subscribe(() => {
+      this._snackBar.open("Lecturer deleted successful!", 'Ok', {
         duration: 10000,
       });
 
-      if(data.statusCode == '200')
-        this.getUsers();
-    });*/
+      this.setLecturerDialogRef?.close();
+      this.getData();
+    });
   }
 }

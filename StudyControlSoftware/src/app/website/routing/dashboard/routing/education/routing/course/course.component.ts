@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 import { Course } from '../../models';
@@ -10,14 +10,18 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { CoursesService } from './services';
 import { TableResponseDto } from 'src/app/website/dto/usersResponseDto';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Lecturer } from '../../../users/models';
+import { LecturersService } from '../../../users/routing/lecturers/services/lecturers.service';
 
 @Component({
   selector: 'app-dashboard-course',
   templateUrl: 'course.component.html'
 })
-export class CourseComponent {
+export class CourseComponent implements OnInit {
   data: Course[] = [];
   resultsLength: number = 0;
+
+  lecturers: Lecturer[] = [];
 
   private userListOptions: TableOptions;
   private newDialogRef: MatDialogRef<NewDialogComponent>;
@@ -25,8 +29,16 @@ export class CourseComponent {
   constructor(
     public dialog: MatDialog,
     private _snackBar: MatSnackBar,
-    private coursesService: CoursesService
+    private coursesService: CoursesService,
+    private lecturersService: LecturersService
   ) { }
+
+  ngOnInit() {
+    this.lecturersService.getAll(new TableOptions('id', 'asc', 0, 999))
+    .subscribe((data: TableResponseDto<Lecturer>) => {
+      this.lecturers = data.entities;
+    });
+  }
 
   onChangeCard(userListOptions: TableOptions) {
     this.userListOptions = userListOptions;

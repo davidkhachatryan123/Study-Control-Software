@@ -14,7 +14,7 @@ export class Lecturer extends UserSkel {
     super(id, username, password, email, emailConfirmed, phoneNumber);
   }
 
-  public get fullName() {
+  /*public get fullName() {
     return this.firstName + ' ' + this.lastName;
-  }
+  }*/
 }

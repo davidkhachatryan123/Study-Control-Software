@@ -1,27 +1,39 @@
-import { AfterContentInit, Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { DeleteDialogComponent } from 'src/app/website/shared/dashboard/dialogs';
 import { Faculty } from '../../../../../education/models';
 import { SetFacultyDialogComponent } from '../../dialogs/set-faculty/set-faulty-dialog.component';
+import { StudentsService } from '../../services/students.service';
 
 @Component({
   selector: 'app-dashboard-set-faculty',
   templateUrl: 'set-faculty.component.html'
 })
-export class SetFacultyComponent implements AfterContentInit {
-  @Input() studentIndex: number;
+export class SetFacultyComponent implements OnInit {
+  @Input() studentIndex: string;
+  @Input() allFaculties: Faculty[] = [];
 
-  faculty: Faculty | undefined/* = new Lecturer(1, 'Դավիթ', 'Խաչատրյան')*/;
+  faculty: Faculty | null;
 
   private setFacultyDialogRef: MatDialogRef<SetFacultyDialogComponent>;
 
   constructor(
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private _snackBar: MatSnackBar,
+    private studentsService: StudentsService
   ) { }
 
-  ngAfterContentInit() {
-    console.log(this.studentIndex);
+  ngOnInit() {
+    this.getData();
+  }
+  
+  getData() {
+    this.studentsService.getFaculty(this.studentIndex)
+    .subscribe((data: Faculty) => {
+      this.faculty = data;
+    });
   }
 
   setFaculty() {
@@ -29,7 +41,10 @@ export class SetFacultyComponent implements AfterContentInit {
   }
   openSetFacultyDialog() {
     this.setFacultyDialogRef = this.dialog.open(SetFacultyDialogComponent, {
-      width: '500px'
+      width: '500px',
+      data: {
+        allFaculties: this.allFaculties
+      }
     });
 
     this.setFacultyDialogRef.componentInstance.onSubmit.subscribe((faculty: Faculty) => {
@@ -37,16 +52,15 @@ export class SetFacultyComponent implements AfterContentInit {
     });
   }
   set(faculty: Faculty) {
-    console.log(faculty.id);
-    /*this.usersManagmentService.deleteAdminUser(id)
-    .subscribe((data: ResponseModel) => {
-      this._snackBar.open(data.message, 'Ok', {
+    this.studentsService.setFaculty(this.studentIndex, faculty.id)
+    .subscribe((data: Faculty) => {
+      this._snackBar.open("Faculty set successful!", 'Ok', {
         duration: 10000,
       });
 
-      if(data.statusCode == '200')
-        this.getUsers();
-    });*/
+      this.setFacultyDialogRef.close();
+      this.getData();
+    });
   }
 
   removeFaculty() {
@@ -64,15 +78,14 @@ export class SetFacultyComponent implements AfterContentInit {
     });
   }
   delete() {
-    console.log('Yes remove!');
-    /*this.usersManagmentService.deleteAdminUser(id)
-    .subscribe((data: ResponseModel) => {
-      this._snackBar.open(data.message, 'Ok', {
+    this.studentsService.deleteFaculty(this.studentIndex)
+    .subscribe(() => {
+      this._snackBar.open("Faculty deleted successful!", 'Ok', {
         duration: 10000,
       });
 
-      if(data.statusCode == '200')
-        this.getUsers();
-    });*/
+      this.setFacultyDialogRef?.close();
+      this.getData();
+    });
   }
 }

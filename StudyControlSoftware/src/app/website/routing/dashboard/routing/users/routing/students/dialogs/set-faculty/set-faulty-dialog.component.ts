@@ -1,6 +1,7 @@
-import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Inject, Output, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
@@ -17,20 +18,19 @@ export class SetFacultyDialogComponent {
   filteredFacultys: Observable<Faculty[]>;
   faculty: Faculty | undefined;
 
-  // Get this values in ngOnInit() function
-  allFaculty: Faculty[] = [
-    new Faculty(1, 'Ինֆորմատիկայի ֆակուլտետ'),
-    new Faculty(2, 'Պատմության ֆակուլտետ'),
-    new Faculty(3, 'Լեզվաբանական ֆակուլտետ'),
-  ];
+  allFaculties: Faculty[] = [];
 
   @ViewChild('facultyInput') facultyInput: ElementRef<HTMLInputElement>;
 
-  constructor() {
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public dialogData: any
+  ) {
+    this.allFaculties = dialogData.allFaculties;
+
     this.filteredFacultys = this.facultyCtrl.valueChanges.pipe(
       startWith(null),
       map((faculty: string | null) =>
-      (faculty ? this._filter(faculty) : this.allFaculty.slice())),
+      (faculty ? this._filter(faculty) : this.allFaculties.slice())),
     );
   }
 
@@ -39,7 +39,7 @@ export class SetFacultyDialogComponent {
   }
 
   selected(event: MatAutocompleteSelectedEvent) {
-    this.faculty = this.allFaculty.find(faculty => faculty.id == event.option.value);
+    this.faculty = this.allFaculties.find(faculty => faculty.id == event.option.value);
 
     this.facultyInput.nativeElement.value = '';
     this.facultyCtrl.setValue(null);
@@ -53,7 +53,7 @@ export class SetFacultyDialogComponent {
     try {
       const filterValue = value.toLowerCase();
 
-      return this.allFaculty.filter(faculty => faculty.name.toLowerCase().includes(filterValue));
+      return this.allFaculties.filter(faculty => faculty.name.toLowerCase().includes(filterValue));
     }
     catch {}
   }

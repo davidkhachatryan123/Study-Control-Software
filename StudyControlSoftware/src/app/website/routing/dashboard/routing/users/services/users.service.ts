@@ -9,7 +9,7 @@ export class ManageUsersService<TResponse, TDto, T> {
   private apiUrl: string;
 
   constructor(
-    private http: HttpClient,
+    public http: HttpClient,
     api: string) {
 
     this.apiUrl = environment.config.apiUrl + api;

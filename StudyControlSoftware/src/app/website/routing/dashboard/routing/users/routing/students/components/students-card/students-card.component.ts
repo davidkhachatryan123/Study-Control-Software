@@ -6,6 +6,7 @@ import { MatTable } from '@angular/material/table';
 
 import { TableOptions } from 'src/app/website/models';
 import { tableDetailExpand } from 'src/app/website/shared/dashboard/animations';
+import { Faculty } from '../../../../../education/models';
 import { Student } from '../../../../models/student';
 
 @Component({
@@ -17,15 +18,18 @@ import { Student } from '../../../../models/student';
   ],
 })
 export class StudentsCardComponent implements AfterViewInit {
-
   @Input() data: Student[] = [];
   @Input() resultsLength: number = 0;
+
+  @Input() allFaculties: Faculty[] = [];
+
 
   @Output() onChange = new EventEmitter<TableOptions>();
   @Output() onDelete = new EventEmitter<any>();
   @Output() onEdit = new EventEmitter<Student>();
   @Output() onConfirmEmail = new EventEmitter<string>();
 
+  
   @ViewChild(MatTable) table: MatTable<Student>;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;

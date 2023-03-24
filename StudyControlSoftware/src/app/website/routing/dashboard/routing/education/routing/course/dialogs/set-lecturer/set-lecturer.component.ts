@@ -1,6 +1,7 @@
-import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Inject, Output, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
@@ -15,14 +16,17 @@ export class SetLecturerDialogComponent {
 
   lecturerCtrl = new FormControl('');
   filteredLecturers: Observable<Lecturer[]>;
-  lecturer: Lecturer | undefined;
+  lecturer: Lecturer | null;
 
-  // Get this values in ngOnInit() function
   allԼecturers: Lecturer[] = [];
 
   @ViewChild('lecturerInput') lecturerInput: ElementRef<HTMLInputElement>;
 
-  constructor() {
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public dialogData: any
+  ) {
+    this.allԼecturers = dialogData.allԼecturers;
+
     this.filteredLecturers = this.lecturerCtrl.valueChanges.pipe(
       startWith(null),
       map((lecturer: string | null) =>
@@ -31,7 +35,7 @@ export class SetLecturerDialogComponent {
   }
 
   remove() {
-    this.lecturer = undefined;
+    this.lecturer = null;
   }
 
   selected(event: MatAutocompleteSelectedEvent) {
@@ -49,7 +53,7 @@ export class SetLecturerDialogComponent {
     try {
       const filterValue = value.toLowerCase();
 
-      return this.allԼecturers.filter(lecturer => lecturer.fullName.toLowerCase().includes(filterValue));
+      return this.allԼecturers.filter(lecturer => lecturer.firstName + ' ' +  lecturer.lastName.toLowerCase().includes(filterValue));
     }
     catch {}
   }

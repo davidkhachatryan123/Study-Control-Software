@@ -6,6 +6,7 @@ import { TableOptions } from 'src/app/website/models';
 
 import { Course } from 'src/app/website/routing/dashboard/routing/education/models';
 import { tableDetailExpand } from 'src/app/website/shared/dashboard/animations';
+import { Lecturer } from '../../../../../users/models';
 
 @Component({
   selector: 'app-dashboard-course-card',
@@ -19,10 +20,14 @@ export class CourseCardComponent implements AfterViewInit {
   @Input() data: Course[] = [];
   @Input() resultsLength: number = 0;
 
+  @Input() lecturers: Lecturer[] = [];
+
+
   @Output() onChange = new EventEmitter<TableOptions>();
 
   @Output() onEdit = new EventEmitter<Course>;
   @Output() onDelete = new EventEmitter<Course>;
+  
 
   @ViewChild(MatTable) table: MatTable<Course>;
   @ViewChild(MatSort) sort: MatSort;

@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -8,6 +8,8 @@ import { TableResponseDto } from 'src/app/website/dto/usersResponseDto';
 import { TableOptions } from 'src/app/website/models';
 import { AuthService } from 'src/app/website/routing/auth/services';
 import { DeleteDialogComponent } from 'src/app/website/shared/dashboard/dialogs';
+import { Faculty } from '../../../education/models';
+import { FacultyService } from '../../../education/routing/faculty/services';
 
 import { Student } from '../../models/student';
 import { NewDialogComponent } from './dialogs';
@@ -17,9 +19,11 @@ import { StudentsService } from './services/students.service';
   selector: 'app-dashboard-students',
   templateUrl: 'students.component.html'
 })
-export class StudentsComponent {
+export class StudentsComponent implements OnInit {
   data: Student[] = [];
   resultsLength: number = 0;
+
+  allFaculties: Faculty[] = [];
 
   private userListOptions: TableOptions;
   private createDialogRef: MatDialogRef<NewDialogComponent>;
@@ -28,8 +32,16 @@ export class StudentsComponent {
     public dialog: MatDialog,
     private _snackBar: MatSnackBar,
     private studentsService: StudentsService,
-    private authService: AuthService
+    private authService: AuthService,
+    private facultyService: FacultyService
   ) { }
+
+  ngOnInit() {
+    this.facultyService.getAll(new TableOptions('id', 'asc', 0, 999))
+    .subscribe((data: TableResponseDto<Faculty>) => {
+      this.allFaculties = data.entities;
+    });
+  }
 
   onChangeUserCard(userListOptions: TableOptions) {
     this.userListOptions = userListOptions;
