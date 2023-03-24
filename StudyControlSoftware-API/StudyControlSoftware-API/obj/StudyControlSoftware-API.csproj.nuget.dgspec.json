@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\david\\Documents\\Study-Control-Software\\StudyControlSoftware-API\\StudyControlSoftware-API\\StudyControlSoftware-API.csproj": {}
+    "D:\\Programming\\Web\\Study-Control-Software\\StudyControlSoftware-API\\StudyControlSoftware-API\\StudyControlSoftware-API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\david\\Documents\\Study-Control-Software\\StudyControlSoftware-API\\StudyControlSoftware-API\\StudyControlSoftware-API.csproj": {
+    "D:\\Programming\\Web\\Study-Control-Software\\StudyControlSoftware-API\\StudyControlSoftware-API\\StudyControlSoftware-API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\david\\Documents\\Study-Control-Software\\StudyControlSoftware-API\\StudyControlSoftware-API\\StudyControlSoftware-API.csproj",
+        "projectUniqueName": "D:\\Programming\\Web\\Study-Control-Software\\StudyControlSoftware-API\\StudyControlSoftware-API\\StudyControlSoftware-API.csproj",
         "projectName": "StudyControlSoftware-API",
-        "projectPath": "C:\\Users\\david\\Documents\\Study-Control-Software\\StudyControlSoftware-API\\StudyControlSoftware-API\\StudyControlSoftware-API.csproj",
+        "projectPath": "D:\\Programming\\Web\\Study-Control-Software\\StudyControlSoftware-API\\StudyControlSoftware-API\\StudyControlSoftware-API.csproj",
         "packagesPath": "C:\\Users\\david\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\david\\Documents\\Study-Control-Software\\StudyControlSoftware-API\\StudyControlSoftware-API\\obj\\",
+        "outputPath": "D:\\Programming\\Web\\Study-Control-Software\\StudyControlSoftware-API\\StudyControlSoftware-API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\david\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -40,13 +40,39 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[12.0.1, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[7.0.2, )"
+            },
+            "Microsoft.AspNetCore.Identity": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[7.0.2, )"
+            },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[7.0.2, )"
             },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.2, )"
+            },
+            "Pomelo.EntityFrameworkCore.MySql": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
-              "version": "[6.4.0, )"
+              "version": "[6.5.0, )"
             }
           },
           "imports": [
