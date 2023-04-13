@@ -5,6 +5,9 @@ services:
     build:
       context: Proxy
       dockerfile: Dockerfile
+    depends_on:
+      - client
+      - api
 
   client:
     build:
