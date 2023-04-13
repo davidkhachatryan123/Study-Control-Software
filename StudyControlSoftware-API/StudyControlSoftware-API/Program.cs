@@ -20,10 +20,10 @@ builder.Services.ConfigureFilters();
 
 builder.Services.ConfigureHostedServices();
 
-builder.Services.AddSpaStaticFiles(configuration =>
+/*builder.Services.AddSpaStaticFiles(configuration =>
 {
     configuration.RootPath = "wwwroot";
-});
+});*/
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.ConfigureSwagger();
@@ -38,11 +38,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors("AllowOrigin");
 
-if (!app.Environment.IsDevelopment())
+/*if (!app.Environment.IsDevelopment())
 {
     app.UseHttpsRedirection();
     app.UseSpaStaticFiles();
-}
+}*/
 
 app.UseAuthentication();
 app.UseAuthorization();

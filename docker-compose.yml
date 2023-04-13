@@ -1,0 +1,25 @@
+version: '3.4'
+
+services:
+  proxy:
+    build:
+      context: Proxy
+      dockerfile: Dockerfile
+
+  client:
+    build:
+      context: StudyControlSoftware
+      dockerfile: Dockerfile
+
+  api:
+    image: ${DOCKER_REGISTRY-}studycontrolsoftwareapi
+    build:
+      context: StudyControlSoftware-API
+      dockerfile: StudyControlSoftware-API/Dockerfile
+    links:
+      - db
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0.31

@@ -29,7 +29,7 @@ namespace StudyControlSoftware_API.Extensions
                     builder =>
                     {
                         builder
-                        .WithOrigins("http://localhost:4200")
+                        .WithOrigins("http://localhost")
                         .AllowAnyMethod()
                         .AllowAnyHeader()
                         .AllowCredentials()

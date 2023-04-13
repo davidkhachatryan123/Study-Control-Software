@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "ievYdlrJyxytkCjUPOPrGonwW0j2RR7aWVya/OkG8AS2YWsASm11fmp9ZEOjuo1dwgJm+Fqfhsqg3mPPlSHqdw==",
+  "dgSpecHash": "xYYs3MXH9nTj5kdzUeCQPBgWK9FZJUu6EE6xNVsSsVf9HHDwsUZczSA0nwoq7ldLHUoNRiIu2ReBKrLGxKSXhw==",
   "success": true,
   "projectFilePath": "D:\\Programming\\Web\\Study-Control-Software\\StudyControlSoftware-API\\StudyControlSoftware-API\\StudyControlSoftware-API.csproj",
   "expectedPackageFiles": [
@@ -60,6 +60,7 @@
     "C:\\Users\\david\\.nuget\\packages\\microsoft.net.http.headers\\2.2.0\\microsoft.net.http.headers.2.2.0.nupkg.sha512",
     "C:\\Users\\david\\.nuget\\packages\\microsoft.netcore.platforms\\2.0.0\\microsoft.netcore.platforms.2.0.0.nupkg.sha512",
     "C:\\Users\\david\\.nuget\\packages\\microsoft.openapi\\1.4.3\\microsoft.openapi.1.4.3.nupkg.sha512",
+    "C:\\Users\\david\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.17.0\\microsoft.visualstudio.azure.containers.tools.targets.1.17.0.nupkg.sha512",
     "C:\\Users\\david\\.nuget\\packages\\microsoft.win32.registry\\4.5.0\\microsoft.win32.registry.4.5.0.nupkg.sha512",
     "C:\\Users\\david\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
     "C:\\Users\\david\\.nuget\\packages\\mysqlconnector\\2.2.5\\mysqlconnector.2.2.5.nupkg.sha512",

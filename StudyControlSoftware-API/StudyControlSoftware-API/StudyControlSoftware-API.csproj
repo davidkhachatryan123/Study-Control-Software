@@ -6,6 +6,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<RootNamespace>StudyControlSoftware_API</RootNamespace>
 		<UserSecretsId>6d8a43c6-e71c-48c2-990f-7266ffa9cffc</UserSecretsId>
+		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
 	</PropertyGroup>
 
 	<PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
@@ -21,6 +22,7 @@
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
 		<PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="7.0.0" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
 	</ItemGroup>
@@ -30,33 +32,13 @@
 		<Folder Include="Interfaces\Education\" />
 		<Folder Include="Services\Education\" />
 		<Folder Include="Dto\Shared\" />
+		<Folder Include="wwwroot\" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<None Remove="Interfaces\Education\" />
 		<None Remove="Services\Education\" />
 		<None Remove="Dto\Shared\" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <None Include="wwwroot\19.c289bf74505fa72d.js" />
-	  <None Include="wwwroot\220.418a3a494e56f60a.js" />
-	  <None Include="wwwroot\276.103ee643123821d7.js" />
-	  <None Include="wwwroot\391.27c5aab51eb246af.js" />
-	  <None Include="wwwroot\3rdpartylicenses.txt" />
-	  <None Include="wwwroot\511.fc54c8a8d7a34ca2.js" />
-	  <None Include="wwwroot\631.a4ad4d32001d33fd.js" />
-	  <None Include="wwwroot\730.32cf248864e15e52.js" />
-	  <None Include="wwwroot\739.9d9438a67485e336.js" />
-	  <None Include="wwwroot\90.86d1bf297c944e1c.js" />
-	  <None Include="wwwroot\961.3cce88b9e04ebee8.js" />
-	  <None Include="wwwroot\common.bf09a78a54346fd2.js" />
-	  <None Include="wwwroot\favicon.ico" />
-	  <None Include="wwwroot\index.html" />
-	  <None Include="wwwroot\main.b79cdc1c633e4f78.js" />
-	  <None Include="wwwroot\polyfills.daf7cc4b01067db8.js" />
-	  <None Include="wwwroot\runtime.2f35edecf3180317.js" />
-	  <None Include="wwwroot\styles.dfff5f804f1fddb1.css" />
 	</ItemGroup>
 
 	<ItemGroup>
