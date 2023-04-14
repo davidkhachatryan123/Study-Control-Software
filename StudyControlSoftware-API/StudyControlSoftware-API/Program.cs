@@ -2,8 +2,6 @@ using StudyControlSoftware_API.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.RegisterDependencies();
-
 builder.Services.ConfigureCORS();
 
 builder.Services.ConfigureMapping();
@@ -16,14 +14,8 @@ builder.Services.ConfigureJWT(builder.Configuration);
 builder.Services.ConfigureAuthorization();
 
 builder.Services.ConfigureControllers();
-builder.Services.ConfigureFilters();
 
 builder.Services.ConfigureHostedServices();
-
-builder.Services.AddSpaStaticFiles(configuration =>
-{
-    configuration.RootPath = "wwwroot";
-});
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.ConfigureSwagger();
@@ -37,12 +29,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors("AllowOrigin");
-
-if (!app.Environment.IsDevelopment())
-{
-    app.UseHttpsRedirection();
-    app.UseSpaStaticFiles();
-}
 
 app.UseAuthentication();
 app.UseAuthorization();

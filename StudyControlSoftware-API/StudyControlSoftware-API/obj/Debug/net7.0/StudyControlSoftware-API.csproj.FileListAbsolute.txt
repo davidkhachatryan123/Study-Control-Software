@@ -90,3 +90,6 @@ D:\Programming\Web\Study-Control-Software\StudyControlSoftware-API\StudyControlS
 D:\Programming\Web\Study-Control-Software\StudyControlSoftware-API\StudyControlSoftware-API\obj\Debug\net7.0\ref\StudyControlSoftware-API.dll
 D:\Programming\Web\Study-Control-Software\StudyControlSoftware-API\StudyControlSoftware-API\bin\Debug\net7.0\Microsoft.AspNetCore.SpaServices.Extensions.dll
 D:\Programming\Web\Study-Control-Software\StudyControlSoftware-API\StudyControlSoftware-API\bin\Debug\net7.0\StudyControlSoftware-API.staticwebassets.runtime.json
+D:\Programming\Web\Study-Control-Software\StudyControlSoftware-API\StudyControlSoftware-API\bin\Debug\net7.0\Assets\2FACode.html
+D:\Programming\Web\Study-Control-Software\StudyControlSoftware-API\StudyControlSoftware-API\bin\Debug\net7.0\Assets\EmailConfirmation.html
+D:\Programming\Web\Study-Control-Software\StudyControlSoftware-API\StudyControlSoftware-API\bin\Debug\net7.0\Assets\RedirectToLogin.html
