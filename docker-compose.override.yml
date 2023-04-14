@@ -15,20 +15,20 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://+:5000
+    env_file:
+      - .env
+      - secrets.env
     ports:
-      - "5000:5000"
+      - "5002:5000"
     restart: always
 
   db:
-    environment:
-       MYSQL_ROOT_PASSWORD: root12
-       MYSQL_DATABASE: study_control_software
-       MYSQL_USER: user
-       MYSQL_PASSWORD: user12
-    volumes:
-       - sqldata:/var/lib/mysql
+    env_file:
+      - .env
     ports:
       - '3306:3306'
+    volumes:
+      - sqldata:/var/lib/mysql
     restart: always
 
 volumes:

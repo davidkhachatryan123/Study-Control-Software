@@ -41,7 +41,13 @@ namespace StudyControlSoftware_API.Extensions
         public static void ConfigureDatabase(this IServiceCollection services, IConfiguration configuration)
         {
             var serverVersion = new MySqlServerVersion(new Version(8, 0, 31));
-            string connection = configuration.GetConnectionString("DefaultConnection")!;
+
+            string mysql_user = configuration["MYSQL_USER"];
+            string mysql_password = configuration["MYSQL_PASSWORD"];
+            string mysql_database = configuration["MYSQL_DATABASE"];
+
+            string connection = 
+                $"server=db;port=3306;userid={mysql_user};password={mysql_password};database={mysql_database};";
 
             services.AddDbContext<ApplicationContext>(options
                 => options.UseMySql(connection, serverVersion));
@@ -131,16 +137,6 @@ namespace StudyControlSoftware_API.Extensions
         public static void ConfigureControllers(this IServiceCollection services)
         {
             services.AddControllers();
-        }
-
-        public static void ConfigureFilters(this IServiceCollection services)
-        {
-            //services.AddScoped<EnsureUserExistsFilter>();
-        }
-
-        public static void RegisterDependencies(this IServiceCollection services)
-        {
-
         }
 
         public static void ConfigureHostedServices(this IServiceCollection services)
