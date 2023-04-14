@@ -19,7 +19,7 @@ services:
       - .env
       - secrets.env
     ports:
-      - "5002:5000"
+      - "5000:5000"
     restart: always
 
   db:
