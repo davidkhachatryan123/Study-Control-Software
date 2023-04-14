@@ -19,16 +19,16 @@ the Docker Desktop installation. Docker Desktop is available for
 ### 3. Change in this file ***Default user configuration*** section:
 
 ```
-DefaultUser:UserName=<username>
-DefaultUser:Password=<password>
-DefaultUser:Email=<email>
+DefaultUser:UserName=admin            // required minimum length 5 symbols
+DefaultUser:Password=x0aVMyf4@        // req. min length 8, one lowercase and uppercase character, one number and symbol
+DefaultUser:Email=<email>             // set your own email for sending 2FA login codes from application
 ```
 
-### 4. Also you need to configure thhe ***Mail server configuration***:
+### 4. Also you need to configure the ***Mail server configuration***:
 
 ```
-MailServer:From=<email>
-MailServer:SmtpClient=<smpt>
+MailServer:From=<email>               // application will send emails to users from this email
+MailServer:SmtpClient=smtp.gmail.com  // smtp client for mail server
 ```
 
 ### 5. Create the new file named as ***secrets.env*** and put "Secret" for smtp client
