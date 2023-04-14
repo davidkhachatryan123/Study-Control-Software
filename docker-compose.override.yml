@@ -1,0 +1,35 @@
+version: '3.4'
+
+services:
+  proxy:
+    ports:
+      - "80:80"
+    restart: always
+
+  client:
+    ports:
+      - "9000:80"
+    restart: always
+
+  api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:5000
+    env_file:
+      - .env
+      - secrets.env
+    ports:
+      - "5000:5000"
+    restart: always
+
+  db:
+    env_file:
+      - .env
+    ports:
+      - '3306:3306'
+    volumes:
+      - sqldata:/var/lib/mysql
+    restart: always
+
+volumes:
+  sqldata:

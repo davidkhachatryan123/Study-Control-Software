@@ -13,14 +13,14 @@ namespace StudyControlSoftware_API.Services.Shared
 
         public string Get2FAMessage(string token)
         {
-            var content = File.ReadAllText(@"assets/2FACode.html");
+            var content = File.ReadAllText(@"Assets/2FACode.html");
             content = content.Replace("{{token}}", token.Insert(3, " - "));
             return content;
         }
 
         public string GetEmailConfirmationMessage(string confirmationLink)
         {
-            var content = File.ReadAllText(@"assets/EmailConfirmation.html");
+            var content = File.ReadAllText(@"Assets/EmailConfirmation.html");
             content = content.Replace("{{link}}", confirmationLink);
 
             return content;
@@ -28,7 +28,7 @@ namespace StudyControlSoftware_API.Services.Shared
 
         public string GetRedirectToLogin()
         {
-            var content = File.ReadAllText(@"assets/RedirectToLogin.html");
+            var content = File.ReadAllText(@"Assets/RedirectToLogin.html");
             content = content.Replace("{{url}}", _configuration["Client:LoginUrl"]);
 
             return content;

@@ -1,0 +1,17 @@
+FROM mcr.microsoft.com/dotnet/sdk:7.0
+EXPOSE 5000
+EXPOSE 5001
+
+ARG BUILD_CONFIGURATION=Debug
+ENV DOTNET_USE_POLLING_FILE_WATCHER=true
+
+WORKDIR /src
+COPY ["StudyControlSoftware-API/StudyControlSoftware-API.csproj", "StudyControlSoftware-API/"]
+RUN dotnet restore "StudyControlSoftware-API/StudyControlSoftware-API.csproj"
+
+COPY . .
+WORKDIR "/src/StudyControlSoftware-API"
+RUN dotnet build "StudyControlSoftware-API.csproj" -c $BUILD_CONFIGURATION -o /app
+
+WORKDIR "/app"
+ENTRYPOINT ["dotnet", "StudyControlSoftware-API.dll"]

@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  studycontrolsoftware-api:
+    image: ${DOCKER_REGISTRY-}studycontrolsoftwareapi
+    build:
+      context: .
+      dockerfile: StudyControlSoftware-API/Dockerfile.develop
+    links:
+      - db
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0.31
