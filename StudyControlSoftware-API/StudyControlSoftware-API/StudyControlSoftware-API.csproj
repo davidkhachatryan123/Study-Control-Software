@@ -7,6 +7,7 @@
 		<RootNamespace>StudyControlSoftware_API</RootNamespace>
 		<UserSecretsId>6d8a43c6-e71c-48c2-990f-7266ffa9cffc</UserSecretsId>
 		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+		<DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
 	</PropertyGroup>
 
 	<PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
