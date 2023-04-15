@@ -2,7 +2,10 @@ using StudyControlSoftware_API.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Configuration.AddEnvironmentVariables();
+
 builder.Services.ConfigureCORS();
+builder.Services.ConfigureForwardedHeaders();
 
 builder.Services.ConfigureMapping();
 
@@ -26,6 +29,10 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+}
+else
+{
+    app.UseForwardedHeaders();
 }
 
 app.UseCors("AllowOrigin");

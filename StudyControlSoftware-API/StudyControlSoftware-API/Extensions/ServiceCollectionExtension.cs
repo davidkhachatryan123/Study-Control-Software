@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -38,6 +39,14 @@ namespace StudyControlSoftware_API.Extensions
             });
         }
 
+        public static void ConfigureForwardedHeaders(this IServiceCollection services)
+        {
+            services.Configure<ForwardedHeadersOptions>(options =>
+            {
+                options.ForwardedHeaders = ForwardedHeaders.All;
+            });
+        }
+
         public static void ConfigureDatabase(this IServiceCollection services, IConfiguration configuration)
         {
             var serverVersion = new MySqlServerVersion(new Version(8, 0, 31));
@@ -46,7 +55,7 @@ namespace StudyControlSoftware_API.Extensions
             string mysql_password = configuration["MYSQL_PASSWORD"];
             string mysql_database = configuration["MYSQL_DATABASE"];
 
-            string connection = 
+            string connection =
                 $"server=db;port=3306;userid={mysql_user};password={mysql_password};database={mysql_database};";
 
             services.AddDbContext<ApplicationContext>(options

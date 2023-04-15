@@ -13,6 +13,8 @@ services:
     build:
       context: StudyControlSoftware
       dockerfile: Dockerfile
+    depends_on:
+      - api
 
   api:
     image: ${DOCKER_REGISTRY-}studycontrolsoftwareapi
