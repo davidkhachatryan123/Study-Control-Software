@@ -66,7 +66,7 @@ export class CourseComponent implements OnInit {
       data: { model: new Course(0, '', '') }
     });
 
-    this.newDialogRef.componentInstance.title = "Create new Course";
+    this.newDialogRef.componentInstance.dialogTitle = "Create new Course";
     this.newDialogRef.componentInstance.submitBtnText = "Create";
 
     this.newDialogRef.componentInstance.onSubmit.subscribe((data: any) => {
@@ -102,7 +102,7 @@ export class CourseComponent implements OnInit {
       data: { model: course }
     });
 
-    this.newDialogRef.componentInstance.title = "Edit Course";
+    this.newDialogRef.componentInstance.dialogTitle = "Edit Course";
     this.newDialogRef.componentInstance.submitBtnText = "Edit";
 
     this.newDialogRef.componentInstance.onSubmit.subscribe((data: any) => {

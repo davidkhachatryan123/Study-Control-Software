@@ -12,14 +12,14 @@ services:
     restart: always
 
   api:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Production
-      - ASPNETCORE_URLS=http://+:5000
     env_file:
       - .env
       - secrets.env
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:5000
     ports:
-      - "5000:5000"
+      - "5005:5000"
     restart: always
 
   db:
