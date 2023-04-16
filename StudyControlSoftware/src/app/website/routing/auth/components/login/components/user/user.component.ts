@@ -34,7 +34,7 @@ export class UserComponent {
         ]),
         "password": new FormControl('', [
           Validators.required, Validators.minLength(8), Validators.maxLength(64),
-          Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@$!%*?&=#])[A-Za-z0-9@$!%*?&=#]+$')
+          Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@$!%*?&=#])[A-Za-z0-9;@$!%*?&=#]+$')
         ])
     });
   }

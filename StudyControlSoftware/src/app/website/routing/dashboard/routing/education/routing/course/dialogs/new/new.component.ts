@@ -9,7 +9,7 @@ import { Course } from '../../../../models';
   templateUrl: 'new.component.html'
 })
 export class NewDialogComponent {
-  @Input() title: string;
+  @Input() dialogTitle: string;
   @Input() submitBtnText: string;
 
   @Output() onSubmit = new EventEmitter<any>();

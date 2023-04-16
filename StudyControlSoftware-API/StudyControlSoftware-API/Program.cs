@@ -2,7 +2,7 @@ using StudyControlSoftware_API.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Configuration.AddEnvironmentVariables();
+builder.Configuration.AddApplicationConfiguration();
 
 builder.Services.ConfigureCORS();
 builder.Services.ConfigureForwardedHeaders();

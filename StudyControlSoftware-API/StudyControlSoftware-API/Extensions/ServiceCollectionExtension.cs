@@ -8,12 +8,10 @@ using Microsoft.OpenApi.Models;
 using StudyControlSoftware_API.Database;
 using StudyControlSoftware_API.Database.Models;
 using StudyControlSoftware_API.Enums;
-using StudyControlSoftware_API.Filters;
 using StudyControlSoftware_API.HostedServices;
 using StudyControlSoftware_API.Interfaces;
 using StudyControlSoftware_API.Mappings;
 using StudyControlSoftware_API.Services;
-using System;
 using System.Security.Claims;
 using System.Text;
 
@@ -21,6 +19,13 @@ namespace StudyControlSoftware_API.Extensions
 {
     public static class ServiceCollectionExtension
     {
+        public static void AddApplicationConfiguration(this ConfigurationManager configuration)
+        {
+            configuration
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddEnvironmentVariables();
+        }
+
         public static void ConfigureCORS(this IServiceCollection services)
         {
             services.AddCors(options =>
@@ -51,9 +56,9 @@ namespace StudyControlSoftware_API.Extensions
         {
             var serverVersion = new MySqlServerVersion(new Version(8, 0, 31));
 
-            string mysql_user = configuration["MYSQL_USER"];
-            string mysql_password = configuration["MYSQL_PASSWORD"];
-            string mysql_database = configuration["MYSQL_DATABASE"];
+            string? mysql_user = configuration["MYSQL_USER"];
+            string? mysql_password = configuration["MYSQL_PASSWORD"];
+            string? mysql_database = configuration["MYSQL_DATABASE"];
 
             string connection =
                 $"server=db;port=3306;userid={mysql_user};password={mysql_password};database={mysql_database};";
@@ -102,7 +107,7 @@ namespace StudyControlSoftware_API.Extensions
 
                 // User settings.
                 options.User.AllowedUserNameCharacters =
-                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@$!%*?&=#";
+                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789;@$!%*?&=#";
                 options.User.RequireUniqueEmail = true;
             });
         }
