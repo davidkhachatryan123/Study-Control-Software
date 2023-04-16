@@ -18,13 +18,8 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://+:5000
-      - DefaultUser__UserName=${DEFAULT_USERNAME}
-      - DefaultUser__Password=${DEFAULT_PASSWORD}
-      - DefaultUser__Email=${DEFAULT_EMAIL}
-      - MailServer__From=${MAILSERVER_FROM}
-      - MailServer__SmtpClient=${MAILSERVER_SMTP}
     ports:
-      - "5000:5000"
+      - "5005:5000"
     restart: always
 
   db:

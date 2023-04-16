@@ -40,6 +40,8 @@ namespace StudyControlSoftware_API.HostedServices
                         _configuration["DefaultUser:UserName"],
                         _configuration["DefaultUser:Password"],
                         _configuration["DefaultUser:Email"]);
+                else
+                    _logger.LogError("Default User can't created!");
             }
         }
     }

@@ -50,12 +50,12 @@ namespace StudyControlSoftware_API.Services.Auth
             var result = await _userManager.CreateAsync(
                 defaultUser,
                 _configuration["DefaultUser:Password"]!);
-
-            result = await _roleManager.CreateAsync(
+            
+            await _roleManager.CreateAsync(
                 new IdentityRole(nameof(UserRoles.Admin)));
-            result = await _roleManager.CreateAsync(
+            await _roleManager.CreateAsync(
                 new IdentityRole(nameof(UserRoles.Lecturer)));
-            result = await _roleManager.CreateAsync(
+            await _roleManager.CreateAsync(
                 new IdentityRole(nameof(UserRoles.Student)));
 
             result = await _userManager.AddToRoleAsync(defaultUser, nameof(UserRoles.Admin));
