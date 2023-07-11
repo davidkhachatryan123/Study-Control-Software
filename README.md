@@ -1,6 +1,6 @@
 # Study-Control-Software
 
-This project was created to improve the skills of working with Angular and ASP.NET Core, and the main goal was to develop software for a "GlobalIT" startup.
+This project was created to improve the skills of working with Angular and ASP.NET Core, and the main goal was to develop software for a **"Global IT"** startup.
 
 ## Install Study-Control-Software with docker
 
