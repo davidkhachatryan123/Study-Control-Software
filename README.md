@@ -10,6 +10,8 @@ This project was created to improve the skills of working with Angular and ASP.N
 | ------ | ----------- |
 | Docker | Please, note that `docker-compose` is needed too and is included in the Docker Desktop installation. Docker Desktop is available for [Mac](https://docs.docker.com/desktop/install/mac-install/), [Windows](https://docs.docker.com/desktop/install/windows-install/) and [Linux](https://docs.docker.com/desktop/install/linux-install/). |
 
+### Guide
+
 1. Clone this repository
 
 2. For application configuration open file named as ***.env*** in project directory
